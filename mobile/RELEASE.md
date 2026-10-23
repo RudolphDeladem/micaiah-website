@@ -80,6 +80,41 @@ build; it does not work in Expo Go.
 3. `npm run submit:ios` uploads the build to TestFlight.
 4. Fill in the listing, App Privacy, age rating and review notes from `store/STORE_LISTING.md`, attach the build, and **Submit for Review**.
 
+## Deploy to TestFlight from GitHub (one click)
+
+`.github/workflows/testflight.yml` builds the iOS app on EAS and submits it to
+TestFlight. It runs `npm run check` first. One-time setup:
+
+1. **Apple**: enroll in the Apple Developer Program and accept all agreements in
+   App Store Connect → Business.
+2. **App Store Connect app**: My Apps → + → New App → iOS, name "Micaiah AI",
+   bundle ID `com.micaiahai.app` (register it under Certificates, Identifiers & Profiles
+   first if it's not listed), SKU `micaiah-ai`. Copy the numeric **Apple ID** shown under
+   App Information.
+3. **App Store Connect API key**: Users and Access → Integrations → App Store Connect API →
+   generate a key with **App Manager** access. Download the `.p8` (you can only download it once)
+   and note the **Key ID** and **Issuer ID**.
+4. **Expo**: create an account at expo.dev → Account settings → Access tokens → create a token.
+5. **GitHub** (repo Settings → Secrets and variables → Actions):
+
+   | Kind | Name | Value |
+   |---|---|---|
+   | Secret | `EXPO_TOKEN` | Expo access token |
+   | Secret | `ASC_API_KEY_P8` | Full contents of the `.p8` file |
+   | Secret | `ASC_KEY_ID` | Key ID |
+   | Secret | `ASC_ISSUER_ID` | Issuer ID |
+   | Secret | `APPLE_TEAM_ID` | 10-character Team ID (developer.apple.com → Membership) |
+   | Variable | `ASC_APP_ID` | Numeric Apple ID of the app from step 2 |
+   | Variable (optional) | `APPLE_TEAM_TYPE` | `COMPANY_OR_ORGANIZATION` if you enrolled as an organization (default `INDIVIDUAL`) |
+
+6. Actions → **Deploy to TestFlight** → Run workflow. The job starts the build and exits;
+   follow progress on expo.dev. About 15–30 minutes later the build appears in
+   App Store Connect → TestFlight, ready for internal testers once Apple finishes processing.
+
+If the first run cannot create signing credentials non-interactively, run
+`npx eas-cli@latest credentials --platform ios` once on your computer (signed in to the
+same Expo account), then re-run the workflow.
+
 ## 6. Shipping updates
 
 Bump `version` in `app.json` for user-visible releases (build numbers auto-increment via
