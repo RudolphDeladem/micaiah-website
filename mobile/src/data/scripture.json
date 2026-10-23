@@ -1,0 +1,1143 @@
+{
+  "translation": "KJV",
+  "translationName": "King James Version (public domain)",
+  "themes": [
+    {
+      "id": "anxiety",
+      "label": "Anxiety & Worry",
+      "icon": "cloudy-outline",
+      "keywords": [
+        "anxious",
+        "anxiety",
+        "worry",
+        "worried",
+        "worrying",
+        "stress",
+        "stressed",
+        "overwhelm",
+        "overwhelmed",
+        "nervous",
+        "panic",
+        "restless",
+        "overthinking",
+        "pressure",
+        "uncertain",
+        "uncertainty",
+        "tense",
+        "can't sleep",
+        "cannot sleep",
+        "racing thoughts"
+      ],
+      "interpretations": [
+        "What you are carrying is real, and it is heavy. Scripture does not ask you to pretend otherwise — it invites you to hand each worry to God, one by one, in prayer and with thanksgiving, and to receive a peace that does not depend on everything being solved.",
+        "Anxiety often lives in tomorrow. The Word gently draws you back into today, where God's grace is sufficient. You are not asked to hold the whole future — only to trust the One who already holds it.",
+        "Your mind may be racing, but you are not alone in the noise. Scripture describes a peace that guards the heart and mind — not as a reward for being calm, but as a gift for those who bring their cares to God."
+      ],
+      "steps": [
+        [
+          "Write down the specific worry in one sentence.",
+          "Pray Philippians 4:6 back to God, naming that worry.",
+          "List three things you can thank God for right now."
+        ],
+        [
+          "Take five slow breaths, praying \"Lord, I give this to You\" on each one.",
+          "Identify one small thing within your control today and do it.",
+          "Share what you are carrying with one trusted person this week."
+        ]
+      ],
+      "prayers": [
+        "Father, You see every worry I carry. I place them in Your hands now. Guard my heart and mind with Your peace, and teach me to trust You with tomorrow. Amen.",
+        "Lord, my thoughts are restless. Quiet my heart. Help me cast my cares on You, because You care for me. Amen."
+      ],
+      "verses": [
+        {
+          "ref": "Philippians 4:6-7",
+          "text": "Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God. And the peace of God, which passeth all understanding, shall keep your hearts and minds through Christ Jesus."
+        },
+        {
+          "ref": "1 Peter 5:7",
+          "text": "Casting all your care upon him; for he careth for you."
+        },
+        {
+          "ref": "Matthew 6:34",
+          "text": "Take therefore no thought for the morrow: for the morrow shall take thought for the things of itself. Sufficient unto the day is the evil thereof."
+        },
+        {
+          "ref": "Isaiah 26:3",
+          "text": "Thou wilt keep him in perfect peace, whose mind is stayed on thee: because he trusteth in thee."
+        }
+      ]
+    },
+    {
+      "id": "fear",
+      "label": "Fear & Courage",
+      "icon": "shield-outline",
+      "keywords": [
+        "afraid",
+        "fear",
+        "fearful",
+        "scared",
+        "terrified",
+        "frightened",
+        "dread",
+        "courage",
+        "brave",
+        "intimidated",
+        "threat",
+        "danger",
+        "unsafe"
+      ],
+      "interpretations": [
+        "Fear is one of the most human things there is, and Scripture meets it again and again with the same words: do not be afraid, for I am with you. Courage is not the absence of fear — it is walking forward knowing you are not walking alone.",
+        "The thing you fear may feel bigger than you, but it is not bigger than God. Scripture reminds you that you have been given a spirit of power, love, and a sound mind — even when your feelings say otherwise.",
+        "It is honest to admit you are afraid. The psalmist did the same: \"What time I am afraid, I will trust in thee.\" Trust is not a feeling you wait for — it is a choice you can make right in the middle of fear."
+      ],
+      "steps": [
+        [
+          "Name the fear out loud or on paper.",
+          "Read Isaiah 41:10 slowly, twice.",
+          "Take one small, courageous step toward what you fear today."
+        ],
+        [
+          "Pray Psalm 56:3 every time the fear returns today.",
+          "Ask: what is true about God in this situation?",
+          "Tell someone you trust what you are facing."
+        ]
+      ],
+      "prayers": [
+        "God, I am afraid, and I bring that fear to You honestly. Strengthen me, help me, and uphold me with Your hand. Give me courage for the next step. Amen.",
+        "Lord, You have not given me a spirit of fear. Fill me instead with Your power, Your love, and a sound mind. Amen."
+      ],
+      "verses": [
+        {
+          "ref": "Isaiah 41:10",
+          "text": "Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness."
+        },
+        {
+          "ref": "2 Timothy 1:7",
+          "text": "For God hath not given us the spirit of fear; but of power, and of love, and of a sound mind."
+        },
+        {
+          "ref": "Psalm 56:3",
+          "text": "What time I am afraid, I will trust in thee."
+        },
+        {
+          "ref": "Joshua 1:9",
+          "text": "Have not I commanded thee? Be strong and of a good courage; be not afraid, neither be thou dismayed: for the LORD thy God is with thee whithersoever thou goest."
+        }
+      ]
+    },
+    {
+      "id": "grief",
+      "label": "Grief & Loss",
+      "icon": "rainy-outline",
+      "keywords": [
+        "grief",
+        "grieving",
+        "loss",
+        "lost",
+        "died",
+        "death",
+        "passed away",
+        "funeral",
+        "mourning",
+        "mourn",
+        "miss her",
+        "miss him",
+        "miss them",
+        "heartbroken",
+        "broken heart",
+        "sorrow",
+        "bereaved",
+        "miscarriage"
+      ],
+      "interpretations": [
+        "Grief is love with nowhere to go, and Scripture never rushes it. God draws especially near to the brokenhearted. You do not need to be strong right now — you are allowed to mourn, and you are promised comfort.",
+        "Loss can make the world feel strangely quiet. The Word speaks of a God who binds up wounds and of a coming day with no more tears. Today, you can simply rest in His nearness.",
+        "Even Jesus wept at the grave of a friend. Your tears are not a lack of faith; they are part of love. Let God hold you in this season, one day at a time."
+      ],
+      "steps": [
+        [
+          "Give yourself permission to grieve today without hurrying.",
+          "Write down one memory you are thankful for.",
+          "Let someone close to you know how you are really doing."
+        ],
+        [
+          "Read Psalm 34:18 and pray it in your own words.",
+          "Do one gentle thing to care for your body: rest, eat, or walk.",
+          "Consider reaching out to a pastor or grief counselor for support."
+        ]
+      ],
+      "prayers": [
+        "Lord, my heart is broken. Draw near to me as You promised. Comfort me in my mourning, and hold what I cannot carry. Amen.",
+        "Father, thank You for the love that makes this loss so painful. Bind up my wounds and give me hope for the day when every tear is wiped away. Amen."
+      ],
+      "verses": [
+        {
+          "ref": "Psalm 34:18",
+          "text": "The LORD is nigh unto them that are of a broken heart; and saveth such as be of a contrite spirit."
+        },
+        {
+          "ref": "Matthew 5:4",
+          "text": "Blessed are they that mourn: for they shall be comforted."
+        },
+        {
+          "ref": "Psalm 147:3",
+          "text": "He healeth the broken in heart, and bindeth up their wounds."
+        },
+        {
+          "ref": "Revelation 21:4",
+          "text": "And God shall wipe away all tears from their eyes; and there shall be no more death, neither sorrow, nor crying, neither shall there be any more pain: for the former things are passed away."
+        }
+      ]
+    },
+    {
+      "id": "gratitude",
+      "label": "Gratitude",
+      "icon": "gift-outline",
+      "keywords": [
+        "thank",
+        "thanks",
+        "thankful",
+        "grateful",
+        "gratitude",
+        "blessed",
+        "blessing",
+        "blessings",
+        "appreciate",
+        "provided",
+        "answered prayer",
+        "answered my prayer"
+      ],
+      "interpretations": [
+        "Gratitude is a form of worship. Noticing God's goodness — even in small things — trains the heart to see His hand everywhere. What you are feeling right now is worth savoring and remembering.",
+        "Every good gift comes from above. By naming what you are thankful for, you are tracing the gifts back to the Giver. Let this moment of thankfulness become a memorial you can return to in harder seasons.",
+        "Scripture calls us to give thanks in every circumstance, and today you are doing exactly that. Gratitude does not ignore difficulty; it simply refuses to let difficulty have the last word."
+      ],
+      "steps": [
+        [
+          "Write down three specific things you are grateful for today.",
+          "Thank God for each one out loud.",
+          "Tell one person how they have been a blessing to you."
+        ],
+        [
+          "Read Psalm 107:1 and make it your prayer.",
+          "Save this reflection to revisit on a hard day.",
+          "Find one way to pass a blessing on to someone else this week."
+        ]
+      ],
+      "prayers": [
+        "Father, thank You. Thank You for Your goodness and Your mercy that endure forever. Keep my heart awake to every gift You give. Amen.",
+        "Lord, every good and perfect gift comes from You. I see Your hand in my life today, and I am grateful. Amen."
+      ],
+      "verses": [
+        {
+          "ref": "1 Thessalonians 5:18",
+          "text": "In every thing give thanks: for this is the will of God in Christ Jesus concerning you."
+        },
+        {
+          "ref": "Psalm 107:1",
+          "text": "O give thanks unto the LORD, for he is good: for his mercy endureth for ever."
+        },
+        {
+          "ref": "James 1:17",
+          "text": "Every good gift and every perfect gift is from above, and cometh down from the Father of lights, with whom is no variableness, neither shadow of turning."
+        },
+        {
+          "ref": "1 Chronicles 16:34",
+          "text": "O give thanks unto the LORD; for he is good; for his mercy endureth for ever."
+        }
+      ]
+    },
+    {
+      "id": "joy",
+      "label": "Joy & Praise",
+      "icon": "sunny-outline",
+      "keywords": [
+        "happy",
+        "joy",
+        "joyful",
+        "rejoice",
+        "excited",
+        "celebrate",
+        "celebrating",
+        "praise",
+        "glad",
+        "wonderful",
+        "amazing",
+        "good news",
+        "beautiful",
+        "delight",
+        "worship"
+      ],
+      "interpretations": [
+        "Joy is a gift, and it is right to enjoy it fully. Scripture invites you to rejoice in the Lord — to let your happiness become praise directed toward the One who is the source of all good things.",
+        "This is a day the Lord has made. Moments like this one are worth marking. Let your joy overflow into worship and into kindness toward the people around you.",
+        "In God's presence there is fullness of joy. What you are feeling today is a small taste of that. Hold it with open hands and a thankful heart."
+      ],
+      "steps": [
+        [
+          "Spend two minutes simply praising God for who He is.",
+          "Share your good news with someone who will celebrate with you.",
+          "Write this moment down so you can remember it later."
+        ],
+        [
+          "Read Psalm 16:11 and thank God for His presence.",
+          "Put on a worship song and let it be your prayer.",
+          "Look for a way to bring joy to someone else today."
+        ]
+      ],
+      "prayers": [
+        "Lord, my heart is glad. I rejoice in You today. Thank You for this good gift — let my joy point back to You. Amen.",
+        "Father, this is the day You have made, and I will rejoice and be glad in it. Fill me with Your joy, which is my strength. Amen."
+      ],
+      "verses": [
+        {
+          "ref": "Psalm 118:24",
+          "text": "This is the day which the LORD hath made; we will rejoice and be glad in it."
+        },
+        {
+          "ref": "Philippians 4:4",
+          "text": "Rejoice in the Lord alway: and again I say, Rejoice."
+        },
+        {
+          "ref": "Psalm 16:11",
+          "text": "Thou wilt shew me the path of life: in thy presence is fulness of joy; at thy right hand there are pleasures for evermore."
+        },
+        {
+          "ref": "Nehemiah 8:10",
+          "text": "Then he said unto them, Go your way, eat the fat, and drink the sweet, and send portions unto them for whom nothing is prepared: for this day is holy unto our Lord: neither be ye sorry; for the joy of the LORD is your strength."
+        }
+      ]
+    },
+    {
+      "id": "guidance",
+      "label": "Guidance & Direction",
+      "icon": "compass-outline",
+      "keywords": [
+        "decision",
+        "decide",
+        "direction",
+        "guidance",
+        "guide",
+        "which way",
+        "path",
+        "choice",
+        "choose",
+        "should i",
+        "confused",
+        "confusion",
+        "unsure",
+        "not sure",
+        "crossroads",
+        "next step",
+        "opportunity",
+        "calling",
+        "move",
+        "career",
+        "job offer",
+        "wisdom",
+        "lost my way"
+      ],
+      "interpretations": [
+        "Not knowing which way to go can be unsettling. Scripture promises that God gives wisdom generously to those who ask, and that He directs the paths of those who acknowledge Him. You do not have to see the whole road — just the next step.",
+        "God's Word is described as a lamp to your feet — enough light for the next step, not always for the whole journey. Trust that He will guide you as you walk, and lean on His understanding rather than only your own.",
+        "Seeking direction is itself an act of faith. As you weigh this decision, bring it honestly before God, seek wise counsel, and watch for His peace as you move forward."
+      ],
+      "steps": [
+        [
+          "Write out the decision and the options in front of you.",
+          "Ask God for wisdom using James 1:5.",
+          "Talk it through with a mature believer you trust."
+        ],
+        [
+          "Pray Proverbs 3:5-6 each morning this week.",
+          "Notice which option aligns with Scripture and brings lasting peace.",
+          "Take the next faithful step you can see, and trust God with the rest."
+        ]
+      ],
+      "prayers": [
+        "Lord, I need Your wisdom. I trust You with all my heart and choose not to lean on my own understanding. Direct my paths. Amen.",
+        "Father, Your Word is a lamp to my feet. Show me the next step, and give me courage to take it. Amen."
+      ],
+      "verses": [
+        {
+          "ref": "Proverbs 3:5-6",
+          "text": "Trust in the LORD with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths."
+        },
+        {
+          "ref": "James 1:5",
+          "text": "If any of you lack wisdom, let him ask of God, that giveth to all men liberally, and upbraideth not; and it shall be given him."
+        },
+        {
+          "ref": "Psalm 119:105",
+          "text": "Thy word is a lamp unto my feet, and a light unto my path."
+        },
+        {
+          "ref": "Psalm 32:8",
+          "text": "I will instruct thee and teach thee in the way which thou shalt go: I will guide thee with mine eye."
+        }
+      ]
+    },
+    {
+      "id": "doubt",
+      "label": "Doubt & Faith",
+      "icon": "help-circle-outline",
+      "keywords": [
+        "doubt",
+        "doubting",
+        "doubts",
+        "faith",
+        "believe",
+        "unbelief",
+        "question god",
+        "questioning",
+        "is god real",
+        "where is god",
+        "far from god",
+        "distant",
+        "silent",
+        "dry",
+        "spiritually dry",
+        "struggling to pray",
+        "can't pray"
+      ],
+      "interpretations": [
+        "Doubt is not the opposite of faith — it is often part of the path. One father in the Gospels prayed, \"Lord, I believe; help thou mine unbelief,\" and Jesus met him right there. You can bring your honest questions to God.",
+        "Seasons where God feels distant are part of many believers' stories. Scripture promises that those who seek Him with all their heart will find Him. Keep seeking, even when it feels quiet.",
+        "Faith grows by hearing the Word. When your feelings waver, Scripture gives you solid ground to stand on. Let today be a small step back toward Him."
+      ],
+      "steps": [
+        [
+          "Write your honest question to God in a short prayer.",
+          "Read one chapter of the Gospel of John today.",
+          "Talk about your doubts with a pastor or mature believer."
+        ],
+        [
+          "Pray Mark 9:24 as your own prayer.",
+          "Recall one time God was faithful to you in the past.",
+          "Commit to five quiet minutes with Scripture each day this week."
+        ]
+      ],
+      "prayers": [
+        "Lord, I believe; help my unbelief. Meet me in my questions and show me Your faithfulness again. Amen.",
+        "Father, I want to seek You with all my heart. Even when You feel far away, help me keep turning toward You. Amen."
+      ],
+      "verses": [
+        {
+          "ref": "Mark 9:24",
+          "text": "And straightway the father of the child cried out, and said with tears, Lord, I believe; help thou mine unbelief."
+        },
+        {
+          "ref": "Jeremiah 29:13",
+          "text": "And ye shall seek me, and find me, when ye shall search for me with all your heart."
+        },
+        {
+          "ref": "Hebrews 11:1",
+          "text": "Now faith is the substance of things hoped for, the evidence of things not seen."
+        },
+        {
+          "ref": "Romans 10:17",
+          "text": "So then faith cometh by hearing, and hearing by the word of God."
+        }
+      ]
+    },
+    {
+      "id": "loneliness",
+      "label": "Loneliness",
+      "icon": "person-outline",
+      "keywords": [
+        "lonely",
+        "loneliness",
+        "alone",
+        "isolated",
+        "isolation",
+        "no friends",
+        "nobody",
+        "no one cares",
+        "left out",
+        "rejected",
+        "rejection",
+        "forgotten",
+        "unseen",
+        "invisible",
+        "abandoned"
+      ],
+      "interpretations": [
+        "Loneliness can be one of the heaviest feelings to carry. Scripture is full of God's promise: I will never leave thee, nor forsake thee. You are seen, known, and not forgotten.",
+        "Even when people are absent, God is present. He sets the lonely in families and draws near to those who feel unseen. Your longing for connection is good, and He cares about it.",
+        "Jesus promised, \"I am with you alway.\" That promise is for you today. Let it be a foundation as you also take small steps toward community."
+      ],
+      "steps": [
+        [
+          "Read Hebrews 13:5 and speak it over yourself.",
+          "Reach out to one person today with a message or call.",
+          "Look for a small group or church gathering you could visit."
+        ],
+        [
+          "Tell God honestly how lonely you feel.",
+          "Do one kind thing for someone else who may also be alone.",
+          "Write down three people you could reconnect with this month."
+        ]
+      ],
+      "prayers": [
+        "Lord, I feel alone. Thank You that You never leave me nor forsake me. Be near to me today, and lead me to people who can walk with me. Amen.",
+        "Father, You set the lonely in families. Open doors for real friendship and community in my life. Amen."
+      ],
+      "verses": [
+        {
+          "ref": "Hebrews 13:5",
+          "text": "Let your conversation be without covetousness; and be content with such things as ye have: for he hath said, I will never leave thee, nor forsake thee."
+        },
+        {
+          "ref": "Deuteronomy 31:6",
+          "text": "Be strong and of a good courage, fear not, nor be afraid of them: for the LORD thy God, he it is that doth go with thee; he will not fail thee, nor forsake thee."
+        },
+        {
+          "ref": "Matthew 28:20",
+          "text": "Teaching them to observe all things whatsoever I have commanded you: and, lo, I am with you alway, even unto the end of the world. Amen."
+        },
+        {
+          "ref": "Psalm 68:6",
+          "text": "God setteth the solitary in families: he bringeth out those which are bound with chains: but the rebellious dwell in a dry land."
+        }
+      ]
+    },
+    {
+      "id": "anger",
+      "label": "Anger & Frustration",
+      "icon": "flame-outline",
+      "keywords": [
+        "angry",
+        "anger",
+        "mad",
+        "furious",
+        "frustrated",
+        "frustration",
+        "annoyed",
+        "irritated",
+        "rage",
+        "resent",
+        "resentment",
+        "bitter",
+        "bitterness",
+        "unfair",
+        "betrayed",
+        "betrayal",
+        "argument",
+        "fight",
+        "fought"
+      ],
+      "interpretations": [
+        "Anger is a real emotion, and Scripture does not say it is always wrong — it says, \"Be ye angry, and sin not.\" Bring what you feel to God before you act on it, and let Him help you respond with wisdom.",
+        "Frustration often signals that something important to you has been hurt. Scripture calls us to be quick to listen and slow to speak, giving space for God's righteousness to work rather than our own reaction.",
+        "Being hurt can make bitterness feel justified. The Word invites a different path: kindness, tenderness, and forgiveness — not because the hurt did not matter, but because you have been forgiven too."
+      ],
+      "steps": [
+        [
+          "Pause and pray before you respond to anyone.",
+          "Write out exactly what made you angry and why.",
+          "Choose one gentle response you could give instead of a harsh one."
+        ],
+        [
+          "Read James 1:19-20 slowly.",
+          "Ask God to show you if there is someone to forgive.",
+          "If a conversation is needed, plan it for when you are calm."
+        ]
+      ],
+      "prayers": [
+        "Lord, I am angry. I bring it to You instead of letting it control me. Make me quick to listen, slow to speak, and slow to wrath. Amen.",
+        "Father, soften my heart. Help me to be kind and tenderhearted, forgiving as You have forgiven me. Amen."
+      ],
+      "verses": [
+        {
+          "ref": "James 1:19-20",
+          "text": "Wherefore, my beloved brethren, let every man be swift to hear, slow to speak, slow to wrath: For the wrath of man worketh not the righteousness of God."
+        },
+        {
+          "ref": "Ephesians 4:26",
+          "text": "Be ye angry, and sin not: let not the sun go down upon your wrath:"
+        },
+        {
+          "ref": "Proverbs 15:1",
+          "text": "A soft answer turneth away wrath: but grievous words stir up anger."
+        },
+        {
+          "ref": "Ephesians 4:32",
+          "text": "And be ye kind one to another, tenderhearted, forgiving one another, even as God for Christ's sake hath forgiven you."
+        }
+      ]
+    },
+    {
+      "id": "forgiveness",
+      "label": "Guilt & Forgiveness",
+      "icon": "water-outline",
+      "keywords": [
+        "guilt",
+        "guilty",
+        "shame",
+        "ashamed",
+        "regret",
+        "sorry",
+        "sin",
+        "sinned",
+        "mistake",
+        "messed up",
+        "failed",
+        "failure",
+        "forgive me",
+        "forgiveness",
+        "repent",
+        "confess",
+        "unworthy",
+        "condemned"
+      ],
+      "interpretations": [
+        "Guilt can be a gift when it leads you back to God, but it was never meant to be a place you live. Scripture promises that if we confess our sins, He is faithful and just to forgive and to cleanse.",
+        "Your mistake is not the end of your story. The Word says there is no condemnation for those who are in Christ Jesus. You can bring this honestly to God and receive His mercy fully.",
+        "God does not keep a record you cannot escape. As far as the east is from the west, so far has He removed our transgressions. Let His forgiveness reach the place you feel most ashamed."
+      ],
+      "steps": [
+        [
+          "Confess what is on your heart to God in plain words.",
+          "Read 1 John 1:9 and receive it as true for you.",
+          "If someone was hurt, consider how you might make it right."
+        ],
+        [
+          "Write \"No condemnation\" (Romans 8:1) somewhere you will see it.",
+          "Thank God for His mercy, specifically and personally.",
+          "Talk with a trusted believer if this guilt keeps returning."
+        ]
+      ],
+      "prayers": [
+        "Father, I confess my sin to You. Thank You that You are faithful and just to forgive me and cleanse me. Help me walk in Your freedom. Amen.",
+        "Lord, I receive Your mercy. Remove my shame as far as the east is from the west, and make my heart new. Amen."
+      ],
+      "verses": [
+        {
+          "ref": "1 John 1:9",
+          "text": "If we confess our sins, he is faithful and just to forgive us our sins, and to cleanse us from all unrighteousness."
+        },
+        {
+          "ref": "Romans 8:1",
+          "text": "There is therefore now no condemnation to them which are in Christ Jesus, who walk not after the flesh, but after the Spirit."
+        },
+        {
+          "ref": "Psalm 103:12",
+          "text": "As far as the east is from the west, so far hath he removed our transgressions from us."
+        },
+        {
+          "ref": "Isaiah 1:18",
+          "text": "Come now, and let us reason together, saith the LORD: though your sins be as scarlet, they shall be as white as snow; though they be red like crimson, they shall be as wool."
+        }
+      ]
+    },
+    {
+      "id": "weariness",
+      "label": "Weariness & Strength",
+      "icon": "battery-half-outline",
+      "keywords": [
+        "tired",
+        "exhausted",
+        "weary",
+        "worn out",
+        "burnt out",
+        "burned out",
+        "burnout",
+        "drained",
+        "weak",
+        "no energy",
+        "give up",
+        "giving up",
+        "can't go on",
+        "struggling",
+        "hard week",
+        "hard day",
+        "rest"
+      ],
+      "interpretations": [
+        "You sound weary, and Jesus has a specific invitation for you: \"Come unto me, all ye that labour and are heavy laden, and I will give you rest.\" Rest is not a reward for finishing — it is a gift you are invited to receive now.",
+        "When your strength runs out, Scripture says God's grace is sufficient and His strength is made perfect in weakness. You do not need to be strong today to be held.",
+        "Those who wait on the Lord renew their strength. Waiting is not wasted time; it is where God restores what life has drained. Give yourself permission to slow down."
+      ],
+      "steps": [
+        [
+          "Read Matthew 11:28 and accept the invitation to rest.",
+          "Choose one thing you can set down or postpone today.",
+          "Go to bed a little earlier tonight."
+        ],
+        [
+          "Pray Isaiah 40:31 over your week.",
+          "Ask someone for help with one specific task.",
+          "Spend ten quiet minutes with God without an agenda."
+        ]
+      ],
+      "prayers": [
+        "Jesus, I am weary. I come to You for rest. Lift what is too heavy for me and renew my strength. Amen.",
+        "Lord, Your grace is sufficient for me. Be strong in my weakness today. Amen."
+      ],
+      "verses": [
+        {
+          "ref": "Matthew 11:28",
+          "text": "Come unto me, all ye that labour and are heavy laden, and I will give you rest."
+        },
+        {
+          "ref": "Isaiah 40:31",
+          "text": "But they that wait upon the LORD shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary; and they shall walk, and not faint."
+        },
+        {
+          "ref": "2 Corinthians 12:9",
+          "text": "And he said unto me, My grace is sufficient for thee: for my strength is made perfect in weakness. Most gladly therefore will I rather glory in my infirmities, that the power of Christ may rest upon me."
+        },
+        {
+          "ref": "Galatians 6:9",
+          "text": "And let us not be weary in well doing: for in due season we shall reap, if we faint not."
+        }
+      ]
+    },
+    {
+      "id": "hope",
+      "label": "Hope & Future",
+      "icon": "sparkles-outline",
+      "keywords": [
+        "hope",
+        "hopeful",
+        "future",
+        "waiting",
+        "wait",
+        "dream",
+        "dreams",
+        "plans",
+        "new beginning",
+        "fresh start",
+        "tomorrow",
+        "someday",
+        "expecting",
+        "longing",
+        "hopeless",
+        "discouraged",
+        "disappointed",
+        "disappointment"
+      ],
+      "interpretations": [
+        "Hope looks forward with trust. Scripture says God's thoughts toward you are thoughts of peace and not of evil, to give you an expected end. Whatever you are waiting for, you are not waiting alone.",
+        "God's mercies are new every morning. Even after disappointment, today is a fresh start. Let His faithfulness — not your circumstances — be the anchor of your hope.",
+        "The God of hope can fill you with joy and peace as you trust Him. Hope is not wishful thinking; it is confidence rooted in who God is and what He has promised."
+      ],
+      "steps": [
+        [
+          "Write down what you are hoping for and offer it to God.",
+          "Read Lamentations 3:22-23 and thank Him for new mercies.",
+          "Take one practical step toward the future you are praying about."
+        ],
+        [
+          "Pray Romans 15:13 over your heart.",
+          "Remember one past answer to prayer and thank God for it.",
+          "Encourage someone else who is waiting on something too."
+        ]
+      ],
+      "prayers": [
+        "God of hope, fill me with all joy and peace in believing, that I may abound in hope. I trust You with my future. Amen.",
+        "Lord, Your mercies are new this morning. Great is Your faithfulness. Help me hope in You. Amen."
+      ],
+      "verses": [
+        {
+          "ref": "Jeremiah 29:11",
+          "text": "For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end."
+        },
+        {
+          "ref": "Romans 15:13",
+          "text": "Now the God of hope fill you with all joy and peace in believing, that ye may abound in hope, through the power of the Holy Ghost."
+        },
+        {
+          "ref": "Lamentations 3:22-23",
+          "text": "It is of the LORD's mercies that we are not consumed, because his compassions fail not. They are new every morning: great is thy faithfulness."
+        },
+        {
+          "ref": "Romans 8:28",
+          "text": "And we know that all things work together for good to them that love God, to them who are the called according to his purpose."
+        }
+      ]
+    },
+    {
+      "id": "provision",
+      "label": "Provision & Finances",
+      "icon": "wallet-outline",
+      "keywords": [
+        "money",
+        "finances",
+        "financial",
+        "bills",
+        "rent",
+        "debt",
+        "afford",
+        "job",
+        "unemployed",
+        "laid off",
+        "fired",
+        "income",
+        "provide",
+        "provision",
+        "need",
+        "needs",
+        "lack",
+        "broke",
+        "salary"
+      ],
+      "interpretations": [
+        "Financial pressure can touch every part of life. Scripture reminds you that God knows your needs and promises to supply them according to His riches. Bring your practical concerns to Him — He cares about them.",
+        "\"The LORD is my shepherd; I shall not want.\" Provision often comes step by step rather than all at once. Seek His kingdom first, and trust Him with what you need today.",
+        "Your worth is not measured by your bank account. God sees your situation and invites you to trust Him while also taking wise, faithful steps."
+      ],
+      "steps": [
+        [
+          "List your most pressing need and pray specifically about it.",
+          "Take one practical step: a budget, a call, or an application.",
+          "Ask a trusted friend or church leader for advice or help."
+        ],
+        [
+          "Read Philippians 4:19 each morning this week.",
+          "Thank God for one way He has provided before.",
+          "Look for a small way to be generous, even now."
+        ]
+      ],
+      "prayers": [
+        "Father, You know what I need. I trust You to supply it. Give me wisdom for each step and peace while I wait. Amen.",
+        "Lord, You are my shepherd; I shall not want. Help me seek Your kingdom first and trust You with the rest. Amen."
+      ],
+      "verses": [
+        {
+          "ref": "Philippians 4:19",
+          "text": "But my God shall supply all your need according to his riches in glory by Christ Jesus."
+        },
+        {
+          "ref": "Matthew 6:33",
+          "text": "But seek ye first the kingdom of God, and his righteousness; and all these things shall be added unto you."
+        },
+        {
+          "ref": "Psalm 23:1",
+          "text": "The LORD is my shepherd; I shall not want."
+        },
+        {
+          "ref": "Proverbs 16:3",
+          "text": "Commit thy works unto the LORD, and thy thoughts shall be established."
+        }
+      ]
+    },
+    {
+      "id": "healing",
+      "label": "Sickness & Healing",
+      "icon": "medkit-outline",
+      "keywords": [
+        "sick",
+        "sickness",
+        "ill",
+        "illness",
+        "pain",
+        "hospital",
+        "diagnosis",
+        "surgery",
+        "cancer",
+        "disease",
+        "healing",
+        "heal",
+        "health",
+        "doctor",
+        "recovery",
+        "chronic"
+      ],
+      "interpretations": [
+        "Sickness and pain can be frightening and exhausting. Scripture invites you to cry out honestly, \"Heal me, O LORD,\" and promises that God strengthens His people even on the bed of illness.",
+        "God cares about your body and your heart. As you seek good medical care, you can also bring every fear and every symptom to Him in prayer. He is near in the waiting rooms too.",
+        "Prayer and medicine are not opposites. Ask others to pray with you, follow wise medical advice, and rest in the One who holds your life."
+      ],
+      "steps": [
+        [
+          "Pray Jeremiah 17:14 as your own prayer.",
+          "Ask one or two people to pray with you this week.",
+          "Follow your doctor's guidance and write down questions for your next visit."
+        ],
+        [
+          "Rest without guilt today.",
+          "Read Psalm 41:3 and thank God for His care.",
+          "Let your church know if you need practical help."
+        ]
+      ],
+      "prayers": [
+        "Lord, heal me, and I shall be healed. Strengthen my body and comfort my heart. I trust You with my health. Amen.",
+        "Father, be near to me in this sickness. Give wisdom to those caring for me and grant me Your peace. Amen."
+      ],
+      "verses": [
+        {
+          "ref": "Jeremiah 17:14",
+          "text": "Heal me, O LORD, and I shall be healed; save me, and I shall be saved: for thou art my praise."
+        },
+        {
+          "ref": "Psalm 41:3",
+          "text": "The LORD will strengthen him upon the bed of languishing: thou wilt make all his bed in his sickness."
+        },
+        {
+          "ref": "James 5:15",
+          "text": "And the prayer of faith shall save the sick, and the Lord shall raise him up; and if he have committed sins, they shall be forgiven him."
+        },
+        {
+          "ref": "Psalm 147:3",
+          "text": "He healeth the broken in heart, and bindeth up their wounds."
+        }
+      ]
+    },
+    {
+      "id": "relationships",
+      "label": "Love & Relationships",
+      "icon": "heart-outline",
+      "keywords": [
+        "husband",
+        "wife",
+        "marriage",
+        "married",
+        "spouse",
+        "boyfriend",
+        "girlfriend",
+        "relationship",
+        "family",
+        "parents",
+        "mother",
+        "father",
+        "mom",
+        "dad",
+        "son",
+        "daughter",
+        "children",
+        "kids",
+        "friend",
+        "friendship",
+        "love",
+        "conflict",
+        "divorce",
+        "breakup",
+        "broke up"
+      ],
+      "interpretations": [
+        "Relationships are where love is tested and grown. Scripture describes love that is patient and kind, that bears and forgives. Ask God to help you love the people in your life the way He loves you.",
+        "Conflict with people we care about can be deeply painful. The Word calls us, as much as it depends on us, to live peaceably — and to forgive as Christ has forgiven us.",
+        "Love is of God. As you think about this relationship, let His love shape your words, your patience, and your hopes."
+      ],
+      "steps": [
+        [
+          "Pray for the person on your heart by name.",
+          "Read 1 Corinthians 13:4-5 and choose one quality to practice today.",
+          "Send a kind message or speak a word of encouragement."
+        ],
+        [
+          "Ask God to show you your part in any conflict.",
+          "Plan a calm, honest conversation if one is needed.",
+          "Seek counsel from a pastor or counselor if the situation is complex."
+        ]
+      ],
+      "prayers": [
+        "Lord, teach me to love like You — patient, kind, and forgiving. Bless the people You have placed in my life. Amen.",
+        "Father, where there is conflict, bring Your peace. Help me do my part to live peaceably and to forgive. Amen."
+      ],
+      "verses": [
+        {
+          "ref": "1 Corinthians 13:4-5",
+          "text": "Charity suffereth long, and is kind; charity envieth not; charity vaunteth not itself, is not puffed up, Doth not behave itself unseemly, seeketh not her own, is not easily provoked, thinketh no evil;"
+        },
+        {
+          "ref": "Colossians 3:13",
+          "text": "Forbearing one another, and forgiving one another, if any man have a quarrel against any: even as Christ forgave you, so also do ye."
+        },
+        {
+          "ref": "Romans 12:18",
+          "text": "If it be possible, as much as lieth in you, live peaceably with all men."
+        },
+        {
+          "ref": "1 John 4:7",
+          "text": "Beloved, let us love one another: for love is of God; and every one that loveth is born of God, and knoweth God."
+        }
+      ]
+    },
+    {
+      "id": "purpose",
+      "label": "Purpose & Work",
+      "icon": "construct-outline",
+      "keywords": [
+        "purpose",
+        "meaning",
+        "work",
+        "working",
+        "boss",
+        "career",
+        "calling",
+        "goal",
+        "goals",
+        "project",
+        "study",
+        "studies",
+        "exam",
+        "exams",
+        "school",
+        "university",
+        "business",
+        "ministry",
+        "gift",
+        "talents",
+        "productive",
+        "success"
+      ],
+      "interpretations": [
+        "You were created on purpose and for a purpose. Scripture says you are God's workmanship, created for good works He prepared in advance. Your daily work can become an offering to Him.",
+        "Whatever you do — study, work, serve — Scripture invites you to do it heartily, as unto the Lord. That changes ordinary tasks into worship.",
+        "Commit your work to the Lord, and your plans will be established. You do not have to carry the pressure of success alone; invite God into every part of it."
+      ],
+      "steps": [
+        [
+          "Dedicate today's work to God in a short prayer.",
+          "Read Colossians 3:23 before you begin your next task.",
+          "Focus on one important task and give it your full attention."
+        ],
+        [
+          "Ask God to show you how your gifts can serve others.",
+          "Write down one goal and commit it to Him (Proverbs 16:3).",
+          "Thank God for the work in front of you, even the hard parts."
+        ]
+      ],
+      "prayers": [
+        "Lord, I commit my work to You. Let everything I do today be done heartily, as unto You. Establish my plans. Amen.",
+        "Father, I am Your workmanship. Show me the good works You have prepared for me, and help me walk in them. Amen."
+      ],
+      "verses": [
+        {
+          "ref": "Colossians 3:23",
+          "text": "And whatsoever ye do, do it heartily, as to the Lord, and not unto men;"
+        },
+        {
+          "ref": "Ephesians 2:10",
+          "text": "For we are his workmanship, created in Christ Jesus unto good works, which God hath before ordained that we should walk in them."
+        },
+        {
+          "ref": "Proverbs 16:3",
+          "text": "Commit thy works unto the LORD, and thy thoughts shall be established."
+        },
+        {
+          "ref": "Psalm 138:8",
+          "text": "The LORD will perfect that which concerneth me: thy mercy, O LORD, endureth for ever: forsake not the works of thine own hands."
+        }
+      ]
+    },
+    {
+      "id": "temptation",
+      "label": "Temptation",
+      "icon": "git-branch-outline",
+      "keywords": [
+        "temptation",
+        "tempted",
+        "addiction",
+        "addicted",
+        "relapse",
+        "habit",
+        "lust",
+        "pornography",
+        "drinking",
+        "craving",
+        "struggle with",
+        "keep falling",
+        "resist"
+      ],
+      "interpretations": [
+        "Temptation is common to everyone, and Scripture promises that God is faithful — He will not let you be tempted beyond what you can bear, and He will provide a way of escape.",
+        "Struggling with the same thing again does not disqualify you. Submit yourself to God, resist, and lean on His strength and on people who can walk with you.",
+        "Freedom often grows through small, faithful choices and honest community. Bring this struggle into the light with God and with someone you trust."
+      ],
+      "steps": [
+        [
+          "Read 1 Corinthians 10:13 and identify your \"way of escape.\"",
+          "Remove one trigger or temptation from your environment today.",
+          "Tell a trusted friend, mentor, or support group about your struggle."
+        ],
+        [
+          "Pray James 4:7 when temptation comes.",
+          "Plan what you will do instead in that moment.",
+          "Consider professional or ministry support if this is an ongoing addiction."
+        ]
+      ],
+      "prayers": [
+        "Lord, You are faithful. Show me the way of escape and give me strength to take it. I submit myself to You. Amen.",
+        "Father, I bring this struggle into Your light. Free me, strengthen me, and surround me with people who can help. Amen."
+      ],
+      "verses": [
+        {
+          "ref": "1 Corinthians 10:13",
+          "text": "There hath no temptation taken you but such as is common to man: but God is faithful, who will not suffer you to be tempted above that ye are able; but will with the temptation also make a way to escape, that ye may be able to bear it."
+        },
+        {
+          "ref": "James 4:7",
+          "text": "Submit yourselves therefore to God. Resist the devil, and he will flee from you."
+        },
+        {
+          "ref": "Galatians 6:9",
+          "text": "And let us not be weary in well doing: for in due season we shall reap, if we faint not."
+        },
+        {
+          "ref": "Romans 8:1",
+          "text": "There is therefore now no condemnation to them which are in Christ Jesus, who walk not after the flesh, but after the Spirit."
+        }
+      ]
+    },
+    {
+      "id": "peace",
+      "label": "Peace & Stillness",
+      "icon": "leaf-outline",
+      "keywords": [
+        "peace",
+        "peaceful",
+        "calm",
+        "still",
+        "stillness",
+        "quiet",
+        "presence",
+        "be still",
+        "silence"
+      ],
+      "interpretations": [
+        "Thank you for taking a moment to be still and bring your heart before God. Scripture invites you to \"be still, and know\" — to rest in who He is, whatever today holds.",
+        "Jesus offers a peace that is not like the world's peace. As you reflect, let His presence settle your heart and remind you that you are loved and held.",
+        "\"Call unto me, and I will answer thee.\" Every honest reflection is a form of prayer. Keep bringing your heart to God; He listens."
+      ],
+      "steps": [
+        [
+          "Sit quietly for two minutes and simply be with God.",
+          "Read Psalm 46:10 slowly, pausing on each phrase.",
+          "Carry one phrase from today's verse with you through the day."
+        ],
+        [
+          "Write one sentence telling God what is on your heart.",
+          "Read John 14:27 and receive His peace.",
+          "End the day by thanking Him for one moment you noticed His presence."
+        ]
+      ],
+      "prayers": [
+        "Lord, I am here. Quiet my heart so I can know You are God. Fill me with Your peace today. Amen.",
+        "Jesus, thank You for the peace You give. Let my heart not be troubled, and keep me close to You. Amen."
+      ],
+      "verses": [
+        {
+          "ref": "Psalm 46:10",
+          "text": "Be still, and know that I am God: I will be exalted among the heathen, I will be exalted in the earth."
+        },
+        {
+          "ref": "John 14:27",
+          "text": "Peace I leave with you, my peace I give unto you: not as the world giveth, give I unto you. Let not your heart be troubled, neither let it be afraid."
+        },
+        {
+          "ref": "Jeremiah 33:3",
+          "text": "Call unto me, and I will answer thee, and shew thee great and mighty things, which thou knowest not."
+        },
+        {
+          "ref": "Psalm 37:4",
+          "text": "Delight thyself also in the LORD; and he shall give thee the desires of thine heart."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+:root{--indigo:#3d3a8c;--indigo-mid:#4c55b6;--gold:#b8965a;--cream:#faf8f4;--ink:#1a1830;--ink-mid:#3d3952;--ink-soft:#6b6782}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink-mid);font:16px/1.7 'DM Sans',system-ui,-apple-system,sans-serif}
+header{padding:20px 24px;border-bottom:1px solid rgba(61,58,140,.08);background:#fff}
+.brand{font-family:'Cinzel',Georgia,serif;letter-spacing:2px;color:var(--indigo);text-decoration:none;font-weight:600}
+main{max-width:720px;margin:0 auto;padding:40px 24px 64px}
+h1{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;font-size:42px;line-height:1.15;color:var(--ink);margin:0 0 8px}
+h2{font-size:18px;color:var(--ink);margin:32px 0 6px}
+.date{color:var(--ink-soft);font-size:14px;margin:0 0 24px}
+a{color:var(--indigo-mid)}
+.card{background:#fff;border:1px solid rgba(61,58,140,.1);border-radius:16px;padding:20px 24px;margin:16px 0}
+footer{text-align:center;color:var(--ink-soft);font-size:14px;padding:24px;border-top:1px solid rgba(61,58,140,.08)}
