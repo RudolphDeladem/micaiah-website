@@ -1,0 +1,74 @@
+# Builds the iOS app on EAS and submits it to TestFlight.
+# Run it from GitHub: Actions → "Deploy to TestFlight" → Run workflow.
+# One-time setup is described in mobile/RELEASE.md ("Deploy to TestFlight from GitHub").
+name: Deploy to TestFlight
+
+on:
+  workflow_dispatch:
+
+jobs:
+  testflight:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+
+      - name: Check required secrets
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          ASC_API_KEY_P8: ${{ secrets.ASC_API_KEY_P8 }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          ASC_APP_ID: ${{ vars.ASC_APP_ID }}
+        run: |
+          missing=""
+          for name in EXPO_TOKEN ASC_API_KEY_P8 ASC_KEY_ID ASC_ISSUER_ID APPLE_TEAM_ID ASC_APP_ID; do
+            [ -n "${!name}" ] || missing="$missing $name"
+          done
+          if [ -n "$missing" ]; then
+            echo "::error::Missing repository secrets/variables:$missing (see mobile/RELEASE.md)"
+            exit 1
+          fi
+
+      - run: npm ci
+
+      - name: Typecheck, lint and test
+        run: npm run check
+
+      - name: Prepare App Store Connect API key
+        env:
+          ASC_API_KEY_P8: ${{ secrets.ASC_API_KEY_P8 }}
+          ASC_APP_ID: ${{ vars.ASC_APP_ID }}
+        run: |
+          printf '%s' "$ASC_API_KEY_P8" > "$RUNNER_TEMP/asc_api_key.p8"
+          # Point the submit profile at your App Store Connect app.
+          node -e "
+            const fs = require('fs');
+            const eas = JSON.parse(fs.readFileSync('eas.json', 'utf8'));
+            eas.submit.production.ios.ascAppId = process.env.ASC_APP_ID;
+            fs.writeFileSync('eas.json', JSON.stringify(eas, null, 2));
+          "
+
+      - name: Link EAS project
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: npx --yes eas-cli@25 init --non-interactive --force
+
+      - name: Build on EAS and submit to TestFlight
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          EXPO_ASC_API_KEY_PATH: ${{ runner.temp }}/asc_api_key.p8
+          EXPO_ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          EXPO_ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          EXPO_APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          EXPO_APPLE_TEAM_TYPE: ${{ vars.APPLE_TEAM_TYPE || 'INDIVIDUAL' }}
+        run: npx --yes eas-cli@25 build --platform ios --profile production --auto-submit --non-interactive --no-wait
