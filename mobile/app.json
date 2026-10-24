@@ -21,6 +21,7 @@
       "infoPlist": {
         "NSMicrophoneUsageDescription": "Micaiah uses the microphone only while you record a spoken reflection, so your words can be turned into text for your journal.",
         "NSSpeechRecognitionUsageDescription": "Micaiah uses speech recognition to turn your spoken reflection into text. Whenever your device supports it, this happens on the device.",
+        "NSPhotoLibraryUsageDescription": "Micaiah does not use your photo library. Your reflections and journal are text only, and Micaiah never reads, saves, or uploads your photos.",
         "CFBundleAllowMixedLocalizations": true
       },
       "privacyManifests": {
