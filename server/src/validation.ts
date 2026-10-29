@@ -14,6 +14,26 @@ export function parseInsightRequest(body: unknown): InsightRequest | string {
   return { text: trimmed, mode: mode as InsightRequest['mode'] };
 }
 
+export type InterpretRequest = { kind: 'dream' | 'prophetic'; text: string };
+
+export function parseInterpretRequest(body: unknown): InterpretRequest | string {
+  if (!body || typeof body !== 'object') return 'Body must be a JSON object';
+  const { text, kind } = body as Record<string, unknown>;
+  if (kind !== 'dream' && kind !== 'prophetic') return '"kind" must be dream or prophetic';
+  if (typeof text !== 'string') return '"text" must be a string';
+  const trimmed = text.trim();
+  if (trimmed.length < 10 || trimmed.length > MAX_TEXT) return `"text" must be 10–${MAX_TEXT} characters`;
+  return { kind, text: trimmed };
+}
+
+/** The app's pseudonymous install ID (also its RevenueCat app user ID). */
+const USER_ID = /^m_[0-9a-f]{32}$/;
+
+export function parseUserId(value: string | string[] | undefined): string | null {
+  const id = Array.isArray(value) ? value[0] : value;
+  return id && USER_ID.test(id) ? id : null;
+}
+
 /** Fixed-window, per-key rate limiter kept in memory (one instance per server process). */
 export class RateLimiter {
   private hits = new Map<string, { count: number; resetAt: number }>();
