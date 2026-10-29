@@ -67,8 +67,9 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  // Usage is fetched by the screens that show it, and only after the person has agreed to use
+  // interpretations — nothing is sent to the AI service just for opening the app.
   useEffect(() => {
-    if (interpretAvailable) fetchUsage().then(setUsage, () => {});
     if (!purchasesAvailable) return;
     const onUpdate = (info: CustomerInfo) => setIsPlus(hasPlus(info));
     ensureConfigured()

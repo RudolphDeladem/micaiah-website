@@ -22,7 +22,10 @@ module.exports = ({ config }) => {
   const privacyManifests = {
     ...config.ios.privacyManifests,
     NSPrivacyCollectedDataTypes: [
-      ...(cloudEnabled ? [collected('NSPrivacyCollectedDataTypeOtherUserContent')] : []),
+      // The random install ID is sent with dream / prophetic requests to apply monthly allowances.
+      ...(cloudEnabled
+        ? [collected('NSPrivacyCollectedDataTypeOtherUserContent'), collected('NSPrivacyCollectedDataTypeUserID')]
+        : []),
       ...(purchasesEnabled ? [collected('NSPrivacyCollectedDataTypePurchaseHistory')] : []),
     ],
   };

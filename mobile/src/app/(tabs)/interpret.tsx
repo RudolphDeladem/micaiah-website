@@ -23,14 +23,14 @@ function allowanceLabel(usage: Usage | null, kind: InterpretationKind): string |
 }
 
 export default function Interpret() {
-  const { interpretations } = useStore();
+  const { interpretations, settings } = useStore();
   const { usage, isPlus, refreshUsage } = useSubscription();
 
   // Counts change after purchases and at the start of each month — refresh whenever the tab is shown.
   useFocusEffect(
     useCallback(() => {
-      refreshUsage();
-    }, [refreshUsage]),
+      if (settings.interpretConsent) refreshUsage();
+    }, [refreshUsage, settings.interpretConsent]),
   );
 
   const start = (kind: InterpretationKind) => {
