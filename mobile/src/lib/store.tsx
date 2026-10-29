@@ -1,5 +1,4 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Crypto from 'expo-crypto';
 import {
   createContext,
   useCallback,
@@ -11,13 +10,13 @@ import {
 } from 'react';
 
 import { DEFAULT_BIBLE_VERSION } from './bible';
+import { forgetInstallId } from './install-id';
 import type { Entry, Interpretation, Settings } from './types';
 
 const ENTRIES_KEY = 'micaiah.entries.v1';
 const SETTINGS_KEY = 'micaiah.settings.v1';
 const INTERPRETATIONS_KEY = 'micaiah.interpretations.v1';
-/** Pseudonymous install ID: links this device to its subscription and monthly usage. Never tied to a name or email. */
-const INSTALL_ID_KEY = 'micaiah.install-id.v1';
+
 
 export const DEFAULT_SETTINGS: Settings = {
   name: '',
@@ -130,8 +129,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   );
 
   const deleteAllData = useCallback(async () => {
-    await AsyncStorage.multiRemove([ENTRIES_KEY, SETTINGS_KEY, INTERPRETATIONS_KEY, INSTALL_ID_KEY]);
-    installId = null;
+    await AsyncStorage.multiRemove([ENTRIES_KEY, SETTINGS_KEY, INTERPRETATIONS_KEY]);
+    await forgetInstallId();
     setEntries([]);
     setInterpretations([]);
     setSettings(DEFAULT_SETTINGS);
@@ -181,14 +180,3 @@ export function newEntryId(): string {
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
-let installId: string | null = null;
-
-/** Random, pseudonymous ID for this install (created on first use). */
-export async function getInstallId(): Promise<string> {
-  if (installId) return installId;
-  const stored = await AsyncStorage.getItem(INSTALL_ID_KEY).catch(() => null);
-  if (stored) return (installId = stored);
-  const id = `m_${Crypto.randomUUID().replace(/-/g, '')}`;
-  await AsyncStorage.setItem(INSTALL_ID_KEY, id).catch(() => {});
-  return (installId = id);
-}

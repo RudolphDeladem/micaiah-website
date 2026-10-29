@@ -1,5 +1,6 @@
+import { formatRef } from './bible';
 import { INSIGHT_API_URL, cloudInsightAvailable } from './cloud-insight';
-import type { Insight } from './types';
+import type { Insight, Interpretation } from './types';
 
 /**
  * Sends an in-app report about a generated insight. The user's own reflection
@@ -21,6 +22,29 @@ export async function reportInsight(insight: Insight, reason: string): Promise<b
         steps: insight.steps,
         prayer: insight.prayer,
         verseRefs: insight.verses.map((v) => v.ref),
+      }),
+    });
+    return response.ok;
+  } catch {
+    return false;
+  }
+}
+
+/** Reports a dream or prophetic interpretation. The person's own dream or word is never included. */
+export async function reportInterpretation(item: Interpretation, reason: string): Promise<boolean> {
+  if (!cloudInsightAvailable) return false;
+  try {
+    const response = await fetch(`${INSIGHT_API_URL}/v1/report`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        reason,
+        source: item.kind,
+        title: item.title,
+        interpretation: [item.summary, ...item.points.map((p) => `${p.heading}: ${p.body}`), ...item.cautions].join('\n'),
+        steps: item.steps,
+        prayer: item.prayer,
+        verseRefs: [...item.refs, ...item.points.flatMap((p) => p.refs)].map(formatRef),
       }),
     });
     return response.ok;

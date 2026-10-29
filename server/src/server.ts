@@ -160,10 +160,10 @@ async function handleReport(req: IncomingMessage, res: ServerResponse) {
       themeId: String(body.themeId ?? '').slice(0, 40),
       title: String(body.title ?? '').slice(0, 120),
       source: String(body.source ?? '').slice(0, 20),
-      interpretation: String(body.interpretation ?? '').slice(0, 2000),
+      interpretation: String(body.interpretation ?? '').slice(0, 4000),
       steps: Array.isArray(body.steps) ? body.steps.slice(0, 5).map((s) => String(s).slice(0, 300)) : [],
       prayer: String(body.prayer ?? '').slice(0, 1000),
-      verseRefs: Array.isArray(body.verseRefs) ? body.verseRefs.slice(0, 5).map((s) => String(s).slice(0, 60)) : [],
+      verseRefs: Array.isArray(body.verseRefs) ? body.verseRefs.slice(0, 15).map((s) => String(s).slice(0, 60)) : [],
     }),
   );
   return send(res, 202, { ok: true });

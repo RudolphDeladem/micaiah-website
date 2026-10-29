@@ -16,14 +16,27 @@ import { LogoMark, T } from './ui';
 
 const STAGES = ['Understanding your reflection', 'Finding relevant Scripture', 'Preparing your insight'];
 
-export function SeekingWisdom({ onCancel }: { onCancel: () => void }) {
+export function SeekingWisdom({
+  onCancel,
+  subtitle = 'Searching the Scriptures for insight into your reflection',
+  stages = STAGES,
+  stageMs = [800, 1700],
+}: {
+  onCancel: () => void;
+  subtitle?: string;
+  stages?: string[];
+  /** When each later stage lights up (ms after start). */
+  stageMs?: number[];
+}) {
   const [stage, setStage] = useState(0);
   const pulse = useSharedValue(0);
 
   useEffect(() => {
     pulse.value = withRepeat(withTiming(1, { duration: 1400, easing: Easing.inOut(Easing.ease) }), -1, true);
-    const timers = [setTimeout(() => setStage(1), 800), setTimeout(() => setStage(2), 1700)];
+    const timers = stageMs.map((ms, i) => setTimeout(() => setStage(i + 1), ms));
     return () => timers.forEach(clearTimeout);
+    // Stage timings are fixed for the life of the screen.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pulse]);
 
   const ring = useAnimatedStyle(() => ({
@@ -41,9 +54,9 @@ export function SeekingWisdom({ onCancel }: { onCancel: () => void }) {
         <T variant="title" style={{ textAlign: 'center' }}>
           Seeking wisdom…
         </T>
-        <T style={{ textAlign: 'center' }}>Searching the Scriptures for insight into your reflection</T>
+        <T style={{ textAlign: 'center' }}>{subtitle}</T>
         <View style={{ gap: Spacing.md, marginTop: Spacing.lg }}>
-          {STAGES.map((label, i) => {
+          {stages.map((label, i) => {
             const done = i < stage;
             const active = i === stage;
             return (

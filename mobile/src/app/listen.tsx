@@ -101,7 +101,9 @@ export default function Listen() {
   const mode = params.mode ?? 'daily';
 
   const goToReview = (text: string) =>
-    router.replace({ pathname: '/reflect', params: { mode, text, voice: text.trim() ? '1' : '0' } });
+    mode === 'dream' || mode === 'prophetic'
+      ? router.replace({ pathname: '/interpret/[kind]', params: { kind: mode, text } })
+      : router.replace({ pathname: '/reflect', params: { mode, text, voice: text.trim() ? '1' : '0' } });
 
   const stop = () => {
     tapFeedback();
@@ -127,8 +129,8 @@ export default function Listen() {
             </T>
             <T style={{ textAlign: 'center' }}>
               {status === 'denied'
-                ? 'To speak your reflections, allow microphone and speech recognition access for Micaiah in Settings. You can always type instead.'
-                : 'Speech recognition isn’t available on this device right now. You can type your reflection instead.'}
+                ? 'To speak instead of typing, allow microphone and speech recognition access for Micaiah in Settings. You can always type instead.'
+                : 'Speech recognition isn’t available on this device right now. You can type instead.'}
             </T>
           </View>
           <View style={{ gap: Spacing.sm }}>

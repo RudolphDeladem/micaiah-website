@@ -4,12 +4,14 @@ import { useMemo } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { VerseCard } from '@/components/insight-view';
+import { KIND_COPY } from '@/components/interpretation-view';
 import { Card, PrimaryButton, Screen, T, tapFeedback, type IconName } from '@/components/ui';
 import { Colors, Radius, Spacing } from '@/constants/theme';
+import { interpretAvailable } from '@/lib/interpret';
 import { verseOfTheDay } from '@/lib/scripture';
 import { useStore } from '@/lib/store';
 import { currentStreak, dayKey } from '@/lib/streak';
-import type { ReflectionMode } from '@/lib/types';
+import type { InterpretationKind, ReflectionMode } from '@/lib/types';
 
 function greeting(date: Date): string {
   const hour = date.getHours();
@@ -100,6 +102,46 @@ export default function Today() {
             <Ionicons name="chevron-forward" size={18} color={Colors.inkSoft} />
           </Pressable>
         ))}
+        {interpretAvailable
+          ? (['dream', 'prophetic'] as InterpretationKind[]).map((kind) => (
+              <Pressable
+                key={kind}
+                accessibilityRole="button"
+                accessibilityLabel={`${KIND_COPY[kind].title}. ${KIND_COPY[kind].blurb}`}
+                onPress={() => {
+                  tapFeedback();
+                  router.push({ pathname: '/interpret/[kind]', params: { kind } });
+                }}
+                style={({ pressed }) => [styles.mode, { opacity: pressed ? 0.75 : 1 }]}>
+                <View style={styles.modeIcon}>
+                  <Ionicons name={KIND_COPY[kind].icon} size={22} color={Colors.indigoMid} />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <T variant="heading" style={{ fontSize: 16 }}>
+                    {KIND_COPY[kind].title}
+                  </T>
+                  <T variant="small">{KIND_COPY[kind].blurb}</T>
+                </View>
+                <Ionicons name="chevron-forward" size={18} color={Colors.inkSoft} />
+              </Pressable>
+            ))
+          : null}
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Read the Bible. Choose a book and chapter."
+          onPress={() => router.push('/bible')}
+          style={({ pressed }) => [styles.mode, { opacity: pressed ? 0.75 : 1 }]}>
+          <View style={styles.modeIcon}>
+            <Ionicons name="library-outline" size={22} color={Colors.indigoMid} />
+          </View>
+          <View style={{ flex: 1 }}>
+            <T variant="heading" style={{ fontSize: 16 }}>
+              Read the Bible
+            </T>
+            <T variant="small">The whole Bible in four translations, offline.</T>
+          </View>
+          <Ionicons name="chevron-forward" size={18} color={Colors.inkSoft} />
+        </Pressable>
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Bible Insight. Explore Scripture by theme."
