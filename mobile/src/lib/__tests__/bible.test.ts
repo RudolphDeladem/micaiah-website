@@ -1,7 +1,4 @@
 /// <reference types="jest" />
-import { readFileSync } from 'node:fs';
-import path from 'node:path';
-
 import {
   BIBLE_VERSIONS,
   BOOKS,
@@ -14,8 +11,12 @@ import {
   type BibleText,
 } from '../bible';
 
+// Jest runs in Node (from mobile/), where the bundled asset files can be read directly.
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const fs: { readFileSync(file: string, encoding: 'utf8'): string } = require('fs');
+
 function readBible(id: string): BibleText {
-  return JSON.parse(readFileSync(path.join(__dirname, '../../../assets/bibles', `${id}.bible`), 'utf8'));
+  return JSON.parse(fs.readFileSync(`${process.cwd()}/assets/bibles/${id}.bible`, 'utf8'));
 }
 
 const kjv = readBible('kjv');
