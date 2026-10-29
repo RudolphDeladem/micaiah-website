@@ -1,17 +1,19 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { useMemo } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, Share, StyleSheet, View } from 'react-native';
 
 import { VerseCard } from '@/components/insight-view';
 import { KIND_COPY } from '@/components/interpretation-view';
-import { Card, PrimaryButton, Screen, T, tapFeedback, type IconName } from '@/components/ui';
-import { Colors, Radius, Spacing } from '@/constants/theme';
+import { Card, NavTile, PrimaryButton, Screen, T, tapFeedback, type IconName } from '@/components/ui';
+import { Accents, Colors, Gradients, Radius, Spacing } from '@/constants/theme';
+import { BOOKS } from '@/lib/bible';
 import { interpretAvailable, interpretComingSoon } from '@/lib/interpret';
-import { verseOfTheDay } from '@/lib/scripture';
+import { TRANSLATION, verseOfTheDay } from '@/lib/scripture';
 import { useStore } from '@/lib/store';
 import { currentStreak, dayKey } from '@/lib/streak';
-import type { InterpretationKind, ReflectionMode } from '@/lib/types';
+import type { ReflectionMode } from '@/lib/types';
 
 function greeting(date: Date): string {
   const hour = date.getHours();
@@ -20,10 +22,10 @@ function greeting(date: Date): string {
   return 'Good evening';
 }
 
-const MODES: { mode: ReflectionMode; icon: IconName; title: string; body: string }[] = [
-  { mode: 'daily', icon: 'partly-sunny-outline', title: 'Daily Reflection', body: 'Process your thoughts and find clarity.' },
-  { mode: 'prayer', icon: 'flame-outline', title: 'Prayer Journal', body: 'Write a prayer and receive Scripture.' },
-  { mode: 'gratitude', icon: 'gift-outline', title: 'Gratitude', body: 'Count your blessings, big and small.' },
+const MODES: { mode: ReflectionMode; icon: IconName; title: string; body: string; accent: keyof typeof Accents }[] = [
+  { mode: 'daily', icon: 'partly-sunny-outline', title: 'Reflect', body: 'Find clarity', accent: 'sunrise' },
+  { mode: 'prayer', icon: 'flame-outline', title: 'Pray', body: 'Talk to God', accent: 'lavender' },
+  { mode: 'gratitude', icon: 'leaf-outline', title: 'Thanks', body: 'Count blessings', accent: 'sage' },
 ];
 
 export default function Today() {
@@ -33,42 +35,52 @@ export default function Today() {
   const streak = currentStreak(entries);
   const reflectedToday = entries.some((e) => dayKey(new Date(e.createdAt)) === dayKey(now));
   const latest = entries[0];
+  const lastRead = settings.lastRead;
+  const showInterpret = interpretAvailable || interpretComingSoon;
 
   const startReflection = (mode: ReflectionMode) => {
     tapFeedback();
     router.push({ pathname: '/reflect', params: { mode } });
   };
 
+  const shareVerse = () =>
+    Share.share({ message: `“${verse.text}” — ${verse.ref} (${TRANSLATION})\n\nShared from Micaiah AI` }).catch(() => {});
+
   return (
     <Screen contentStyle={{ gap: Spacing.lg }}>
-      <View style={styles.header}>
-        <View style={{ flex: 1 }}>
-          <T variant="small">
+      <LinearGradient colors={Gradients.dawn} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.hero}>
+        <View style={styles.heroTop}>
+          <T variant="small" style={{ color: Colors.indigoPale, flex: 1 }}>
             {now.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}
           </T>
-          <T variant="title">
-            {greeting(now)}
-            {settings.name ? `, ${settings.name}` : ''}
-          </T>
+          <View
+            style={styles.streak}
+            accessible
+            accessibilityLabel={streak > 0 ? `${streak} day reflection streak` : 'No reflection streak yet'}>
+            <Ionicons name="flame" size={16} color={Colors.goldLight} />
+            <T variant="small" style={{ color: Colors.white, fontFamily: 'DMSans_600SemiBold' }}>
+              {streak > 0 ? `${streak}-day streak` : 'Start a streak'}
+            </T>
+          </View>
         </View>
-        <View
-          style={styles.streak}
-          accessible
-          accessibilityLabel={`${streak} day reflection streak`}>
-          <Ionicons name="flame" size={18} color={Colors.gold} />
-          <T variant="heading" style={{ color: Colors.gold }}>
-            {streak}
-          </T>
-        </View>
-      </View>
+        <T variant="title" style={{ color: Colors.white }}>
+          {greeting(now)}
+          {settings.name ? `, ${settings.name}` : ''}
+        </T>
+        <T style={{ color: Colors.indigoPale }}>
+          {reflectedToday
+            ? 'You’ve spent time with God today. Come back anytime.'
+            : 'A quiet moment with God is waiting for you.'}
+        </T>
+      </LinearGradient>
 
       <View style={{ gap: Spacing.sm }}>
         <T variant="label">✦ Verse of the day</T>
-        <VerseCard verse={verse} />
+        <VerseCard verse={verse} tone="gold" onShare={shareVerse} />
       </View>
 
       <Card style={{ gap: Spacing.md }}>
-        <T variant="heading">{reflectedToday ? 'Come back anytime today' : 'What is on your heart today?'}</T>
+        <T variant="heading">{reflectedToday ? 'Anything else on your heart?' : 'What is on your heart today?'}</T>
         <T variant="small">Speak or write freely — your words stay private on this device.</T>
         <View style={{ flexDirection: 'row', gap: Spacing.sm }}>
           <PrimaryButton
@@ -82,83 +94,76 @@ export default function Today() {
       </Card>
 
       <View style={{ gap: Spacing.sm }}>
-        <T variant="label">✦ Choose your path</T>
-        {MODES.map((m) => (
-          <Pressable
-            key={m.mode}
-            accessibilityRole="button"
-            accessibilityLabel={`${m.title}. ${m.body}`}
-            onPress={() => startReflection(m.mode)}
-            style={({ pressed }) => [styles.mode, { opacity: pressed ? 0.75 : 1 }]}>
-            <View style={styles.modeIcon}>
-              <Ionicons name={m.icon} size={22} color={Colors.indigoMid} />
-            </View>
-            <View style={{ flex: 1 }}>
-              <T variant="heading" style={{ fontSize: 16 }}>
-                {m.title}
-              </T>
-              <T variant="small">{m.body}</T>
-            </View>
-            <Ionicons name="chevron-forward" size={18} color={Colors.inkSoft} />
-          </Pressable>
-        ))}
-        {interpretAvailable || interpretComingSoon
-          ? (['dream', 'prophetic'] as InterpretationKind[]).map((kind) => (
+        <T variant="label">✦ Ways to reflect</T>
+        <View style={styles.modes}>
+          {MODES.map((m) => {
+            const accent = Accents[m.accent];
+            return (
               <Pressable
-                key={kind}
+                key={m.mode}
                 accessibilityRole="button"
-                accessibilityLabel={`${KIND_COPY[kind].title}. ${KIND_COPY[kind].blurb}`}
-                onPress={() => {
-                  tapFeedback();
-                  if (interpretComingSoon) router.push('/interpret');
-                  else router.push({ pathname: '/interpret/[kind]', params: { kind } });
-                }}
-                style={({ pressed }) => [styles.mode, { opacity: pressed ? 0.75 : 1 }]}>
+                accessibilityLabel={`${m.title}. ${m.body}`}
+                onPress={() => startReflection(m.mode)}
+                style={({ pressed }) => [
+                  styles.mode,
+                  { backgroundColor: accent.tint, opacity: pressed ? 0.8 : 1, transform: [{ scale: pressed ? 0.97 : 1 }] },
+                ]}>
                 <View style={styles.modeIcon}>
-                  <Ionicons name={KIND_COPY[kind].icon} size={22} color={Colors.indigoMid} />
+                  <Ionicons name={m.icon} size={22} color={accent.icon} />
                 </View>
-                <View style={{ flex: 1 }}>
-                  <T variant="heading" style={{ fontSize: 16 }}>
-                    {KIND_COPY[kind].title}
-                  </T>
-                  <T variant="small">{interpretComingSoon ? 'Coming soon' : KIND_COPY[kind].blurb}</T>
-                </View>
-                <Ionicons name="chevron-forward" size={18} color={Colors.inkSoft} />
+                <T variant="heading" style={{ fontSize: 15 }} numberOfLines={1}>
+                  {m.title}
+                </T>
+                <T variant="small" numberOfLines={2}>
+                  {m.body}
+                </T>
               </Pressable>
-            ))
-          : null}
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Read the Bible. Choose a book and chapter."
-          onPress={() => router.push('/bible')}
-          style={({ pressed }) => [styles.mode, { opacity: pressed ? 0.75 : 1 }]}>
-          <View style={styles.modeIcon}>
-            <Ionicons name="library-outline" size={22} color={Colors.indigoMid} />
-          </View>
-          <View style={{ flex: 1 }}>
-            <T variant="heading" style={{ fontSize: 16 }}>
-              Read the Bible
-            </T>
-            <T variant="small">The whole Bible in four translations, offline.</T>
-          </View>
-          <Ionicons name="chevron-forward" size={18} color={Colors.inkSoft} />
-        </Pressable>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Bible Insight. Explore Scripture by theme."
+            );
+          })}
+        </View>
+      </View>
+
+      <View style={{ gap: Spacing.sm }}>
+        <T variant="label">✦ Explore</T>
+        {lastRead ? (
+          <NavTile
+            icon="book"
+            title="Continue reading"
+            detail={`${BOOKS[lastRead.book]?.name ?? 'Bible'} ${lastRead.chapter} · pick up where you left off`}
+            onPress={() =>
+              router.push({
+                pathname: '/read/[book]/[chapter]',
+                params: { book: String(lastRead.book), chapter: String(lastRead.chapter) },
+              })
+            }
+          />
+        ) : (
+          <NavTile
+            icon="library-outline"
+            title="Read the Bible"
+            detail="The whole Bible in four translations, offline."
+            onPress={() => router.push('/bible')}
+          />
+        )}
+        <NavTile
+          icon="sparkles-outline"
+          title="Bible Insight"
+          detail="Verses for peace, fear, grief, hope and more."
+          tint={Accents.sunrise.tint}
+          iconColor={Accents.sunrise.icon}
           onPress={() => router.push('/topics')}
-          style={({ pressed }) => [styles.mode, { opacity: pressed ? 0.75 : 1 }]}>
-          <View style={styles.modeIcon}>
-            <Ionicons name="book-outline" size={22} color={Colors.indigoMid} />
-          </View>
-          <View style={{ flex: 1 }}>
-            <T variant="heading" style={{ fontSize: 16 }}>
-              Bible Insight
-            </T>
-            <T variant="small">Explore Scripture by theme, verse by verse.</T>
-          </View>
-          <Ionicons name="chevron-forward" size={18} color={Colors.inkSoft} />
-        </Pressable>
+        />
+        {showInterpret ? (
+          <NavTile
+            icon={KIND_COPY.dream.icon}
+            title="Interpret"
+            detail="Dreams and prophetic words, weighed with Scripture."
+            tint={Accents.rose.tint}
+            iconColor={Accents.rose.icon}
+            badge={interpretComingSoon ? 'Soon' : undefined}
+            onPress={() => router.push('/interpret')}
+          />
+        ) : null}
       </View>
 
       {latest ? (
@@ -185,32 +190,26 @@ export default function Today() {
 }
 
 const styles = StyleSheet.create({
-  header: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md },
+  hero: { borderRadius: Radius.lg, padding: Spacing.lg, gap: Spacing.sm, marginTop: Spacing.xs },
+  heroTop: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
   streak: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
-    paddingHorizontal: 14,
-    paddingVertical: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
     borderRadius: Radius.pill,
-    backgroundColor: Colors.goldPale,
+    backgroundColor: 'rgba(255,255,255,0.16)',
   },
-  mode: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.md,
-    padding: Spacing.md,
-    borderRadius: Radius.md,
-    backgroundColor: Colors.white,
-    borderWidth: 1,
-    borderColor: Colors.border,
-  },
+  modes: { flexDirection: 'row', gap: Spacing.sm },
+  mode: { flex: 1, borderRadius: Radius.md, padding: 12, gap: 2, minHeight: 116 },
   modeIcon: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: Colors.indigoGhost,
+    width: 40,
+    height: 40,
+    borderRadius: 12,
+    backgroundColor: 'rgba(255,255,255,0.75)',
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: Spacing.xs,
   },
 });

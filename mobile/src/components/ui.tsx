@@ -241,6 +241,60 @@ export function Row({
   );
 }
 
+export function Badge({ label, tone = 'gold' }: { label: string; tone?: 'gold' | 'light' }) {
+  return (
+    <View style={[styles.badge, tone === 'light' && styles.badgeLight]}>
+      <Text style={[styles.badgeLabel, tone === 'light' && { color: Colors.white }]} maxFontSizeMultiplier={1.3}>
+        {label}
+      </Text>
+    </View>
+  );
+}
+
+/** A tappable card row: tinted icon, title, one line of detail and a chevron. */
+export function NavTile({
+  icon,
+  title,
+  detail,
+  onPress,
+  tint = Colors.indigoGhost,
+  iconColor = Colors.indigoMid,
+  badge,
+}: {
+  icon: IconName;
+  title: string;
+  detail: string;
+  onPress: () => void;
+  tint?: string;
+  iconColor?: string;
+  badge?: string;
+}) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={`${title}. ${detail}${badge ? `. ${badge}` : ''}`}
+      onPress={() => {
+        tapFeedback();
+        onPress();
+      }}
+      style={({ pressed }) => [styles.tile, { opacity: pressed ? 0.75 : 1, transform: [{ scale: pressed ? 0.99 : 1 }] }]}>
+      <View style={[styles.tileIcon, { backgroundColor: tint }]}>
+        <Ionicons name={icon} size={22} color={iconColor} />
+      </View>
+      <View style={{ flex: 1, gap: 2 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: Spacing.sm }}>
+          <T variant="heading" style={{ fontSize: 16, flexShrink: 1 }} numberOfLines={1}>
+            {title}
+          </T>
+          {badge ? <Badge label={badge} /> : null}
+        </View>
+        <T variant="small">{detail}</T>
+      </View>
+      <Ionicons name="chevron-forward" size={18} color={Colors.inkSoft} />
+    </Pressable>
+  );
+}
+
 export function Divider() {
   return <View style={styles.divider} />;
 }
@@ -323,4 +377,25 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.sm,
   },
   divider: { height: StyleSheet.hairlineWidth, backgroundColor: Colors.border },
+  badge: {
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: Radius.pill,
+    backgroundColor: Colors.goldPale,
+    borderWidth: 1,
+    borderColor: 'rgba(184,150,90,0.35)',
+  },
+  badgeLight: { backgroundColor: 'rgba(255,255,255,0.18)', borderColor: 'rgba(255,255,255,0.3)' },
+  badgeLabel: { fontFamily: Fonts.sansBold, fontSize: 10, letterSpacing: 0.8, textTransform: 'uppercase', color: Colors.gold },
+  tile: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.md,
+    padding: Spacing.md,
+    borderRadius: Radius.md,
+    backgroundColor: Colors.white,
+    borderWidth: 1,
+    borderColor: Colors.border,
+  },
+  tileIcon: { width: 44, height: 44, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
 });

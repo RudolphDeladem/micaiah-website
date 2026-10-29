@@ -22,7 +22,16 @@ export const Gradients = {
   primary: ['#4c55b6', '#8c95fb'] as const,
   night: ['#1a1830', '#3d3a8c'] as const,
   gold: ['#b8965a', '#e8d5a3'] as const,
+  dawn: ['#3d3a8c', '#6b5fb5', '#c9a77c'] as const,
 };
+
+/** Soft accents that give each reflection path its own colour, within the brand's warm palette. */
+export const Accents = {
+  sunrise: { tint: '#fbefe0', icon: '#c27c3a' },
+  lavender: { tint: '#eeeaff', icon: '#5b4fc4' },
+  sage: { tint: '#e7f1ea', icon: '#4d8a64' },
+  rose: { tint: '#fbe9ee', icon: '#b5536f' },
+} as const;
 
 export const Fonts = {
   serif: 'CormorantGaramond_500Medium',
