@@ -103,7 +103,7 @@ export default function Today() {
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Bible Insight. Explore Scripture by theme."
-          onPress={() => router.push('/scripture')}
+          onPress={() => router.push('/topics')}
           style={({ pressed }) => [styles.mode, { opacity: pressed ? 0.75 : 1 }]}>
           <View style={styles.modeIcon}>
             <Ionicons name="book-outline" size={22} color={Colors.indigoMid} />

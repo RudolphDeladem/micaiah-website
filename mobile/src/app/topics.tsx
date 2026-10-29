@@ -6,10 +6,9 @@ import { Screen, T, type IconName } from '@/components/ui';
 import { Colors, Radius, Spacing } from '@/constants/theme';
 import { THEMES, TRANSLATION_NAME } from '@/lib/scripture';
 
-export default function Scripture() {
+export default function Topics() {
   return (
-    <Screen contentStyle={{ gap: Spacing.md }}>
-      <T variant="title">Bible Insight</T>
+    <Screen edges={[]} contentStyle={{ gap: Spacing.md }}>
       <T variant="small">
         Explore what Scripture says about the seasons of life. Tap a theme for verses, reflection, and a prayer.
       </T>

@@ -30,8 +30,8 @@ export default function TabLayout() {
         sceneStyle: { backgroundColor: Colors.cream },
       }}>
       <Tabs.Screen name="index" options={{ title: 'Today', tabBarIcon: tabIcon('sunny-outline', 'sunny') }} />
+      <Tabs.Screen name="bible" options={{ title: 'Bible', tabBarIcon: tabIcon('book-outline', 'book') }} />
       <Tabs.Screen name="journal" options={{ title: 'Journal', tabBarIcon: tabIcon('journal-outline', 'journal') }} />
-      <Tabs.Screen name="scripture" options={{ title: 'Scripture', tabBarIcon: tabIcon('book-outline', 'book') }} />
       <Tabs.Screen name="settings" options={{ title: 'Settings', tabBarIcon: tabIcon('settings-outline', 'settings') }} />
     </Tabs>
   );

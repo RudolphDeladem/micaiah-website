@@ -54,6 +54,9 @@ function RootNavigator() {
         <Stack.Screen name="listen" options={{ headerShown: false, presentation: 'fullScreenModal' }} />
         <Stack.Screen name="entry/[id]" options={{ title: 'Your insight' }} />
         <Stack.Screen name="theme/[id]" options={{ title: 'Scripture' }} />
+        <Stack.Screen name="topics" options={{ title: 'Bible Insight' }} />
+        <Stack.Screen name="read/[book]/[chapter]" options={{ title: '' }} />
+        <Stack.Screen name="bible-version" options={{ title: 'Bible translation', presentation: 'modal' }} />
         <Stack.Screen name="crisis" options={{ title: 'Get help now', presentation: 'modal' }} />
         <Stack.Screen name="legal/[doc]" options={{ title: '' }} />
       </Stack>
