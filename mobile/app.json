@@ -2,6 +2,7 @@
   "expo": {
     "name": "Micaiah AI",
     "slug": "micaiah-ai",
+    "owner": "deladem90",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -121,6 +122,11 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "dd4f8345-af6a-4e01-995c-3edb09875cdf"
+      }
     }
   }
 }
