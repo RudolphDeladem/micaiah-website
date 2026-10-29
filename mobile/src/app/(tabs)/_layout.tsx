@@ -5,7 +5,7 @@ import type { ComponentProps } from 'react';
 import type { ColorValue } from 'react-native';
 
 import { Colors, Fonts } from '@/constants/theme';
-import { interpretAvailable } from '@/lib/interpret';
+import { interpretAvailable, interpretComingSoon } from '@/lib/interpret';
 import { useStore } from '@/lib/store';
 
 type IconName = ComponentProps<typeof Ionicons>['name'];
@@ -37,8 +37,8 @@ export default function TabLayout() {
         options={{
           title: 'Interpret',
           tabBarIcon: tabIcon('moon-outline', 'moon'),
-          // Needs the AI service; hidden entirely in builds without it.
-          href: interpretAvailable ? undefined : null,
+          // Needs the AI service; shown as "Coming soon" without it unless hidden.
+          href: interpretAvailable || interpretComingSoon ? undefined : null,
         }}
       />
       <Tabs.Screen name="journal" options={{ title: 'Journal', tabBarIcon: tabIcon('journal-outline', 'journal') }} />

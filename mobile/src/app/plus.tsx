@@ -6,6 +6,7 @@ import type { PurchasesPackage } from 'react-native-purchases';
 
 import { Card, LogoMark, PrimaryButton, Screen, SecondaryButton, T, type IconName } from '@/components/ui';
 import { Colors, Radius, Spacing } from '@/constants/theme';
+import { interpretComingSoon } from '@/lib/interpret';
 import { priceLabel, purchasesAvailable, trialLabel, useSubscription } from '@/lib/subscription';
 
 export default function Plus() {
@@ -114,7 +115,11 @@ export default function Plus() {
           <SecondaryButton label="Manage subscription" icon="settings-outline" onPress={manage} />
         </View>
       ) : !purchasesAvailable ? (
-        <T style={{ textAlign: 'center' }}>Subscriptions aren’t available in this version of the app.</T>
+        <T style={{ textAlign: 'center' }}>
+          {interpretComingSoon
+            ? 'Micaiah Plus is coming soon — one monthly plan of $4.99 for both features. Everything else stays free.'
+            : 'Subscriptions aren’t available in this version of the app.'}
+        </T>
       ) : failed ? (
         <View style={{ gap: Spacing.sm, alignItems: 'center' }}>
           <T style={{ textAlign: 'center' }}>We couldn’t load the plans. Please check your connection.</T>

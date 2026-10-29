@@ -7,7 +7,7 @@ import { VerseCard } from '@/components/insight-view';
 import { KIND_COPY } from '@/components/interpretation-view';
 import { Card, PrimaryButton, Screen, T, tapFeedback, type IconName } from '@/components/ui';
 import { Colors, Radius, Spacing } from '@/constants/theme';
-import { interpretAvailable } from '@/lib/interpret';
+import { interpretAvailable, interpretComingSoon } from '@/lib/interpret';
 import { verseOfTheDay } from '@/lib/scripture';
 import { useStore } from '@/lib/store';
 import { currentStreak, dayKey } from '@/lib/streak';
@@ -102,7 +102,7 @@ export default function Today() {
             <Ionicons name="chevron-forward" size={18} color={Colors.inkSoft} />
           </Pressable>
         ))}
-        {interpretAvailable
+        {interpretAvailable || interpretComingSoon
           ? (['dream', 'prophetic'] as InterpretationKind[]).map((kind) => (
               <Pressable
                 key={kind}
@@ -110,7 +110,8 @@ export default function Today() {
                 accessibilityLabel={`${KIND_COPY[kind].title}. ${KIND_COPY[kind].blurb}`}
                 onPress={() => {
                   tapFeedback();
-                  router.push({ pathname: '/interpret/[kind]', params: { kind } });
+                  if (interpretComingSoon) router.push('/interpret');
+                  else router.push({ pathname: '/interpret/[kind]', params: { kind } });
                 }}
                 style={({ pressed }) => [styles.mode, { opacity: pressed ? 0.75 : 1 }]}>
                 <View style={styles.modeIcon}>
@@ -120,7 +121,7 @@ export default function Today() {
                   <T variant="heading" style={{ fontSize: 16 }}>
                     {KIND_COPY[kind].title}
                   </T>
-                  <T variant="small">{KIND_COPY[kind].blurb}</T>
+                  <T variant="small">{interpretComingSoon ? 'Coming soon' : KIND_COPY[kind].blurb}</T>
                 </View>
                 <Ionicons name="chevron-forward" size={18} color={Colors.inkSoft} />
               </Pressable>

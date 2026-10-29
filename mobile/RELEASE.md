@@ -44,9 +44,10 @@ If you host the site elsewhere, update `WEBSITE_URL` in `src/lib/legal.ts`.
 
 ## 3. Enable the AI features (cloud insights, Dream Interpretation, Prophetic Word)
 
-Dream Interpretation and Prophetic Word always need the AI service, so **the Interpret tab
-only appears in builds that have its URL**. Without it the app ships as before (on-device
-insights + the Bible reader).
+Dream Interpretation and Prophetic Word always need the AI service. **Without its URL, the
+Interpret tab and Micaiah Plus appear as "Coming soon"** — handy for TestFlight previews.
+App Store review rejects placeholder features, so for a store build without the service add
+`EXPO_PUBLIC_HIDE_COMING_SOON` = `1` on expo.dev (production) to hide them instead.
 
 1. Deploy `../server` (see its README): set `ANTHROPIC_API_KEY`, mount a volume at `/data`,
    and serve it over HTTPS. Check `https://your-service/health` returns `{"ok":true}`.
@@ -175,7 +176,8 @@ review.
 
 ## Review checklist (what the stores look for)
 
-- [x] App is complete: no placeholders, no "coming soon" features, and every button works
+- [ ] App is complete: no placeholders, no "coming soon" features, and every button works
+      (set `EXPO_PUBLIC_INSIGHT_API_URL`, or `EXPO_PUBLIC_HIDE_COMING_SOON=1`, for the store build)
 - [x] No login wall; nothing to delete server-side (no accounts)
 - [x] Permission prompts appear only when needed, with clear purpose strings
 - [x] Privacy policy available in-app (Settings → Legal) and at a public URL

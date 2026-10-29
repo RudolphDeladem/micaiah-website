@@ -7,6 +7,13 @@ import type { Interpretation, InterpretationKind, InterpretationPoint } from './
 /** Dream and prophetic interpretation always need the AI service, so they exist only when it is configured. */
 export const interpretAvailable = cloudInsightAvailable;
 
+/**
+ * Builds without the AI service show Dream Interpretation, Prophetic Word and Micaiah Plus as
+ * "Coming soon" so testers can preview them. App Store review rejects placeholder features, so
+ * set EXPO_PUBLIC_HIDE_COMING_SOON=1 for a store build that ships without the service.
+ */
+export const interpretComingSoon = !interpretAvailable && process.env.EXPO_PUBLIC_HIDE_COMING_SOON !== '1';
+
 export const MIN_INTERPRET_LENGTH = 10;
 export const MAX_INTERPRET_LENGTH = 5000;
 const REQUEST_TIMEOUT_MS = 60_000;
