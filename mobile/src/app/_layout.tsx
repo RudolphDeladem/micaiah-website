@@ -14,6 +14,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { Colors, Fonts } from '@/constants/theme';
 import { StoreProvider, useStore } from '@/lib/store';
+import { SubscriptionProvider } from '@/lib/subscription';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
@@ -54,6 +55,12 @@ function RootNavigator() {
         <Stack.Screen name="listen" options={{ headerShown: false, presentation: 'fullScreenModal' }} />
         <Stack.Screen name="entry/[id]" options={{ title: 'Your insight' }} />
         <Stack.Screen name="theme/[id]" options={{ title: 'Scripture' }} />
+        <Stack.Screen name="topics" options={{ title: 'Bible Insight' }} />
+        <Stack.Screen name="read/[book]/[chapter]" options={{ title: '' }} />
+        <Stack.Screen name="bible-version" options={{ title: 'Bible translation', presentation: 'modal' }} />
+        <Stack.Screen name="interpret/[kind]" options={{ headerShown: false, presentation: 'fullScreenModal' }} />
+        <Stack.Screen name="interpretation/[id]" options={{ title: '' }} />
+        <Stack.Screen name="plus" options={{ title: 'Micaiah Plus', presentation: 'modal' }} />
         <Stack.Screen name="crisis" options={{ title: 'Get help now', presentation: 'modal' }} />
         <Stack.Screen name="legal/[doc]" options={{ title: '' }} />
       </Stack>
@@ -66,7 +73,9 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <StoreProvider>
-          <RootNavigator />
+          <SubscriptionProvider>
+            <RootNavigator />
+          </SubscriptionProvider>
         </StoreProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>

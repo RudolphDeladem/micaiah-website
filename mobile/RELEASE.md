@@ -42,16 +42,55 @@ The stores require a working privacy-policy URL. Enable GitHub Pages
 
 If you host the site elsewhere, update `WEBSITE_URL` in `src/lib/legal.ts`.
 
-## 3. (Optional) Enable cloud AI insights
+## 3. Enable the AI features (cloud insights, Dream Interpretation, Prophetic Word)
 
-See `../server/README.md` to deploy the insight service, then set its URL for builds:
-on expo.dev open the project → **Environment variables** → add
-`EXPO_PUBLIC_INSIGHT_API_URL` = `https://your-insight-service.example` for the
-**production** environment (visibility: plain text — it is not a secret).
+Dream Interpretation and Prophetic Word always need the AI service. **Without its URL, the
+Interpret tab and Micaiah Plus appear as "Coming soon"** — handy for TestFlight previews.
+App Store review rejects placeholder features, so for a store build without the service add
+`EXPO_PUBLIC_HIDE_COMING_SOON` = `1` on expo.dev (production) to hide them instead.
 
-When this variable is set, the app shows the AI consent dialog, the Settings toggle,
-and the iOS privacy manifest declares user content. Use the matching privacy answers
-in `store/STORE_LISTING.md`.
+1. Deploy `../server` (see its README): set `ANTHROPIC_API_KEY`, mount a volume at `/data`,
+   and serve it over HTTPS. Check `https://your-service/health` returns `{"ok":true}`.
+2. On expo.dev open the project → **Environment variables** → add
+   `EXPO_PUBLIC_INSIGHT_API_URL` = `https://your-service` for the **production** (and
+   **preview**) environment (visibility: plain text — it is not a secret).
+
+When this variable is set, the app shows the AI consent dialogs, the Settings toggles, the
+Interpret tab, and the iOS privacy manifest declares user content and the install ID. Use
+the matching privacy answers in `store/STORE_LISTING.md`.
+
+## 3b. Enable Micaiah Plus (subscription)
+
+Micaiah Plus unlocks Dream Interpretation and Prophetic Word beyond the free allowance
+(defaults: 1 free of each per month; 20 of each with Plus — change them on the server with
+`FREE_INTERPRETATIONS_PER_MONTH` / `PLUS_INTERPRETATIONS_PER_MONTH`, no app update needed).
+Everything else stays free. Purchases go through the App Store / Google Play, managed by
+[RevenueCat](https://www.revenuecat.com) (free until $2.5k/month revenue).
+
+1. **App Store Connect**: Business → accept the **Paid Apps** agreement and fill in banking
+   and tax. Then your app → Monetization → **Subscriptions** → create group `Micaiah Plus` →
+   add `micaiah_plus_monthly` (1 month, $4.99). Optionally add `micaiah_plus_yearly` and a free
+   trial (introductory offer). Fill in the localization and review screenshot
+   (see `store/STORE_LISTING.md`). Generate an **In-App Purchase key** (Users and Access →
+   Integrations → In-App Purchase) for RevenueCat.
+2. **Google Play** (when you ship Android): Monetize → Subscriptions → `micaiah_plus_monthly`
+   with a monthly base plan.
+3. **RevenueCat**: create a project, add the iOS app (bundle ID `com.micaiahai.app`, upload the
+   In-App Purchase key) and the Android app. Create the entitlement **`plus`**, attach the
+   products, and add them as packages to the **default (current) offering** — the paywall shows
+   whatever that offering contains, with prices from the store.
+4. **Keys**:
+   - expo.dev → Environment variables (production + preview, plain text):
+     `EXPO_PUBLIC_REVENUECAT_IOS_KEY` = the `appl_…` public key,
+     `EXPO_PUBLIC_REVENUECAT_ANDROID_KEY` = the `goog_…` public key.
+   - On the server: `REVENUECAT_SECRET_KEY` = a RevenueCat **secret** API key (v1) — keep it
+     secret; it is how the server confirms someone has paid.
+5. Build a new version (step 4). Test with a **Sandbox** Apple ID (Settings → App Store →
+   Sandbox Account on the iPhone): subscribe, check the Interpret tab shows "Plus", delete and
+   reinstall, then **Restore purchases**.
+
+The subscription is offered only when both the AI service URL and a RevenueCat key are
+set; otherwise its screens are hidden.
 
 ## 4. Build
 
@@ -120,9 +159,25 @@ same Expo account), then re-run the workflow.
 Bump `version` in `app.json` for user-visible releases (build numbers auto-increment via
 `appVersionSource: remote`), run `npm run check`, then build and submit again.
 
+### Over-the-air (OTA) updates
+
+Builds include `expo-updates`, so JavaScript-only changes (screens, text, logic, styling)
+can reach installed builds without a new TestFlight build or App Review:
+Actions → **Publish OTA update** → Run workflow (message + channel). The update reaches
+builds with the same app `version` on that channel; the app downloads it in the background
+and uses it on the next launch.
+
+Still needs a new build: adding or upgrading native modules, permissions, icons/splash,
+anything in `app.json` / `app.config.js`, a new `version`, or new `EXPO_PUBLIC_*` values
+(those are fixed into each build and update at build time — publish an update after changing
+them). Builds made before OTA support was added can't receive updates. Apple allows OTA
+updates that fix bugs or improve existing features; new features should still go through
+review.
+
 ## Review checklist (what the stores look for)
 
-- [x] App is complete: no placeholders, no "coming soon" features, and every button works
+- [ ] App is complete: no placeholders, no "coming soon" features, and every button works
+      (set `EXPO_PUBLIC_INSIGHT_API_URL`, or `EXPO_PUBLIC_HIDE_COMING_SOON=1`, for the store build)
 - [x] No login wall; nothing to delete server-side (no accounts)
 - [x] Permission prompts appear only when needed, with clear purpose strings
 - [x] Privacy policy available in-app (Settings → Legal) and at a public URL
@@ -131,7 +186,10 @@ Bump `version` in `app.json` for user-visible releases (build numbers auto-incre
 - [x] AI processing is opt-in, discloses the provider (Anthropic Claude), and has in-app reporting
 - [x] iOS privacy manifest, `ITSAppUsesNonExemptEncryption=false`, no push entitlement
 - [x] Android target SDK 36, no unnecessary permissions (location, camera, storage and AD_ID are blocked)
-- [x] Scripture text is public domain (KJV)
+- [x] Scripture text is public domain (KJV, WEB, ASV, BBE)
+- [x] Subscription screen shows price, period, auto-renew terms, Restore purchases, and Terms/Privacy links
+- [x] Dream / prophetic interpretations are labelled as AI reflections, not prophecy or predictions
 - [ ] Privacy/support URLs are live (step 2)
 - [ ] Screenshots captured from simulator/device
-- [ ] Store answers match the build (cloud AI on or off)
+- [ ] Store answers match the build (cloud AI on or off, Plus on or off)
+- [ ] Subscription product submitted with the app version (Plus build)

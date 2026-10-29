@@ -6,10 +6,13 @@ import { Alert, Linking, Pressable, Share, StyleSheet, Switch, TextInput, View }
 import { Card, Divider, Row, Screen, T } from '@/components/ui';
 import { Colors, Fonts, Radius, Spacing } from '@/constants/theme';
 import { cloudInsightAvailable } from '@/lib/cloud-insight';
+import { formatRef, versionInfo } from '@/lib/bible';
+import { interpretAvailable } from '@/lib/interpret';
 import { SUPPORT_EMAIL } from '@/lib/legal';
 import { cancelReminders, requestReminderPermission, scheduleDailyReminder } from '@/lib/reminders';
 import { TRANSLATION } from '@/lib/scripture';
 import { useStore } from '@/lib/store';
+import { purchasesAvailable, useSubscription } from '@/lib/subscription';
 
 const REMINDER_TIMES: [number, number][] = [
   [6, 30],
@@ -24,7 +27,9 @@ function formatTime(hour: number, minute: number): string {
 }
 
 export default function SettingsScreen() {
-  const { settings, entries, updateSettings, deleteAllData } = useStore();
+  const { settings, entries, interpretations, updateSettings, deleteAllData } = useStore();
+  const { isPlus, usage, manage, restore, resetIdentity } = useSubscription();
+  const subscribed = isPlus || usage?.plan === 'plus';
   const [name, setName] = useState(settings.name);
 
   const toggleReminder = async (enabled: boolean) => {
@@ -70,24 +75,33 @@ export default function SettingsScreen() {
   };
 
   const exportJournal = () => {
-    if (entries.length === 0) {
+    if (entries.length === 0 && interpretations.length === 0) {
       Alert.alert('Nothing to export yet', 'Your journal is empty.');
       return;
     }
-    const body = entries
+    const reflections = entries
       .map((e) => {
         const date = new Date(e.createdAt).toLocaleString();
         const verses = e.insight.verses.map((v) => `  “${v.text}” — ${v.ref} (${TRANSLATION})`).join('\n');
         return `${date} · ${e.insight.themeLabel}\n${e.text}\n\n${e.insight.interpretation}\n${verses}`;
       })
       .join('\n\n— — —\n\n');
+    const interpreted = interpretations
+      .map((i) => {
+        const date = new Date(i.createdAt).toLocaleString();
+        const label = i.kind === 'dream' ? 'Dream' : 'Prophetic word';
+        const refs = i.refs.map(formatRef).join(' · ');
+        return `${date} · ${label} · ${i.title}\n${i.text}\n\n${i.summary}${refs ? `\nScripture: ${refs}` : ''}`;
+      })
+      .join('\n\n— — —\n\n');
+    const body = [reflections, interpreted].filter(Boolean).join('\n\n— — —\n\n');
     Share.share({ title: 'My Micaiah Journal', message: `My Micaiah Journal\n\n${body}` }).catch(() => {});
   };
 
   const confirmDeleteAll = () => {
     Alert.alert(
       'Delete all data?',
-      'This permanently erases every reflection, your name, and your preferences from this device. This cannot be undone.',
+      `This permanently erases every reflection and interpretation, your name, and your preferences from this device. This cannot be undone.${subscribed ? ' Your Micaiah Plus subscription is not cancelled — manage it in your store account, and use Restore purchases to use it again.' : ''}`,
       [
         { text: 'Cancel', style: 'cancel' },
         {
@@ -96,6 +110,7 @@ export default function SettingsScreen() {
           onPress: async () => {
             await cancelReminders().catch(() => {});
             await deleteAllData();
+            await resetIdentity().catch(() => {});
             router.replace('/onboarding');
           },
         },
@@ -118,6 +133,51 @@ export default function SettingsScreen() {
           maxLength={40}
           accessibilityLabel="Your first name"
           style={styles.input}
+        />
+      </Section>
+
+      {purchasesAvailable ? (
+        <Section title="Micaiah Plus">
+          <Row
+            icon="sparkles-outline"
+            label={subscribed ? 'Micaiah Plus is active' : 'Micaiah Plus'}
+            detail={
+              subscribed
+                ? usage
+                  ? `This month: ${usage.dream.used}/${usage.dream.limit} dreams · ${usage.prophetic.used}/${usage.prophetic.limit} prophetic words`
+                  : 'Dream Interpretation and Prophetic Word unlocked'
+                : 'Unlock Dream Interpretation and Prophetic Word'
+            }
+            onPress={() => router.push('/plus')}
+          />
+          <Divider />
+          {subscribed ? (
+            <Row icon="card-outline" label="Manage subscription" onPress={manage} />
+          ) : (
+            <Row
+              icon="refresh-outline"
+              label="Restore purchases"
+              onPress={() =>
+                restore()
+                  .then((found) =>
+                    Alert.alert(
+                      found ? 'Purchases restored' : 'No subscription found',
+                      found ? 'Your Micaiah Plus subscription is active on this device.' : 'No active Micaiah Plus subscription was found.',
+                    ),
+                  )
+                  .catch(() => Alert.alert('Could not restore', 'Please check your connection and try again.'))
+              }
+            />
+          )}
+        </Section>
+      ) : null}
+
+      <Section title="Bible">
+        <Row
+          icon="book-outline"
+          label="Translation"
+          detail={versionInfo(settings.bibleVersion).name}
+          onPress={() => router.push('/bible-version')}
         />
       </Section>
 
@@ -156,7 +216,7 @@ export default function SettingsScreen() {
       </Section>
 
       {cloudInsightAvailable ? (
-        <Section title="Insights">
+        <Section title="AI insights">
           <Row
             icon="sparkles-outline"
             label="Cloud insights (AI)"
@@ -174,6 +234,24 @@ export default function SettingsScreen() {
               />
             }
           />
+          {interpretAvailable && settings.interpretConsent ? (
+            <>
+              <Divider />
+              <Row
+                icon="moon-outline"
+                label="Dream & prophetic interpretation"
+                detail="Allowed — what you submit there is processed by Claude AI"
+                right={
+                  <Switch
+                    value
+                    onValueChange={() => updateSettings({ interpretConsent: false })}
+                    trackColor={{ true: Colors.indigoMid, false: Colors.indigoPale }}
+                    accessibilityLabel="Allow dream and prophetic interpretation"
+                  />
+                }
+              />
+            </>
+          ) : null}
         </Section>
       ) : null}
 
@@ -198,15 +276,15 @@ export default function SettingsScreen() {
 
       <Section title="Your data">
         <T variant="small">
-          Your journal is stored only on this device. There is no account and nothing is uploaded unless you turn on
-          cloud insights.
+          Your journal and interpretations are stored only on this device. There is no account, and nothing is uploaded
+          unless you use cloud insights or Dream / Prophetic interpretation.
         </T>
         <Row icon="trash-outline" label="Delete all data" tone="danger" onPress={confirmDeleteAll} />
       </Section>
 
       <T variant="small" style={{ textAlign: 'center' }}>
         Micaiah AI · Version {Constants.expoConfig?.version ?? '1.0.0'}
-        {'\n'}Scripture quotations from the King James Version (public domain).
+        {'\n'}Bible text: KJV, WEB, ASV and BBE (public domain).
       </T>
     </Screen>
   );

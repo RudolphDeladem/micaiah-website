@@ -1,3 +1,5 @@
+import type { BibleVersionId, ScriptureRef } from './bible';
+
 export type ReflectionMode = 'daily' | 'prayer' | 'gratitude';
 
 export type Verse = {
@@ -50,4 +52,31 @@ export type Settings = {
   reminderMinute: number;
   /** null = never asked; true/false = explicit choice. */
   cloudConsent: boolean | null;
+  /** Explicit consent to send dreams / prophetic words to the AI service (asked on first use). */
+  interpretConsent: boolean;
+  bibleVersion: BibleVersionId;
+  /** Where the Bible reader was last open: book index (0 = Genesis) and chapter number. */
+  lastRead: { book: number; chapter: number } | null;
+};
+
+export type InterpretationKind = 'dream' | 'prophetic';
+
+export type InterpretationPoint = { heading: string; body: string; refs: ScriptureRef[] };
+
+/** An AI interpretation of a dream or a prophetic word. Scripture is stored as references and shown in the reader's chosen translation. */
+export type Interpretation = {
+  id: string;
+  createdAt: string;
+  kind: InterpretationKind;
+  /** What the person wrote. */
+  text: string;
+  title: string;
+  summary: string;
+  points: InterpretationPoint[];
+  refs: ScriptureRef[];
+  cautions: string[];
+  steps: string[];
+  prayer: string;
+  crisis: boolean;
+  favorite?: boolean;
 };

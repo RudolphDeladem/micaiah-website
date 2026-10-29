@@ -1,0 +1,60 @@
+# Publishes a JavaScript-only update (EAS Update) to installed builds — no new TestFlight
+# build or App Review needed. Run it from GitHub: Actions → "Publish OTA update" → Run workflow.
+#
+# Reaches builds whose app version (app.json "version") matches. Anything that adds a native
+# module, permission or app.json/app.config.js change still needs a new build via "Deploy to
+# TestFlight". Builds made before expo-updates was added cannot receive OTA updates.
+name: Publish OTA update
+
+on:
+  workflow_dispatch:
+    inputs:
+      message:
+        description: What changed (shown in the EAS dashboard)
+        required: true
+      channel:
+        description: Which builds receive it
+        type: choice
+        options: [production, preview]
+        default: production
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+
+      - name: Check required secrets
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          if [ -z "$EXPO_TOKEN" ]; then
+            echo "::error::Missing repository secret EXPO_TOKEN (see mobile/RELEASE.md)"
+            exit 1
+          fi
+
+      - run: npm ci
+
+      - name: Typecheck, lint and test
+        run: npm run check
+
+      - name: Link EAS project
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: npx --yes eas-cli@25 init --non-interactive --force
+
+      - name: Publish update
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          MESSAGE: ${{ inputs.message }}
+          CHANNEL: ${{ inputs.channel }}
+        run: npx --yes eas-cli@25 update --channel "$CHANNEL" --environment "$CHANNEL" --message "$MESSAGE" --non-interactive

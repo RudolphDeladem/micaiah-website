@@ -24,7 +24,7 @@ inaccurate metadata or privacy answers are the most common reason for rejection.
 | Marketing URL | https://rudolphdeladem.github.io/micaiah-website/ |
 | Privacy Policy URL | https://rudolphdeladem.github.io/micaiah-website/privacy.html |
 | Contact email | siastesfinance@gmail.com |
-| Price | Free, no in-app purchases, no ads |
+| Price | Free, no ads. **Plus build:** in-app purchase "Micaiah Plus" (auto-renewing subscription) |
 | Copyright | © 2026 Micaiah AI |
 
 The URLs assume GitHub Pages is enabled for this repository
@@ -34,7 +34,7 @@ submitting; a broken privacy-policy link is an automatic rejection.
 ### Keywords (iOS, ≤100 characters, comma-separated, no spaces)
 
 ```
-bible,prayer,journal,devotional,scripture,faith,christian,verse,reflection,gratitude,god,jesus,peace
+bible,prayer,journal,devotional,scripture,faith,christian,verse,dream,prophetic,kjv,gratitude,jesus
 ```
 
 ### Promotional text (iOS, ≤170)
@@ -61,6 +61,9 @@ THREE WAYS TO REFLECT
 • Prayer Journal — write to God and receive Scripture
 • Gratitude — count your blessings, big and small
 
+THE WHOLE BIBLE, OFFLINE
+Read any book and chapter in the King James Version, World English Bible, American Standard Version, or Bible in Basic English. Pick up where you left off and share a verse with a long-press.
+
 BIBLE INSIGHT
 Explore what Scripture says about anxiety, fear, grief, guidance, doubt, loneliness, forgiveness, hope, healing, relationships, purpose, and more.
 
@@ -81,12 +84,35 @@ If shipping **with** cloud AI, add this paragraph after "A prayer you can make y
 ```
 OPTIONAL CLOUD AI
 Turn on cloud insights to receive a reflection written personally for you by Claude, Anthropic's AI model. It's off until you choose it, your words are never used to train AI, and Scripture always comes from the built-in KJV library.
+
+DREAM INTERPRETATION & PROPHETIC WORD
+Describe a dream, or share a prophetic word you received, and receive a humble, Scripture-based reflection: the images or themes, passages to read, gentle cautions, next steps, and a prayer. "Test all things; hold fast that which is good" (1 Thessalonians 5:21). These are reflections written by AI — not prophecy and not predictions.
+```
+
+If shipping **with Micaiah Plus**, add at the end of the description (Apple requires a
+link to the Terms of Use / EULA for subscriptions):
+
+```
+MICAIAH PLUS
+Dream Interpretation and Prophetic Word are included with Micaiah Plus, an optional auto-renewing subscription. Everything else is free. Payment is charged to your account at confirmation; the subscription renews automatically unless cancelled at least 24 hours before the end of the period. Manage it in your account settings.
+
+Terms of Use: https://rudolphdeladem.github.io/micaiah-website/terms.html
+Privacy Policy: https://rudolphdeladem.github.io/micaiah-website/privacy.html
 ```
 
 ### What's New (v1.0)
 
 ```
 Welcome to Micaiah — speak, reflect, and receive Scripture-based insight.
+```
+
+Next release:
+
+```
+• Read the whole Bible — KJV, WEB, ASV and BBE, offline
+• Dream Interpretation: bring your dreams to Scripture
+• Prophetic Word: weigh the words you receive with Scripture
+• Micaiah Plus: an optional subscription for dream and prophetic interpretations — everything else stays free
 ```
 
 ---
@@ -99,11 +125,29 @@ Welcome to Micaiah — speak, reflect, and receive Scripture-based insight.
 
 **Cloud AI build:**
 - Data type: **User Content → Other User Content**
+- Data type: **Identifiers → User ID** (the random install ID sent with dream / prophetic requests to count monthly allowances)
 - Used for: **App Functionality** only
 - Linked to the user's identity: **No**
 - Used for tracking: **No**
 
+**Plus build (RevenueCat keys set):** additionally
+- Data type: **Purchases → Purchase History**, App Functionality, not linked, not tracking
+
 (The iOS privacy manifest in the build is generated to match: see `app.config.js`.)
+
+### In-app purchase (Plus build)
+
+| Field | Value |
+|---|---|
+| Subscription group | `Micaiah Plus` |
+| Product ID | `micaiah_plus_monthly` — 1 month, US$4.99 (tier closest to $5) |
+| Optional | `micaiah_plus_yearly` — 1 year, e.g. US$39.99; and/or a 1-week free trial as an introductory offer |
+| Display name | Micaiah Plus |
+| Description (≤55) | Dream & prophetic interpretations each month |
+| Review screenshot | The Micaiah Plus screen (Interpret tab → Micaiah Plus) |
+
+Submit the subscription **with** the app version that first includes it (on the version
+page, "In-App Purchases and Subscriptions" → add it), otherwise review rejects it.
 
 ### Age rating questionnaire
 
@@ -129,6 +173,8 @@ Thank you for reviewing Micaiah.
 • Privacy: all data is stored on-device only. Settings → Delete all data erases everything. There is no account, analytics, advertising, or tracking.
 • Scripture is quoted from the King James Version (public domain).
 [Cloud AI build only:] Cloud insights are off until the user opts in through an explicit consent dialog that names Anthropic's Claude as the AI provider; insights can be reported in-app via "Report this insight".
+[Cloud AI build only:] Interpret tab → Dream Interpretation or Prophetic Word. Each install gets one free interpretation of each per month, so you can try both without purchasing. These are presented as Scripture-based reflections written by AI, with a clear disclaimer that they are not prophecy or predictions; they never predict events, and they can be reported in-app.
+[Plus build only:] Micaiah Plus unlocks more dream and prophetic interpretations per month; all other features are free. It can be purchased with a Sandbox account from Interpret → Micaiah Plus; "Restore purchases" is on the same screen and in Settings. The Terms of Use (with subscription terms) are linked from the purchase screen.
 ```
 
 Demo account: **not required** (leave "Sign-in required" unchecked).
@@ -137,7 +183,7 @@ Demo account: **not required** (leave "Sign-in required" unchecked).
 
 Required: 6.9" iPhone (1320×2868 or 1290×2796) and, because the app supports iPad,
 13" iPad (2064×2752). Capture from the iOS Simulator with a few sample reflections:
-Welcome · Today · Write · Seeking wisdom · Insight · Journal · Bible Insight.
+Welcome · Today · Write · Seeking wisdom · Insight · Journal · Bible reader · Interpret · Micaiah Plus.
 
 ---
 
@@ -152,6 +198,8 @@ Welcome · Today · Write · Seeking wisdom · Insight · Journal · Bible Insig
 - Data type: **App activity → Other user-generated content**
   - Collected, **processed ephemerally: Yes**, **optional (user can choose): Yes**
   - Purpose: **App functionality**
+- Data type: **Device or other IDs** (random install ID, used to count monthly interpretations), App functionality
+- **Plus build:** **Financial info → Purchase history**, App functionality (payments themselves are handled by Google Play)
 - Encrypted in transit: **Yes**
 - Users can request deletion: **Yes** (nothing is retained server-side; on-device data is deleted via Settings → Delete all data)
 
@@ -167,9 +215,9 @@ Welcome · Today · Write · Seeking wisdom · Insight · Journal · Bible Insig
 | News app | No |
 | Health apps | "My app does not have any health features" |
 | Government app | No |
-| Financial features | None |
+| Financial features | None (subscriptions through Google Play Billing are not a "financial feature") |
 | Data safety | See above |
-| AI-generated content (cloud build) | Yes — users can report offensive content in-app ("Report this insight") |
+| AI-generated content (cloud build) | Yes — users can report offensive content in-app ("Report this insight" / "Report this interpretation") |
 
 ### Graphics
 
