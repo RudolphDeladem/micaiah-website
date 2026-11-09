@@ -44,31 +44,42 @@ export default function SettingsScreen() {
       : 'Dream Interpretation and Prophetic Word are unlocked'
     : 'More AI-written Dream Interpretation and Prophetic Word';
 
+  const reminderFailed = () =>
+    Alert.alert('Reminder not set', 'Micaiah could not schedule your daily reminder. Please try again in a moment.');
+
   const toggleReminder = async (enabled: boolean) => {
-    if (!enabled) {
-      await cancelReminders();
-      await updateSettings({ reminderEnabled: false });
-      return;
+    try {
+      if (!enabled) {
+        await cancelReminders();
+        await updateSettings({ reminderEnabled: false });
+        return;
+      }
+      const granted = await requestReminderPermission();
+      if (!granted) {
+        Alert.alert(
+          'Notifications are off',
+          'To receive a daily reminder, allow notifications for Micaiah in your device settings.',
+          [
+            { text: 'Not now', style: 'cancel' },
+            { text: 'Open Settings', onPress: () => Linking.openSettings() },
+          ],
+        );
+        return;
+      }
+      await scheduleDailyReminder(settings.reminderHour, settings.reminderMinute);
+      await updateSettings({ reminderEnabled: true });
+    } catch {
+      reminderFailed();
     }
-    const granted = await requestReminderPermission();
-    if (!granted) {
-      Alert.alert(
-        'Notifications are off',
-        'To receive a daily reminder, allow notifications for Micaiah in your device settings.',
-        [
-          { text: 'Not now', style: 'cancel' },
-          { text: 'Open Settings', onPress: () => Linking.openSettings() },
-        ],
-      );
-      return;
-    }
-    await scheduleDailyReminder(settings.reminderHour, settings.reminderMinute);
-    await updateSettings({ reminderEnabled: true });
   };
 
   const chooseTime = async (hour: number, minute: number) => {
-    await updateSettings({ reminderHour: hour, reminderMinute: minute });
-    if (settings.reminderEnabled) await scheduleDailyReminder(hour, minute);
+    try {
+      await updateSettings({ reminderHour: hour, reminderMinute: minute });
+      if (settings.reminderEnabled) await scheduleDailyReminder(hour, minute);
+    } catch {
+      reminderFailed();
+    }
   };
 
   const toggleCloud = (enabled: boolean) => {
@@ -121,7 +132,12 @@ export default function SettingsScreen() {
           style: 'destructive',
           onPress: async () => {
             await cancelReminders().catch(() => {});
-            await deleteAllData();
+            try {
+              await deleteAllData();
+            } catch {
+              Alert.alert('Could not delete everything', 'Please try again. If it keeps failing, uninstalling Micaiah also removes all of its data.');
+              return;
+            }
             await resetIdentity().catch(() => {});
             router.replace('/onboarding');
           },

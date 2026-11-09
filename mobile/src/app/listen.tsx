@@ -1,12 +1,13 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { ExpoSpeechRecognitionModule, useSpeechRecognitionEvent } from 'expo-speech-recognition';
 import { router, useLocalSearchParams } from 'expo-router';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Linking, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { IconButton, PrimaryButton, SecondaryButton, T, tapFeedback } from '@/components/ui';
 import { Colors, Fonts, MaxContentWidth, Radius, Spacing } from '@/constants/theme';
+import { SPEECH_PROBLEM_TEXT, pickSpeechLocale, speechProblem, type SpeechProblem } from '@/lib/speech';
 
 type Status = 'idle' | 'listening' | 'paused' | 'denied' | 'unavailable';
 
@@ -36,6 +37,9 @@ export default function Listen() {
   const [interim, setInterim] = useState('');
   const [volume, setVolume] = useState(0);
   const [elapsed, setElapsed] = useState(0);
+  const [problem, setProblem] = useState<SpeechProblem | null>(null);
+  const localeRef = useRef<string | null>(null);
+  const onDeviceRef = useRef(true);
 
   useSpeechRecognitionEvent('start', () => setStatus('listening'));
   useSpeechRecognitionEvent('end', () => {
@@ -52,35 +56,56 @@ export default function Listen() {
     }
   });
   useSpeechRecognitionEvent('volumechange', (event) => setVolume(Math.max(0, Math.min(1, event.value / 10))));
-  useSpeechRecognitionEvent('error', (event) => {
-    if (event.error === 'not-allowed') setStatus('denied');
-    else if (event.error === 'service-not-allowed' || event.error === 'language-not-supported') setStatus('unavailable');
-    else if (event.error !== 'aborted' && event.error !== 'no-speech') setStatus('paused');
-    else setStatus((s) => (s === 'listening' ? 'paused' : s));
-  });
-
   const start = useCallback(async () => {
-    if (!ExpoSpeechRecognitionModule.isRecognitionAvailable()) {
+    setProblem(null);
+    try {
+      const permission = await ExpoSpeechRecognitionModule.requestPermissionsAsync();
+      if (!permission.granted) {
+        setStatus('denied');
+        return;
+      }
+      // iOS only starts with a locale it supports exactly, so map e.g. en-GH to en-US once.
+      if (!localeRef.current) {
+        const supported = await ExpoSpeechRecognitionModule.getSupportedLocales({})
+          .then((r) => r.locales)
+          .catch(() => [] as string[]);
+        localeRef.current = pickSpeechLocale(deviceLocale(), supported);
+      }
+      ExpoSpeechRecognitionModule.start({
+        lang: localeRef.current,
+        interimResults: true,
+        continuous: true,
+        addsPunctuation: true,
+        // Keep audio on the device when its model is installed; otherwise use the system service.
+        requiresOnDeviceRecognition:
+          onDeviceRef.current && Platform.OS === 'ios' && ExpoSpeechRecognitionModule.supportsOnDeviceRecognition(),
+        iosTaskHint: 'dictation',
+        volumeChangeEventOptions: { enabled: true, intervalMillis: 120 },
+      });
+    } catch {
       setStatus('unavailable');
-      return;
     }
-    const permission = await ExpoSpeechRecognitionModule.requestPermissionsAsync();
-    if (!permission.granted) {
+  }, []);
+
+  useSpeechRecognitionEvent('error', (event) => {
+    if (event.error === 'not-allowed') {
       setStatus('denied');
       return;
     }
-    ExpoSpeechRecognitionModule.start({
-      lang: deviceLocale(),
-      interimResults: true,
-      continuous: true,
-      addsPunctuation: true,
-      // Keep audio on the device whenever the OS supports it.
-      requiresOnDeviceRecognition:
-        Platform.OS === 'ios' && ExpoSpeechRecognitionModule.supportsOnDeviceRecognition(),
-      iosTaskHint: 'dictation',
-      volumeChangeEventOptions: { enabled: true, intervalMillis: 120 },
-    });
-  }, []);
+    if (event.error === 'service-not-allowed' || event.error === 'language-not-supported') {
+      if (onDeviceRef.current) {
+        // The on-device model for this language is not downloaded: retry with the standard service.
+        onDeviceRef.current = false;
+        setTimeout(start, 300);
+        return;
+      }
+      setStatus('unavailable');
+      return;
+    }
+    const kind = speechProblem(event.error);
+    if (kind) setProblem(kind);
+    setStatus((s) => (s === 'listening' || s === 'idle' ? 'paused' : s));
+  });
 
   useEffect(() => {
     // Start after the first frame so the screen is visible before the permission prompt.
@@ -130,7 +155,9 @@ export default function Listen() {
             <T style={{ textAlign: 'center' }}>
               {status === 'denied'
                 ? 'To speak instead of typing, allow microphone and speech recognition access for Micaiah in Settings. You can always type instead.'
-                : 'Speech recognition isn’t available on this device right now. You can type instead.'}
+                : Platform.OS === 'ios'
+                  ? 'Speech recognition isn’t available right now. Make sure Dictation is on (Settings → General → Keyboard → Enable Dictation), then try again. You can always type instead.'
+                  : 'Speech recognition isn’t available on this device right now. You can type instead.'}
             </T>
           </View>
           <View style={{ gap: Spacing.sm }}>
@@ -177,6 +204,14 @@ export default function Listen() {
               {fullText || 'Start speaking — your words will appear here.'}
             </T>
           </ScrollView>
+          {problem && !listening ? (
+            <View style={styles.problem} accessibilityLiveRegion="polite">
+              <Ionicons name="information-circle-outline" size={18} color={Colors.indigoMid} />
+              <T variant="small" style={{ flex: 1, color: Colors.inkMid }}>
+                {SPEECH_PROBLEM_TEXT[problem]}
+              </T>
+            </View>
+          ) : null}
         </View>
 
         {listening ? (
@@ -248,6 +283,14 @@ const styles = StyleSheet.create({
     shadowRadius: 18,
     shadowOffset: { width: 0, height: 8 },
     elevation: 6,
+  },
+  problem: {
+    flexDirection: 'row',
+    gap: Spacing.sm,
+    alignSelf: 'stretch',
+    padding: Spacing.md,
+    borderRadius: Radius.md,
+    backgroundColor: Colors.white,
   },
   stopSquare: { width: 26, height: 26, borderRadius: 4, borderWidth: 3, borderColor: Colors.white },
   typeInstead: {

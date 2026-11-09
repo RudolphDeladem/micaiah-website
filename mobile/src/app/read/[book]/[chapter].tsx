@@ -20,7 +20,7 @@ export default function Reader() {
   const chapter = clampInt(params.chapter, 1, BOOKS[book].chapters);
   const { settings, updateSettings } = useStore();
   const version = versionInfo(settings.bibleVersion);
-  const { text, error } = useBible(settings.bibleVersion);
+  const { text, error, retry } = useBible(settings.bibleVersion);
   const verses = text?.[book]?.[chapter - 1] ?? [];
   const title = `${BOOKS[book].name} ${chapter}`;
   const prev = adjacentChapter(book, chapter, -1);
@@ -73,7 +73,15 @@ export default function Reader() {
       </View>
 
       {error ? (
-        <T>This translation could not be opened. Please try again or choose another translation.</T>
+        <View style={{ gap: Spacing.md }}>
+          <T>This translation could not be opened. Please try again or choose another translation.</T>
+          <SecondaryButton label="Try again" icon="refresh" onPress={retry} />
+          <SecondaryButton
+            label="Choose another translation"
+            icon="book-outline"
+            onPress={() => router.push('/bible-version')}
+          />
+        </View>
       ) : !text ? (
         <ActivityIndicator color={Colors.indigoMid} style={{ marginTop: Spacing.xl }} />
       ) : (

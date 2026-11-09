@@ -1,6 +1,6 @@
 import { Asset } from 'expo-asset';
 import { File } from 'expo-file-system';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Platform } from 'react-native';
 
 import type { BibleText, BibleVersionId } from './bible';
@@ -40,13 +40,14 @@ export function loadBible(id: BibleVersionId): Promise<BibleText> {
   return promise;
 }
 
-/** Loads a translation; `text` is null while loading. */
-export function useBible(id: BibleVersionId): { text: BibleText | null; error: boolean } {
+/** Loads a translation; `text` is null while loading. `retry` loads it again after an error. */
+export function useBible(id: BibleVersionId): { text: BibleText | null; error: boolean; retry: () => void } {
   const [state, setState] = useState<{ id: BibleVersionId; text: BibleText | null; error: boolean }>(() => ({
     id,
     text: cached?.id === id ? cached.text : null,
     error: false,
   }));
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
     let active = true;
@@ -56,7 +57,12 @@ export function useBible(id: BibleVersionId): { text: BibleText | null; error: b
     return () => {
       active = false;
     };
+  }, [id, attempt]);
+
+  const retry = useCallback(() => {
+    setState({ id, text: null, error: false });
+    setAttempt((a) => a + 1);
   }, [id]);
 
-  return state.id === id ? { text: state.text, error: state.error } : { text: null, error: false };
+  return state.id === id ? { text: state.text, error: state.error, retry } : { text: null, error: false, retry };
 }

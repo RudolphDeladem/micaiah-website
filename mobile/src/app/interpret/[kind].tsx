@@ -19,7 +19,7 @@ import {
   type Usage,
 } from '@/lib/interpret';
 import { generateLocalInterpretation } from '@/lib/interpret-engine';
-import { newEntryId, useStore } from '@/lib/store';
+import { DRAFT_KEY_PREFIX, newEntryId, useStore } from '@/lib/store';
 import { purchasesAvailable, useSubscription } from '@/lib/subscription';
 import type { InterpretationKind } from '@/lib/types';
 
@@ -38,7 +38,7 @@ export default function NewInterpretation() {
   const params = useLocalSearchParams<{ kind?: string; text?: string }>();
   const kind = asKind(params.kind);
   const copy = KIND_COPY[kind];
-  const draftKey = `micaiah.draft.${kind}.v1`;
+  const draftKey = `${DRAFT_KEY_PREFIX}${kind}.v1`;
   const { settings, updateSettings, addInterpretation } = useStore();
   const { usage, setUsage, refreshUsage } = useSubscription();
 

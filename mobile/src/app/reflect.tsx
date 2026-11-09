@@ -10,10 +10,10 @@ import { IconButton, PrimaryButton, T } from '@/components/ui';
 import { Colors, Fonts, MaxContentWidth, Radius, Spacing } from '@/constants/theme';
 import { cloudInsightAvailable, generateInsight } from '@/lib/cloud-insight';
 import { MAX_REFLECTION_LENGTH, MIN_REFLECTION_LENGTH } from '@/lib/insight-engine';
-import { newEntryId, useStore } from '@/lib/store';
+import { DRAFT_KEY_PREFIX, newEntryId, useStore } from '@/lib/store';
 import type { ReflectionMode } from '@/lib/types';
 
-const DRAFT_KEY = 'micaiah.draft.v1';
+const DRAFT_KEY = `${DRAFT_KEY_PREFIX}v1`;
 const MIN_SEEKING_MS = 2400;
 
 const MODE_COPY: Record<ReflectionMode, { title: string; prompt: string; placeholder: string }> = {

@@ -4,15 +4,18 @@ import { CormorantGaramond_600SemiBold } from '@expo-google-fonts/cormorant-gara
 import { DMSans_400Regular } from '@expo-google-fonts/dm-sans/400Regular';
 import { DMSans_500Medium } from '@expo-google-fonts/dm-sans/500Medium';
 import { DMSans_600SemiBold } from '@expo-google-fonts/dm-sans/600SemiBold';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Stack, router, type ErrorBoundaryProps } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
-import { Colors, Fonts } from '@/constants/theme';
+import { PrimaryButton, SecondaryButton, T } from '@/components/ui';
+import { Colors, Fonts, Spacing } from '@/constants/theme';
 import { StoreProvider, useStore } from '@/lib/store';
 import { SubscriptionProvider } from '@/lib/subscription';
 
@@ -67,6 +70,44 @@ function RootNavigator() {
     </>
   );
 }
+
+/** Shown instead of a blank screen if any screen throws while rendering. Uses no app state. */
+export function ErrorBoundary({ retry }: ErrorBoundaryProps) {
+  // The error may happen before the app hides the splash screen.
+  useEffect(() => {
+    SplashScreen.hideAsync().catch(() => {});
+  }, []);
+  return (
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.crash}>
+        <View style={styles.crashInner}>
+          <Ionicons name="leaf-outline" size={44} color={Colors.indigoMid} />
+          <T variant="title" style={{ textAlign: 'center' }}>
+            Something went wrong
+          </T>
+          <T style={{ textAlign: 'center' }}>
+            Micaiah hit an unexpected problem. Your journal is safe on this device. Please try again.
+          </T>
+          <PrimaryButton label="Try again" icon="refresh" onPress={() => retry()} style={{ alignSelf: 'stretch' }} />
+          <SecondaryButton
+            label="Go to Today"
+            icon="home-outline"
+            onPress={() => {
+              router.replace('/');
+              retry();
+            }}
+            style={{ alignSelf: 'stretch' }}
+          />
+        </View>
+      </SafeAreaView>
+    </SafeAreaProvider>
+  );
+}
+
+const styles = StyleSheet.create({
+  crash: { flex: 1, backgroundColor: Colors.cream },
+  crashInner: { flex: 1, justifyContent: 'center', alignItems: 'center', gap: Spacing.md, padding: Spacing.lg },
+});
 
 export default function RootLayout() {
   return (
