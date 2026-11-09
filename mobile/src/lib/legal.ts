@@ -3,7 +3,7 @@
  * website (privacy.html / terms.html) so store listings can link to it.
  */
 export const SUPPORT_EMAIL = 'siastesfinance@gmail.com';
-export const WEBSITE_URL = 'https://rudolphdeladem.github.io/micaiah-website';
+export const WEBSITE_URL = 'https://micaiah-website.netlify.app';
 export const PRIVACY_URL = `${WEBSITE_URL}/privacy.html`;
 export const TERMS_URL = `${WEBSITE_URL}/terms.html`;
 export const SUPPORT_URL = `${WEBSITE_URL}/support.html`;

@@ -16,8 +16,8 @@ collected. Everything in this section matches that build.
 | Subtitle (≤30) | `Bible journal, dreams & prayer` |
 | Category | Primary **Lifestyle**, secondary **Reference** |
 | Price | Free · no in-app purchases |
-| Support URL | https://rudolphdeladem.github.io/micaiah-website/support.html |
-| Privacy Policy URL | https://rudolphdeladem.github.io/micaiah-website/privacy.html |
+| Support URL | https://micaiah-website.netlify.app/support.html |
+| Privacy Policy URL | https://micaiah-website.netlify.app/privacy.html |
 | Marketing URL | leave **empty** (the home page still advertises a waitlist and Premium) |
 | Copyright | `© 2026 Micaiah AI` |
 | Devices | iPhone only (`supportsTablet: false`) — no iPad screenshots needed |
@@ -82,8 +82,8 @@ If something you write suggests you may be in danger, Micaiah puts crisis resour
 
 Micaiah offers devotional encouragement and is not a substitute for pastoral care, professional counseling, or medical advice.
 
-Terms of Use: https://rudolphdeladem.github.io/micaiah-website/terms.html
-Privacy Policy: https://rudolphdeladem.github.io/micaiah-website/privacy.html
+Terms of Use: https://micaiah-website.netlify.app/terms.html
+Privacy Policy: https://micaiah-website.netlify.app/privacy.html
 ```
 
 **What's New**
@@ -125,15 +125,15 @@ Thank you for reviewing Micaiah.
 | App name (≤30) | `Micaiah AI` |
 | Subtitle / short description (iOS ≤30, Play ≤80) | iOS: `Speak. Reflect. Receive.` · Play: `Speak or write your heart and receive Scripture-based insight and prayer.` |
 | Primary category | Lifestyle (iOS secondary: Reference) · Play: Lifestyle |
-| Support URL | https://rudolphdeladem.github.io/micaiah-website/support.html |
-| Marketing URL | https://rudolphdeladem.github.io/micaiah-website/ |
-| Privacy Policy URL | https://rudolphdeladem.github.io/micaiah-website/privacy.html |
+| Support URL | https://micaiah-website.netlify.app/support.html |
+| Marketing URL | https://micaiah-website.netlify.app/ |
+| Privacy Policy URL | https://micaiah-website.netlify.app/privacy.html |
 | Contact email | siastesfinance@gmail.com |
 | Price | Free, no ads. **Plus build:** in-app purchase "Micaiah Plus" (auto-renewing subscription) |
 | Copyright | © 2026 Micaiah AI |
 
-The URLs assume GitHub Pages is enabled for this repository
-(Settings → Pages → Deploy from branch → `main` / root). Open each URL before
+The site is hosted on Netlify and deploys automatically from `main`
+(project `micaiah-website`). Open each URL before
 submitting; a broken privacy-policy link is an automatic rejection.
 
 ### Keywords (iOS, ≤100 characters, comma-separated, no spaces)
@@ -201,8 +201,8 @@ link to the Terms of Use / EULA for subscriptions):
 MICAIAH PLUS
 Dream Interpretation and Prophetic Word are included with Micaiah Plus, an optional auto-renewing subscription. Everything else is free. Payment is charged to your account at confirmation; the subscription renews automatically unless cancelled at least 24 hours before the end of the period. Manage it in your account settings.
 
-Terms of Use: https://rudolphdeladem.github.io/micaiah-website/terms.html
-Privacy Policy: https://rudolphdeladem.github.io/micaiah-website/privacy.html
+Terms of Use: https://micaiah-website.netlify.app/terms.html
+Privacy Policy: https://micaiah-website.netlify.app/privacy.html
 ```
 
 ### What's New (v1.0)
