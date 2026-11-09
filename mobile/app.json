@@ -9,12 +9,12 @@
     "scheme": "micaiah",
     "userInterfaceStyle": "light",
     "backgroundColor": "#faf8f4",
-    "description": "A faith-based spiritual companion: speak or write your heart and receive Scripture-based insight, gentle steps, and a prayer \u2014 saved in a private journal.",
+    "description": "A faith-based spiritual companion: speak or write your heart and receive Scripture-based insight, gentle steps, and a prayer — saved in a private journal.",
     "githubUrl": "https://github.com/RudolphDeladem/micaiah-website",
     "ios": {
       "bundleIdentifier": "com.micaiahai.app",
       "buildNumber": "1",
-      "supportsTablet": true,
+      "supportsTablet": false,
       "icon": "./assets/images/icon.png",
       "config": {
         "usesNonExemptEncryption": false

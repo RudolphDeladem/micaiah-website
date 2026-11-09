@@ -5,11 +5,11 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { Alert, Linking, Pressable, Share, StyleSheet, Switch, TextInput, View } from 'react-native';
 
-import { Badge, Card, Divider, Row, Screen, T } from '@/components/ui';
+import { Card, Divider, Row, Screen, T } from '@/components/ui';
 import { Colors, Fonts, Gradients, Radius, Spacing } from '@/constants/theme';
 import { cloudInsightAvailable } from '@/lib/cloud-insight';
 import { formatRef, versionInfo } from '@/lib/bible';
-import { interpretAvailable, interpretComingSoon } from '@/lib/interpret';
+import { interpretUsesService } from '@/lib/interpret';
 import { SUPPORT_EMAIL } from '@/lib/legal';
 import { cancelReminders, requestReminderPermission, scheduleDailyReminder } from '@/lib/reminders';
 import { TRANSLATION } from '@/lib/scripture';
@@ -35,15 +35,14 @@ export default function SettingsScreen() {
   const subscribed = isPlus || usage?.plan === 'plus';
   const [name, setName] = useState(settings.name);
   const streak = currentStreak(entries);
-  // Shown as a full preview while the AI service is not connected yet; live once it is.
-  const showPlus = purchasesAvailable || interpretComingSoon;
+  // Only offered once the AI service and store purchases are configured; App Review rejects
+  // subscriptions that cannot actually be bought.
+  const showPlus = purchasesAvailable;
   const plusDetail = subscribed
     ? usage
       ? `This month: ${usage.dream.used}/${usage.dream.limit} dreams · ${usage.prophetic.used}/${usage.prophetic.limit} prophetic words`
       : 'Dream Interpretation and Prophetic Word are unlocked'
-    : interpretComingSoon
-      ? 'Dream Interpretation and Prophetic Word, weighed with Scripture. $4.99 a month.'
-      : 'Unlock Dream Interpretation and Prophetic Word';
+    : 'More AI-written Dream Interpretation and Prophetic Word';
 
   const toggleReminder = async (enabled: boolean) => {
     if (!enabled) {
@@ -182,7 +181,6 @@ export default function SettingsScreen() {
                   <T variant="heading" style={{ color: Colors.white }}>
                     {subscribed ? 'Micaiah Plus is active' : 'Micaiah Plus'}
                   </T>
-                  {interpretComingSoon ? <Badge label="Coming soon" tone="light" /> : null}
                 </View>
                 <T variant="small" style={{ color: Colors.indigoPale }}>
                   {plusDetail}
@@ -279,7 +277,7 @@ export default function SettingsScreen() {
               />
             }
           />
-          {interpretAvailable && settings.interpretConsent ? (
+          {interpretUsesService && settings.interpretConsent ? (
             <>
               <Divider />
               <Row
@@ -321,8 +319,9 @@ export default function SettingsScreen() {
 
       <Section title="Your data">
         <T variant="small">
-          Your journal and interpretations are stored only on this device. There is no account, and nothing is uploaded
-          unless you use cloud insights or Dream / Prophetic interpretation.
+          {cloudInsightAvailable
+            ? 'Your journal and interpretations are stored only on this device. There is no account, and nothing is uploaded unless you use cloud insights or Dream / Prophetic interpretation.'
+            : 'Your journal and interpretations are created and stored only on this device. There is no account, no tracking, and nothing is ever uploaded.'}
         </T>
         <Row icon="trash-outline" label="Delete all data" tone="danger" onPress={confirmDeleteAll} />
       </Section>

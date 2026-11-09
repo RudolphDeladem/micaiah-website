@@ -3,7 +3,7 @@ import { Linking, Platform } from 'react-native';
 import Purchases, { PURCHASES_ERROR_CODE, type CustomerInfo, type PurchasesPackage } from 'react-native-purchases';
 
 import { getInstallId } from './install-id';
-import { fetchUsage, interpretAvailable, type Usage } from './interpret';
+import { fetchUsage, interpretUsesService, type Usage } from './interpret';
 
 /**
  * Micaiah Plus: one auto-renewing subscription (sold through the App Store / Google Play via
@@ -21,7 +21,7 @@ const API_KEY =
       : undefined) ?? '';
 
 /** Subscriptions are offered only when the store SDK is configured and there is a service to unlock. */
-export const purchasesAvailable = API_KEY.length > 0 && interpretAvailable;
+export const purchasesAvailable = API_KEY.length > 0 && interpretUsesService;
 
 type Subscription = {
   /** RevenueCat says the Plus entitlement is active on this device. */
@@ -57,7 +57,7 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
   const [usage, setUsage] = useState<Usage | null>(null);
 
   const refreshUsage = useCallback(async (options: { recheckPlan?: boolean } = {}) => {
-    if (!interpretAvailable) return null;
+    if (!interpretUsesService) return null;
     try {
       const next = await fetchUsage(options.recheckPlan);
       setUsage(next);

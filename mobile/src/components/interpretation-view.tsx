@@ -170,7 +170,9 @@ export function InterpretationView({ item }: { item: Interpretation }) {
       </Card>
 
       <T variant="small" style={{ textAlign: 'center', marginTop: Spacing.sm }}>
-        {copy.title} written by AI (Claude) as a biblical reflection — it is not a prophecy or a word from God.
+        {item.source === 'on-device'
+          ? `${copy.title} prepared privately on your device as a biblical reflection — it is not a prophecy or a word from God.`
+          : `${copy.title} written by AI (Claude) as a biblical reflection — it is not a prophecy or a word from God.`}
         {'\n'}Test everything against Scripture and seek wise counsel (1 Thessalonians 5:21).
       </T>
     </View>

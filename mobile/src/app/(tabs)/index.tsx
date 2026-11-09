@@ -9,7 +9,6 @@ import { KIND_COPY } from '@/components/interpretation-view';
 import { Card, NavTile, PrimaryButton, Screen, T, tapFeedback, type IconName } from '@/components/ui';
 import { Accents, Colors, Gradients, Radius, Spacing } from '@/constants/theme';
 import { BOOKS } from '@/lib/bible';
-import { interpretAvailable, interpretComingSoon } from '@/lib/interpret';
 import { TRANSLATION, verseOfTheDay } from '@/lib/scripture';
 import { useStore } from '@/lib/store';
 import { currentStreak, dayKey } from '@/lib/streak';
@@ -36,7 +35,6 @@ export default function Today() {
   const reflectedToday = entries.some((e) => dayKey(new Date(e.createdAt)) === dayKey(now));
   const latest = entries[0];
   const lastRead = settings.lastRead;
-  const showInterpret = interpretAvailable || interpretComingSoon;
 
   const startReflection = (mode: ReflectionMode) => {
     tapFeedback();
@@ -153,17 +151,14 @@ export default function Today() {
           iconColor={Accents.sunrise.icon}
           onPress={() => router.push('/topics')}
         />
-        {showInterpret ? (
-          <NavTile
-            icon={KIND_COPY.dream.icon}
-            title="Interpret"
-            detail="Dreams and prophetic words, weighed with Scripture."
-            tint={Accents.rose.tint}
-            iconColor={Accents.rose.icon}
-            badge={interpretComingSoon ? 'Soon' : undefined}
-            onPress={() => router.push('/interpret')}
-          />
-        ) : null}
+        <NavTile
+          icon={KIND_COPY.dream.icon}
+          title="Interpret"
+          detail="Dreams and prophetic words, weighed with Scripture."
+          tint={Accents.rose.tint}
+          iconColor={Accents.rose.icon}
+          onPress={() => router.push('/interpret')}
+        />
       </View>
 
       {latest ? (

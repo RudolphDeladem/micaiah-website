@@ -110,6 +110,15 @@ export function InsightView({ insight }: { insight: Insight }) {
         ))}
       </Card>
 
+      {insight.question ? (
+        <Card style={{ gap: Spacing.sm, borderColor: Colors.indigoPale, backgroundColor: Colors.indigoGhost }}>
+          <T variant="label">✦ A question to sit with</T>
+          <T variant="heading" style={{ fontSize: 17, lineHeight: 25 }} selectable>
+            {insight.question}
+          </T>
+        </Card>
+      ) : null}
+
       <Card tone="gold" style={{ gap: Spacing.sm }}>
         <T variant="label" style={{ color: Colors.gold }}>
           ✦ A prayer for today

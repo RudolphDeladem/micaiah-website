@@ -41,7 +41,9 @@ export type ScriptureRef = { book: string; chapter: number; verse: number; endVe
 
 export function formatRef(ref: ScriptureRef): string {
   const range = ref.endVerse && ref.endVerse > ref.verse ? `-${ref.endVerse}` : '';
-  return `${ref.book} ${ref.chapter}:${ref.verse}${range}`;
+  // A reference never spans chapters, so it is always within one psalm: "Psalm 23:1", as people write it.
+  const book = ref.book === 'Psalms' ? 'Psalm' : ref.book;
+  return `${book} ${ref.chapter}:${ref.verse}${range}`;
 }
 
 /**

@@ -7,7 +7,7 @@ export const WEBSITE_URL = 'https://rudolphdeladem.github.io/micaiah-website';
 export const PRIVACY_URL = `${WEBSITE_URL}/privacy.html`;
 export const TERMS_URL = `${WEBSITE_URL}/terms.html`;
 export const SUPPORT_URL = `${WEBSITE_URL}/support.html`;
-export const LEGAL_EFFECTIVE_DATE = 'October 29, 2026';
+export const LEGAL_EFFECTIVE_DATE = 'November 9, 2026';
 
 export type LegalSection = { heading: string; body: string };
 export type LegalDoc = { title: string; sections: LegalSection[] };
@@ -17,27 +17,23 @@ export const PRIVACY_POLICY: LegalDoc = {
   sections: [
     {
       heading: 'Summary',
-      body: 'Micaiah AI is designed so that your reflections stay yours. There is no account, no advertising, no analytics, and no tracking. Your journal and interpretations are stored only on your device.',
+      body: 'Micaiah AI is designed so that your reflections stay yours. There is no account, no advertising, no analytics, and no tracking. Insights, dream interpretations and prophetic-word reflections are all created on your device, and your journal is stored only on your device. We do not collect any of your data.',
     },
     {
       heading: 'Information stored on your device',
-      body: 'The reflections you write or speak, the insights generated for them, the dreams and prophetic words you submit and their interpretations, your optional first name, and your app preferences (such as reminder time and Bible translation) are stored locally on your device. We do not have access to this data and it is not uploaded to our servers except as described below.',
+      body: 'The reflections you write or speak, the insights generated for them, the dreams and prophetic words you write and their interpretations, your optional first name, and your app preferences (such as reminder time and Bible translation) are stored locally on your device. We do not have access to this data, and the app does not upload it anywhere.',
+    },
+    {
+      heading: 'How insights and interpretations are created',
+      body: 'Micaiah AI uses a Scripture library built into the app to prepare insights, dream interpretations and prophetic-word reflections entirely on your device. The text you write is never sent to us or to any AI service, and it is never used to train AI models.',
     },
     {
       heading: 'Voice input',
       body: 'If you choose to speak a reflection, the app uses your device\'s built-in speech recognition service (Apple Speech on iOS, the system speech service on Android) to convert your voice to text. Where your device supports it, recognition runs on-device. If it does not, your operating system provider may process the audio according to its own privacy policy. Micaiah AI does not record, store, or upload your audio. Microphone and speech recognition permissions are only requested when you tap the microphone, and you can revoke them at any time in your device settings.',
     },
     {
-      heading: 'Optional cloud insights',
-      body: 'By default, insights are generated entirely on your device. In some versions of the app you may choose to turn on "Cloud insights" in Settings. Only if you explicitly opt in, the text of each reflection you submit is sent over an encrypted connection to the Micaiah AI insight service, which uses Anthropic\'s Claude AI model to write a personalised reflection. The text is used only to generate that response: Micaiah AI does not store it after the response is returned, does not sell it, and does not use it to train AI models. Anthropic processes the text as our service provider under its commercial terms, which do not permit training on it; Anthropic may retain it for a limited period for safety and abuse monitoring. You can turn cloud insights off at any time, and the app will return to on-device insights.',
-    },
-    {
-      heading: 'Dream Interpretation and Prophetic Word',
-      body: 'Where the app offers Dream Interpretation and Prophetic Word, these always use the Micaiah AI service. The first time you use them, the app asks for your agreement. Each time you submit a dream or a prophetic word, its text is sent over an encrypted connection to the service, where Anthropic\'s Claude AI writes a biblical reflection on it. As with cloud insights, Micaiah AI does not store the text after the response is returned, does not sell it, and does not use it to train AI models. To apply monthly allowances, the service keeps a count of how many interpretations each install has requested this month, linked only to a random install ID created by the app — not to your name, email, or device identifiers.',
-    },
-    {
-      heading: 'Subscriptions',
-      body: 'Micaiah Plus is sold through the Apple App Store or Google Play, which process your payment under their own privacy policies; we never receive your payment details. We use RevenueCat, Inc. as our service provider to manage subscription status. RevenueCat receives your purchase history (such as the product, purchase dates, and whether the subscription is active) linked to the app\'s random install ID. We use this only to unlock Micaiah Plus features.',
+      heading: 'Purchases',
+      body: 'This version of Micaiah AI is free and has no in-app purchases. If we add optional online features or subscriptions in a future version, the app will explain them and ask before any text leaves your device, and we will update this policy before that version is released.',
     },
     {
       heading: 'Notifications',
@@ -49,7 +45,7 @@ export const PRIVACY_POLICY: LegalDoc = {
     },
     {
       heading: 'Data retention and deletion',
-      body: 'Your data remains on your device until you delete it. You can delete individual entries in the Journal or the Interpret tab, or erase everything using Settings → Delete all data, which also replaces the app\'s random install ID. Uninstalling the app also removes all of its data from your device. Monthly interpretation counts on our service are discarded after the month ends.',
+      body: 'Your data remains on your device until you delete it. You can delete individual entries in the Journal or the Interpret tab, or erase everything using Settings → Delete all data. Uninstalling the app also removes all of its data from your device. Because we never receive your data, there is nothing for us to delete on our side.',
     },
     {
       heading: 'Children',
@@ -83,11 +79,11 @@ export const TERMS_OF_USE: LegalDoc = {
     },
     {
       heading: 'Dreams and prophetic words',
-      body: 'Dream Interpretation and Prophetic Word give AI-generated reflections that connect what you share with Scripture. They are not prophecy, divine revelation, or a word from God, and they do not predict the future. Scripture teaches believers to test every word (1 Thessalonians 5:21). Do not make important decisions on the basis of an interpretation alone; pray, read the Scripture yourself, and seek counsel from your pastor or mature believers.',
+      body: 'Dream Interpretation and Prophetic Word give automatically generated reflections that connect what you share with Scripture. They are not prophecy, divine revelation, or a word from God, and they do not predict the future. Scripture teaches believers to test every word (1 Thessalonians 5:21). Do not make important decisions on the basis of an interpretation alone; pray, read the Scripture yourself, and seek counsel from your pastor or mature believers.',
     },
     {
-      heading: 'Micaiah Plus subscription',
-      body: 'Micaiah Plus is an optional auto-renewing subscription that unlocks Dream Interpretation and Prophetic Word up to the monthly allowance shown in the app. All other features remain free. Payment is charged to your Apple ID or Google Play account when you confirm the purchase. The subscription renews automatically at the same price and duration unless it is cancelled at least 24 hours before the end of the current period, and your account is charged for renewal within 24 hours before the period ends. You can manage or cancel the subscription in your App Store or Google Play account settings; cancelling stops future renewals and you keep access until the end of the paid period. If a free trial is offered, any unused portion ends when you purchase a subscription. Refunds are handled by Apple or Google under their policies. Monthly allowances reset on the first day of each month (UTC); unused interpretations do not carry over.',
+      heading: 'Price',
+      body: 'Micaiah AI is free to download and use, and this version has no in-app purchases. If paid features are added in the future, their price and terms will be shown clearly in the app before you buy.',
     },
     {
       heading: 'Scripture',
@@ -99,7 +95,7 @@ export const TERMS_OF_USE: LegalDoc = {
     },
     {
       heading: 'Acceptable use',
-      body: 'Do not use the app to break the law, to harass others, or to attempt to disrupt, overload, or reverse engineer the Micaiah AI service or bypass its allowances. If an insight or interpretation seems inappropriate, please report it using the "Report" option so we can improve.',
+      body: 'Do not use the app to break the law or to harass others. If an insight or interpretation seems inappropriate, please report it using the "Report" option or by email so we can improve.',
     },
     {
       heading: 'Availability',

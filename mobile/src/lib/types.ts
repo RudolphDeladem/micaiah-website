@@ -15,6 +15,8 @@ export type Theme = {
   interpretations: string[];
   steps: string[][];
   prayers: string[];
+  /** Reflection questions to sit with after reading the insight. */
+  questions: string[];
   verses: Verse[];
 };
 
@@ -27,6 +29,8 @@ export type Insight = {
   verses: Verse[];
   steps: string[];
   prayer: string;
+  /** A question to sit with (absent on older entries and on cloud insights). */
+  question?: string;
   source: InsightSource;
   /** True when the reflection contained language suggesting the person may be in danger. */
   crisis: boolean;
@@ -78,5 +82,7 @@ export type Interpretation = {
   steps: string[];
   prayer: string;
   crisis: boolean;
+  /** Where it was written; older saved interpretations (before on-device) came from the service. */
+  source?: InsightSource;
   favorite?: boolean;
 };

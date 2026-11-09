@@ -4,9 +4,8 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, Platform, Pressable, StyleSheet, View } from 'react-native';
 import type { PurchasesPackage } from 'react-native-purchases';
 
-import { Badge, Card, LogoMark, PrimaryButton, Screen, SecondaryButton, T, type IconName } from '@/components/ui';
+import { Card, LogoMark, PrimaryButton, Screen, SecondaryButton, T, type IconName } from '@/components/ui';
 import { Colors, Radius, Spacing } from '@/constants/theme';
-import { interpretComingSoon } from '@/lib/interpret';
 import { priceLabel, purchasesAvailable, trialLabel, useSubscription } from '@/lib/subscription';
 
 export default function Plus() {
@@ -113,28 +112,6 @@ export default function Plus() {
             ) : null}
           </Card>
           <SecondaryButton label="Manage subscription" icon="settings-outline" onPress={manage} />
-        </View>
-      ) : !purchasesAvailable && interpretComingSoon ? (
-        <View style={{ gap: Spacing.sm }}>
-          <View style={[styles.plan, styles.planActive]}>
-            <Ionicons name="radio-button-on" size={22} color={Colors.indigoMid} />
-            <View style={{ flex: 1, gap: 2 }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', gap: Spacing.sm }}>
-                <T variant="heading" style={{ fontSize: 16 }}>
-                  Monthly
-                </T>
-                <Badge label="Coming soon" />
-              </View>
-              <T variant="small">Both features in one simple plan</T>
-            </View>
-            <T variant="heading" style={{ fontSize: 15, color: Colors.indigo }}>
-              $4.99/mo
-            </T>
-          </View>
-          <PrimaryButton label="Coming soon" icon="time-outline" disabled onPress={() => {}} />
-          <T variant="small" style={{ textAlign: 'center' }}>
-            We’re putting the finishing touches on Micaiah Plus. Everything you use today stays free.
-          </T>
         </View>
       ) : !purchasesAvailable ? (
         <T style={{ textAlign: 'center' }}>Subscriptions aren’t available in this version of the app.</T>

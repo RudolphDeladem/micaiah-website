@@ -13,10 +13,12 @@ import {
   LimitReachedError,
   MAX_INTERPRET_LENGTH,
   MIN_INTERPRET_LENGTH,
+  interpretUsesService,
   remaining,
   requestInterpretation,
   type Usage,
 } from '@/lib/interpret';
+import { generateLocalInterpretation } from '@/lib/interpret-engine';
 import { newEntryId, useStore } from '@/lib/store';
 import { purchasesAvailable, useSubscription } from '@/lib/subscription';
 import type { InterpretationKind } from '@/lib/types';
@@ -84,7 +86,9 @@ export default function NewInterpretation() {
     setSeeking(true);
     const started = Date.now();
     try {
-      const result = await requestInterpretation(kind, text.trim(), controller.signal);
+      const result = interpretUsesService
+        ? await requestInterpretation(kind, text.trim(), controller.signal)
+        : { interpretation: generateLocalInterpretation(kind, text.trim()), usage: null };
       const wait = MIN_SEEKING_MS - (Date.now() - started);
       if (wait > 0) await new Promise((resolve) => setTimeout(resolve, wait));
       if (controller.signal.aborted) return;
@@ -102,7 +106,9 @@ export default function NewInterpretation() {
       }
       Alert.alert(
         'Something went wrong',
-        'We could not prepare your interpretation. Check your connection and try again — this did not count toward your monthly allowance.',
+        interpretUsesService
+          ? 'We could not prepare your interpretation. Check your connection and try again — this did not count toward your monthly allowance.'
+          : 'We could not prepare your interpretation. Please try again — your draft is saved.',
       );
     } finally {
       setSeeking(false);
@@ -116,7 +122,8 @@ export default function NewInterpretation() {
       const latest = await refreshUsage({ recheckPlan: true });
       if (remaining(latest, kind) === 0) return limitReached(latest);
     }
-    if (!settings.interpretConsent) {
+    // Only the AI service sends text off the device, so only it needs consent.
+    if (interpretUsesService && !settings.interpretConsent) {
       Alert.alert(
         'Send this to our AI service?',
         `To interpret it, Micaiah sends the text you write here securely to our service, where Anthropic’s Claude AI writes a biblical reflection. Micaiah does not store your words, and they are never used to train AI. Your interpretations are saved only on this device.`,
@@ -146,8 +153,9 @@ export default function NewInterpretation() {
     );
   }
 
-  const allowance =
-    usage && left !== null
+  const allowance = !interpretUsesService
+    ? 'Free · prepared privately on your device'
+    : usage && left !== null
       ? usage.plan === 'plus'
         ? `Micaiah Plus · ${left} left this month`
         : left > 0

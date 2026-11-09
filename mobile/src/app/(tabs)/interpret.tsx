@@ -2,12 +2,12 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router, useFocusEffect } from 'expo-router';
 import { useCallback } from 'react';
-import { Alert, Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
 import { KIND_COPY } from '@/components/interpretation-view';
 import { Card, Screen, T, tapFeedback } from '@/components/ui';
 import { Colors, Gradients, Radius, Spacing } from '@/constants/theme';
-import { interpretComingSoon, remaining, type Usage } from '@/lib/interpret';
+import { interpretUsesService, remaining, type Usage } from '@/lib/interpret';
 import { useStore } from '@/lib/store';
 import { purchasesAvailable, useSubscription } from '@/lib/subscription';
 import type { InterpretationKind } from '@/lib/types';
@@ -29,25 +29,16 @@ export default function Interpret() {
   // Counts change after purchases and at the start of each month — refresh whenever the tab is shown.
   useFocusEffect(
     useCallback(() => {
-      if (settings.interpretConsent) refreshUsage();
+      if (interpretUsesService && settings.interpretConsent) refreshUsage();
     }, [refreshUsage, settings.interpretConsent]),
   );
 
   const start = (kind: InterpretationKind) => {
     tapFeedback();
-    if (interpretComingSoon) {
-      Alert.alert(
-        `${KIND_COPY[kind].title} — coming soon`,
-        kind === 'dream'
-          ? 'Soon you’ll be able to describe a dream and receive a Scripture-based reflection: what it may mean, the images in it, passages to read, gentle cautions, next steps, and a prayer.'
-          : 'Soon you’ll be able to share a prophetic word you received and weigh it with Scripture: what it is saying, the themes it echoes, anything to be careful about, next steps, and a prayer.',
-      );
-      return;
-    }
     router.push({ pathname: '/interpret/[kind]', params: { kind } });
   };
 
-  const showUpsell = (purchasesAvailable && !isPlus && usage?.plan !== 'plus') || interpretComingSoon;
+  const showUpsell = purchasesAvailable && !isPlus && usage?.plan !== 'plus';
 
   return (
     <Screen contentStyle={{ gap: Spacing.lg }}>
@@ -61,7 +52,7 @@ export default function Interpret() {
 
       {KINDS.map((kind) => {
         const copy = KIND_COPY[kind];
-        const allowance = interpretComingSoon ? 'Coming soon' : allowanceLabel(usage, kind);
+        const allowance = interpretUsesService ? allowanceLabel(usage, kind) : 'Free · private on your device';
         return (
           <Pressable
             key={kind}
@@ -96,7 +87,7 @@ export default function Interpret() {
             <Ionicons name="sparkles" size={22} color={Colors.gold} />
             <View style={{ flex: 1 }}>
               <T variant="heading" style={{ fontSize: 15 }}>
-                Micaiah Plus{interpretComingSoon ? ' · coming soon' : ''}
+                Micaiah Plus
               </T>
               <T variant="small">
                 Up to {usage?.limits.plus ?? 20} dream and {usage?.limits.plus ?? 20} prophetic interpretations every
