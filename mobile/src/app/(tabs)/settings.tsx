@@ -1,17 +1,20 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
 import Constants from 'expo-constants';
+import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { Alert, Linking, Pressable, Share, StyleSheet, Switch, TextInput, View } from 'react-native';
 
 import { Card, Divider, Row, Screen, T } from '@/components/ui';
-import { Colors, Fonts, Radius, Spacing } from '@/constants/theme';
+import { Colors, Fonts, Gradients, Radius, Spacing } from '@/constants/theme';
 import { cloudInsightAvailable } from '@/lib/cloud-insight';
 import { formatRef, versionInfo } from '@/lib/bible';
-import { interpretAvailable } from '@/lib/interpret';
+import { interpretUsesService } from '@/lib/interpret';
 import { SUPPORT_EMAIL } from '@/lib/legal';
 import { cancelReminders, requestReminderPermission, scheduleDailyReminder } from '@/lib/reminders';
 import { TRANSLATION } from '@/lib/scripture';
 import { useStore } from '@/lib/store';
+import { currentStreak } from '@/lib/streak';
 import { purchasesAvailable, useSubscription } from '@/lib/subscription';
 
 const REMINDER_TIMES: [number, number][] = [
@@ -31,6 +34,15 @@ export default function SettingsScreen() {
   const { isPlus, usage, manage, restore, resetIdentity } = useSubscription();
   const subscribed = isPlus || usage?.plan === 'plus';
   const [name, setName] = useState(settings.name);
+  const streak = currentStreak(entries);
+  // Only offered once the AI service and store purchases are configured; App Review rejects
+  // subscriptions that cannot actually be bought.
+  const showPlus = purchasesAvailable;
+  const plusDetail = subscribed
+    ? usage
+      ? `This month: ${usage.dream.used}/${usage.dream.limit} dreams · ${usage.prophetic.used}/${usage.prophetic.limit} prophetic words`
+      : 'Dream Interpretation and Prophetic Word are unlocked'
+    : 'More AI-written Dream Interpretation and Prophetic Word';
 
   const toggleReminder = async (enabled: boolean) => {
     if (!enabled) {
@@ -122,35 +134,66 @@ export default function SettingsScreen() {
     <Screen contentStyle={{ gap: Spacing.lg }}>
       <T variant="title">Settings</T>
 
-      <Section title="You">
-        <T variant="small">Your first name (optional)</T>
-        <TextInput
-          value={name}
-          onChangeText={setName}
-          onEndEditing={() => updateSettings({ name: name.trim().slice(0, 40) })}
-          placeholder="Add your name"
-          placeholderTextColor={Colors.inkSoft}
-          maxLength={40}
-          accessibilityLabel="Your first name"
-          style={styles.input}
-        />
-      </Section>
+      <Card style={styles.profile}>
+        <View style={styles.avatar}>
+          {name.trim() ? (
+            <T style={styles.avatarLetter}>{name.trim()[0].toUpperCase()}</T>
+          ) : (
+            <Ionicons name="person" size={26} color={Colors.white} />
+          )}
+        </View>
+        <View style={{ flex: 1, gap: 2 }}>
+          <TextInput
+            value={name}
+            onChangeText={setName}
+            onEndEditing={() => updateSettings({ name: name.trim().slice(0, 40) })}
+            placeholder="Add your first name"
+            placeholderTextColor={Colors.inkSoft}
+            maxLength={40}
+            returnKeyType="done"
+            accessibilityLabel="Your first name"
+            style={styles.nameInput}
+          />
+          <T variant="small">
+            {entries.length === 0
+              ? 'Your journey starts with your first reflection'
+              : `${entries.length} ${entries.length === 1 ? 'reflection' : 'reflections'} · ${
+                  streak > 0 ? `${streak}-day streak` : 'start a new streak today'
+                }`}
+          </T>
+        </View>
+        <Ionicons name="pencil" size={16} color={Colors.inkSoft} />
+      </Card>
+
+      {showPlus ? (
+        <View style={{ gap: Spacing.sm }}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={`Micaiah Plus. ${plusDetail}`}
+            onPress={() => router.push('/plus')}
+            style={({ pressed }) => ({ opacity: pressed ? 0.85 : 1 })}>
+            <LinearGradient colors={Gradients.night} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.plus}>
+              <View style={styles.plusIcon}>
+                <Ionicons name={subscribed ? 'checkmark-circle' : 'sparkles'} size={24} color={Colors.goldLight} />
+              </View>
+              <View style={{ flex: 1, gap: 4 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, flexWrap: 'wrap' }}>
+                  <T variant="heading" style={{ color: Colors.white }}>
+                    {subscribed ? 'Micaiah Plus is active' : 'Micaiah Plus'}
+                  </T>
+                </View>
+                <T variant="small" style={{ color: Colors.indigoPale }}>
+                  {plusDetail}
+                </T>
+              </View>
+              <Ionicons name="chevron-forward" size={18} color={Colors.white} />
+            </LinearGradient>
+          </Pressable>
+        </View>
+      ) : null}
 
       {purchasesAvailable ? (
-        <Section title="Micaiah Plus">
-          <Row
-            icon="sparkles-outline"
-            label={subscribed ? 'Micaiah Plus is active' : 'Micaiah Plus'}
-            detail={
-              subscribed
-                ? usage
-                  ? `This month: ${usage.dream.used}/${usage.dream.limit} dreams · ${usage.prophetic.used}/${usage.prophetic.limit} prophetic words`
-                  : 'Dream Interpretation and Prophetic Word unlocked'
-                : 'Unlock Dream Interpretation and Prophetic Word'
-            }
-            onPress={() => router.push('/plus')}
-          />
-          <Divider />
+        <Section title="Subscription">
           {subscribed ? (
             <Row icon="card-outline" label="Manage subscription" onPress={manage} />
           ) : (
@@ -234,7 +277,7 @@ export default function SettingsScreen() {
               />
             }
           />
-          {interpretAvailable && settings.interpretConsent ? (
+          {interpretUsesService && settings.interpretConsent ? (
             <>
               <Divider />
               <Row
@@ -276,8 +319,9 @@ export default function SettingsScreen() {
 
       <Section title="Your data">
         <T variant="small">
-          Your journal and interpretations are stored only on this device. There is no account, and nothing is uploaded
-          unless you use cloud insights or Dream / Prophetic interpretation.
+          {cloudInsightAvailable
+            ? 'Your journal and interpretations are stored only on this device. There is no account, and nothing is uploaded unless you use cloud insights or Dream / Prophetic interpretation.'
+            : 'Your journal and interpretations are created and stored only on this device. There is no account, no tracking, and nothing is ever uploaded.'}
         </T>
         <Row icon="trash-outline" label="Delete all data" tone="danger" onPress={confirmDeleteAll} />
       </Section>
@@ -300,15 +344,31 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 }
 
 const styles = StyleSheet.create({
-  input: {
-    minHeight: 48,
-    borderRadius: Radius.sm,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    paddingHorizontal: Spacing.md,
-    fontFamily: Fonts.sans,
-    fontSize: 16,
-    color: Colors.ink,
+  profile: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingVertical: Spacing.md },
+  avatar: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: Colors.indigoMid,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  avatarLetter: { fontFamily: Fonts.serifBold, fontSize: 28, lineHeight: 34, color: Colors.white },
+  nameInput: { fontFamily: Fonts.sansBold, fontSize: 18, color: Colors.ink, paddingVertical: 4 },
+  plus: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.md,
+    padding: Spacing.lg,
+    borderRadius: Radius.lg,
+  },
+  plusIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(255,255,255,0.12)',
   },
   times: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.sm },
   time: {

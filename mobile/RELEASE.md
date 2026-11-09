@@ -33,12 +33,12 @@ after the first store upload:
 
 ## 2. Publish the website pages the stores link to
 
-The stores require a working privacy-policy URL. Enable GitHub Pages
-(repo Settings → Pages → Deploy from branch → `main`, `/ (root)`), then confirm these load:
+The stores require a working privacy-policy URL. The site is hosted on Netlify
+(project `micaiah-website`), which deploys every push to `main`. Confirm these load:
 
-- https://rudolphdeladem.github.io/micaiah-website/privacy.html
-- https://rudolphdeladem.github.io/micaiah-website/terms.html
-- https://rudolphdeladem.github.io/micaiah-website/support.html
+- https://micaiah-website.netlify.app/privacy.html
+- https://micaiah-website.netlify.app/terms.html
+- https://micaiah-website.netlify.app/support.html
 
 If you host the site elsewhere, update `WEBSITE_URL` in `src/lib/legal.ts`.
 

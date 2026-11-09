@@ -4,6 +4,111 @@ Copy-paste material for App Store Connect and Google Play Console. Everything he
 matches what the app actually does; keep it that way when the app changes, because
 inaccurate metadata or privacy answers are the most common reason for rejection.
 
+## v1.0 App Store release — on-device build (use this)
+
+Build 1.0.0 (8) and later: everything runs on the device — insights, Dream
+Interpretation and Prophetic Word. No server, no API key, no purchases, no data
+collected. Everything in this section matches that build.
+
+| Field | Value |
+|---|---|
+| Name | `Micaiah AI` |
+| Subtitle (≤30) | `Bible journal, dreams & prayer` |
+| Category | Primary **Lifestyle**, secondary **Reference** |
+| Price | Free · no in-app purchases |
+| Support URL | https://micaiah-website.netlify.app/support.html |
+| Privacy Policy URL | https://micaiah-website.netlify.app/privacy.html |
+| Marketing URL | leave **empty** (the home page still advertises a waitlist and Premium) |
+| Copyright | `© 2026 Micaiah AI` |
+| Devices | iPhone only (`supportsTablet: false`) — no iPad screenshots needed |
+| App Privacy | **Data Not Collected** |
+| Age rating | answer **None / No** to everything → expected **4+** |
+| Encryption | already answered in the build (`usesNonExemptEncryption: false`) |
+| Sign-in required | **No** (no demo account) |
+| Screenshots (6.9") | `store/screenshots/iphone-6.9/` — 1320×2868, upload in file-name order |
+
+**Promotional text (≤170)**
+
+```
+Bring your heart, your dreams and the words you receive to Scripture — with verses, gentle reflections, next steps and a prayer. Private, free, and on your device.
+```
+
+**Keywords (≤100)**
+
+```
+bible,prayer,journal,devotional,scripture,faith,christian,verse,dream,prophetic,kjv,gratitude,jesus
+```
+
+**Description**
+
+```
+Micaiah is a quiet, private place to bring your heart before God.
+
+Speak or type a prayer, a worry, or a moment of gratitude — no perfect words needed. Micaiah's on-device intelligence finds the spiritual themes in what you shared and responds with:
+
+• A personal reflection on what Scripture says
+• Relevant Bible verses (King James Version)
+• Simple, practical next steps
+• A question to sit with
+• A prayer you can make your own
+
+DREAM INTERPRETATION
+Describe a dream and bring it to Scripture. Micaiah recognises the images in it — water, doors, storms, mountains, light and many more — and explains what they often picture in the Bible, with passages to read, gentle cautions, next steps and a prayer.
+
+PROPHETIC WORD
+Share a word you received and weigh it with Scripture. Micaiah draws out its themes, shows what the Bible says about them, and points out anything to hold carefully — like dates, money or marriage promises. "Test all things; hold fast that which is good" (1 Thessalonians 5:21).
+
+Interpretations are humble, Scripture-based reflections to help you pray — not prophecy, and never predictions.
+
+THREE WAYS TO REFLECT
+• Reflect — process your day and find clarity
+• Pray — write to God and receive Scripture
+• Give thanks — count your blessings, big and small
+
+THE WHOLE BIBLE, OFFLINE
+Read any book and chapter in the King James Version, World English Bible, American Standard Version, or Bible in Basic English. Pick up where you left off and share any verse.
+
+BIBLE INSIGHT
+Explore what Scripture says about anxiety, fear, grief, guidance, doubt, loneliness, forgiveness, hope, healing, relationships, purpose and more.
+
+YOUR PRIVATE JOURNAL
+Every reflection and interpretation is created and saved on your device — searchable, with daily streaks. No account. No ads. No tracking. Nothing is uploaded. Export your journal any time.
+
+DAILY REMINDER
+An optional, gentle daily nudge at the time you choose.
+
+CARE WHEN IT MATTERS
+If something you write suggests you may be in danger, Micaiah puts crisis resources first. Help is always one tap away under Settings → Get help now.
+
+Micaiah offers devotional encouragement and is not a substitute for pastoral care, professional counseling, or medical advice.
+
+Terms of Use: https://micaiah-website.netlify.app/terms.html
+Privacy Policy: https://micaiah-website.netlify.app/privacy.html
+```
+
+**What's New**
+
+```
+Welcome to Micaiah — reflect, pray and give thanks with Scripture, interpret your dreams, weigh prophetic words, and read the whole Bible offline. Everything stays private on your device.
+```
+
+**App Review Information → Notes**
+
+```
+Thank you for reviewing Micaiah.
+
+• No account or sign-in. Tap "Get Started", optionally enter a first name, accept the Terms, and tap "Enter your sanctuary".
+• Insight: Today → Write → type e.g. "I feel anxious about my exam tomorrow" → Generate Insight. You'll get a reflection, KJV verses, steps, a question and a prayer, saved to the Journal tab.
+• Dream Interpretation: Interpret tab → Dream Interpretation → describe a dream (e.g. "I was by a river, a storm came, then a door opened and light came out") → Interpret my dream.
+• Prophetic Word: Interpret tab → Prophetic Word → e.g. "I was told God will open new doors and I will marry by December" → Explain this word. Note the cautions about dates and marriage.
+• All content is generated on the device from a built-in Scripture library. Nothing is sent to a server, there is no AI service, no analytics, no ads, no tracking and no purchases. Interpretations are clearly labelled as reflections, not prophecy or predictions.
+• Voice: Today → Speak. Microphone and speech-recognition permissions are requested only then; typing is always available.
+• Safety: text mentioning self-harm (e.g. "I want to end my life") shows crisis resources (988, Samaritans, findahelpline.com) first. Settings → Get help now is always available.
+• Settings → Delete all data erases everything on the device.
+```
+
+---
+
 > **Decide first: will v1.0 ship with cloud AI?**
 > The app works fully offline with curated, on-device insights. The "AI" in
 > "Micaiah AI" is only accurate when the optional cloud insight service (Claude) is
@@ -20,15 +125,15 @@ inaccurate metadata or privacy answers are the most common reason for rejection.
 | App name (≤30) | `Micaiah AI` |
 | Subtitle / short description (iOS ≤30, Play ≤80) | iOS: `Speak. Reflect. Receive.` · Play: `Speak or write your heart and receive Scripture-based insight and prayer.` |
 | Primary category | Lifestyle (iOS secondary: Reference) · Play: Lifestyle |
-| Support URL | https://rudolphdeladem.github.io/micaiah-website/support.html |
-| Marketing URL | https://rudolphdeladem.github.io/micaiah-website/ |
-| Privacy Policy URL | https://rudolphdeladem.github.io/micaiah-website/privacy.html |
+| Support URL | https://micaiah-website.netlify.app/support.html |
+| Marketing URL | https://micaiah-website.netlify.app/ |
+| Privacy Policy URL | https://micaiah-website.netlify.app/privacy.html |
 | Contact email | siastesfinance@gmail.com |
 | Price | Free, no ads. **Plus build:** in-app purchase "Micaiah Plus" (auto-renewing subscription) |
 | Copyright | © 2026 Micaiah AI |
 
-The URLs assume GitHub Pages is enabled for this repository
-(Settings → Pages → Deploy from branch → `main` / root). Open each URL before
+The site is hosted on Netlify and deploys automatically from `main`
+(project `micaiah-website`). Open each URL before
 submitting; a broken privacy-policy link is an automatic rejection.
 
 ### Keywords (iOS, ≤100 characters, comma-separated, no spaces)
@@ -96,8 +201,8 @@ link to the Terms of Use / EULA for subscriptions):
 MICAIAH PLUS
 Dream Interpretation and Prophetic Word are included with Micaiah Plus, an optional auto-renewing subscription. Everything else is free. Payment is charged to your account at confirmation; the subscription renews automatically unless cancelled at least 24 hours before the end of the period. Manage it in your account settings.
 
-Terms of Use: https://rudolphdeladem.github.io/micaiah-website/terms.html
-Privacy Policy: https://rudolphdeladem.github.io/micaiah-website/privacy.html
+Terms of Use: https://micaiah-website.netlify.app/terms.html
+Privacy Policy: https://micaiah-website.netlify.app/privacy.html
 ```
 
 ### What's New (v1.0)

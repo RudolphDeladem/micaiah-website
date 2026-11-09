@@ -1,10 +1,32 @@
+import extra from '@/data/scripture-extra.json';
 import data from '@/data/scripture.json';
 
-import type { Theme, Verse } from './types';
+import type { ReflectionMode, Theme, Verse } from './types';
+
+type ThemeExtra = Pick<Theme, 'interpretations' | 'steps' | 'prayers' | 'questions' | 'verses'>;
+const extraThemes = extra.themes as Record<string, ThemeExtra>;
 
 export const TRANSLATION = data.translation;
 export const TRANSLATION_NAME = data.translationName;
-export const THEMES: Theme[] = data.themes;
+/** Core themes merged with the extra devotional content (scripture-extra.json). */
+export const THEMES: Theme[] = data.themes.map((theme) => {
+  const more = extraThemes[theme.id];
+  return {
+    ...theme,
+    interpretations: [...theme.interpretations, ...(more?.interpretations ?? [])],
+    steps: [...theme.steps, ...(more?.steps ?? [])],
+    prayers: [...theme.prayers, ...(more?.prayers ?? [])],
+    questions: more?.questions ?? [],
+    verses: [...theme.verses, ...(more?.verses ?? []).filter((v) => !theme.verses.some((t) => t.ref === v.ref))],
+  };
+});
+
+/** Opening lines that acknowledge how the person came (reflection, prayer or gratitude). */
+export const OPENINGS: Record<ReflectionMode, string[]> = extra.openings;
+/** Lines that connect a second theme found in the same reflection; `{theme}` is replaced. */
+export const BRIDGES: string[] = extra.bridges;
+/** One closing step per mode, added after the theme's steps. */
+export const MODE_STEPS: Record<ReflectionMode, string[]> = extra.modeSteps;
 export const DEFAULT_THEME_ID = 'peace';
 
 const themeById = new Map(THEMES.map((t) => [t.id, t]));

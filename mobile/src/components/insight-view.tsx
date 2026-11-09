@@ -9,16 +9,37 @@ import type { Insight, Verse } from '@/lib/types';
 
 import { Card, T } from './ui';
 
-export function VerseCard({ verse, tone = 'indigo' }: { verse: Verse; tone?: 'indigo' | 'gold' }) {
+export function VerseCard({
+  verse,
+  tone = 'indigo',
+  onShare,
+}: {
+  verse: Verse;
+  tone?: 'indigo' | 'gold';
+  onShare?: () => void;
+}) {
   const onIndigo = tone === 'indigo';
+  const accent = onIndigo ? Colors.goldLight : Colors.gold;
   return (
     <Card tone={tone} style={{ gap: Spacing.sm }}>
       <T variant="verse" style={onIndigo && { color: Colors.white }} selectable>
         “{verse.text}”
       </T>
-      <T variant="label" style={{ color: onIndigo ? Colors.goldLight : Colors.gold }}>
-        — {verse.ref} ({TRANSLATION})
-      </T>
+      <View style={styles.verseFooter}>
+        <T variant="label" style={{ color: accent, flex: 1 }}>
+          — {verse.ref} ({TRANSLATION})
+        </T>
+        {onShare ? (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={`Share ${verse.ref}`}
+            hitSlop={10}
+            onPress={onShare}
+            style={({ pressed }) => [styles.share, { opacity: pressed ? 0.6 : 1 }]}>
+            <Ionicons name="share-outline" size={18} color={accent} />
+          </Pressable>
+        ) : null}
+      </View>
     </Card>
   );
 }
@@ -89,6 +110,15 @@ export function InsightView({ insight }: { insight: Insight }) {
         ))}
       </Card>
 
+      {insight.question ? (
+        <Card style={{ gap: Spacing.sm, borderColor: Colors.indigoPale, backgroundColor: Colors.indigoGhost }}>
+          <T variant="label">✦ A question to sit with</T>
+          <T variant="heading" style={{ fontSize: 17, lineHeight: 25 }} selectable>
+            {insight.question}
+          </T>
+        </Card>
+      ) : null}
+
       <Card tone="gold" style={{ gap: Spacing.sm }}>
         <T variant="label" style={{ color: Colors.gold }}>
           ✦ A prayer for today
@@ -109,6 +139,8 @@ export function InsightView({ insight }: { insight: Insight }) {
 }
 
 const styles = StyleSheet.create({
+  verseFooter: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
+  share: { width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
   crisis: { gap: Spacing.md, borderColor: 'rgba(179,38,30,0.25)', backgroundColor: Colors.dangerPale },
   crisisHeader: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
   crisisRow: { gap: 2 },

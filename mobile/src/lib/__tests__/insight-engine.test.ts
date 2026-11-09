@@ -2,7 +2,7 @@
 import { parseCloudResponse } from '../cloud-insight';
 import { detectCrisis } from '../crisis';
 import { generateLocalInsight, scoreThemes } from '../insight-engine';
-import { THEMES, getVerse, verseOfTheDay } from '../scripture';
+import { MODE_STEPS, OPENINGS, THEMES, getVerse, verseOfTheDay } from '../scripture';
 import { currentStreak, longestStreak } from '../streak';
 
 describe('scripture library', () => {
@@ -59,11 +59,29 @@ describe('generateLocalInsight', () => {
     const a = generateLocalInsight('Lord, I am worried about my exams');
     const b = generateLocalInsight('Lord, I am worried about my exams');
     expect(a).toEqual(b);
-    expect(a.verses.length).toBeGreaterThanOrEqual(2);
-    expect(a.steps).toHaveLength(3);
+    expect(a.verses.length).toBeGreaterThanOrEqual(3);
+    expect(a.steps).toHaveLength(4);
     expect(a.prayer.length).toBeGreaterThan(10);
+    expect(a.question).toMatch(/\?$/);
     expect(a.source).toBe('on-device');
     expect(new Set(a.verses.map((v) => v.ref)).size).toBe(a.verses.length);
+  });
+
+  it('writes several paragraphs: an opening for the mode, the theme, and any second theme', () => {
+    const insight = generateLocalInsight('I am so tired and I feel lonely since I moved', 'prayer');
+    const paragraphs = insight.interpretation.split('\n\n');
+    expect(paragraphs.length).toBe(3);
+    expect(OPENINGS.prayer).toContain(paragraphs[0]);
+    expect(insight.steps[3]).toBe(MODE_STEPS.prayer[0]);
+  });
+
+  it('has the extra content merged into every theme', () => {
+    for (const theme of THEMES) {
+      expect(theme.interpretations.length).toBeGreaterThanOrEqual(6);
+      expect(theme.prayers.length).toBeGreaterThanOrEqual(4);
+      expect(theme.questions.length).toBeGreaterThanOrEqual(3);
+      expect(theme.verses.length).toBeGreaterThanOrEqual(7);
+    }
   });
 
   it('flags crisis language and responds with safety-first content', () => {

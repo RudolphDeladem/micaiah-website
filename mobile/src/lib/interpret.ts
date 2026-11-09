@@ -4,15 +4,11 @@ import { detectCrisis } from './crisis';
 import { getInstallId } from './install-id';
 import type { Interpretation, InterpretationKind, InterpretationPoint } from './types';
 
-/** Dream and prophetic interpretation always need the AI service, so they exist only when it is configured. */
-export const interpretAvailable = cloudInsightAvailable;
-
 /**
- * Builds without the AI service show Dream Interpretation, Prophetic Word and Micaiah Plus as
- * "Coming soon" so testers can preview them. App Store review rejects placeholder features, so
- * set EXPO_PUBLIC_HIDE_COMING_SOON=1 for a store build that ships without the service.
+ * Dream and prophetic interpretation run on the device (interpret-engine.ts). When the AI service
+ * is configured they use it instead, with consent, monthly allowances and Micaiah Plus.
  */
-export const interpretComingSoon = !interpretAvailable && process.env.EXPO_PUBLIC_HIDE_COMING_SOON !== '1';
+export const interpretUsesService = cloudInsightAvailable;
 
 export const MIN_INTERPRET_LENGTH = 10;
 export const MAX_INTERPRET_LENGTH = 5000;
@@ -123,6 +119,7 @@ export function parseInterpretation(
     steps,
     prayer,
     crisis: detectCrisis(text) || p.crisis === true,
+    source: 'cloud',
   };
 }
 
