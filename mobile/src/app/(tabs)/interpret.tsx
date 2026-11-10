@@ -7,6 +7,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import { KIND_COPY } from '@/components/interpretation-view';
 import { Card, Screen, T, tapFeedback } from '@/components/ui';
 import { Colors, Gradients, Radius, Spacing } from '@/constants/theme';
+import { FREE_PER_MONTH } from '@/lib/free-allowance';
 import { interpretUsesService, remaining, type Usage } from '@/lib/interpret';
 import { useStore } from '@/lib/store';
 import { purchasesAvailable, useSubscription } from '@/lib/subscription';
@@ -24,7 +25,7 @@ function allowanceLabel(usage: Usage | null, kind: InterpretationKind): string |
 
 export default function Interpret() {
   const { interpretations, settings } = useStore();
-  const { usage, isPlus, refreshUsage } = useSubscription();
+  const { usage, isPlus, refreshUsage, freeRemaining } = useSubscription();
 
   // Counts change after purchases and at the start of each month — refresh whenever the tab is shown.
   useFocusEffect(
@@ -52,7 +53,16 @@ export default function Interpret() {
 
       {KINDS.map((kind) => {
         const copy = KIND_COPY[kind];
-        const allowance = interpretUsesService ? allowanceLabel(usage, kind) : 'Free · private on your device';
+        const free = freeRemaining(kind);
+        const allowance = interpretUsesService
+          ? allowanceLabel(usage, kind)
+          : isPlus
+            ? 'Plus · unlimited · private on your device'
+            : free === null
+              ? 'Free · private on your device'
+              : free > 0
+                ? `${free} of ${FREE_PER_MONTH} free this month`
+                : 'Unlimited with Micaiah Plus';
         return (
           <Pressable
             key={kind}
@@ -90,8 +100,9 @@ export default function Interpret() {
                 Micaiah Plus
               </T>
               <T variant="small">
-                Up to {usage?.limits.plus ?? 20} dream and {usage?.limits.plus ?? 20} prophetic interpretations every
-                month. Everything else stays free.
+                {interpretUsesService
+                  ? `Up to ${usage?.limits.plus ?? 20} dream and ${usage?.limits.plus ?? 20} prophetic interpretations every month. Everything else stays free.`
+                  : 'Unlimited dream and prophetic interpretations. Everything else stays free.'}
               </T>
             </View>
             <Ionicons name="chevron-forward" size={18} color={Colors.gold} />

@@ -6,6 +6,8 @@ import type { PurchasesPackage } from 'react-native-purchases';
 
 import { Card, LogoMark, PrimaryButton, Screen, SecondaryButton, T, type IconName } from '@/components/ui';
 import { Colors, Radius, Spacing } from '@/constants/theme';
+import { FREE_PER_MONTH } from '@/lib/free-allowance';
+import { interpretUsesService } from '@/lib/interpret';
 import { priceLabel, purchasesAvailable, trialLabel, useSubscription } from '@/lib/subscription';
 
 export default function Plus() {
@@ -86,16 +88,32 @@ export default function Plus() {
       </View>
 
       <Card style={{ gap: Spacing.md }}>
-        <Benefit icon="moon-outline" title="Dream Interpretation" body={`Up to ${plusLimit} dreams a month, explained in the light of Scripture.`} />
+        <Benefit
+          icon="moon-outline"
+          title="Dream Interpretation"
+          body={
+            interpretUsesService
+              ? `Up to ${plusLimit} dreams a month, explained in the light of Scripture.`
+              : 'Unlimited dreams, explained in the light of Scripture.'
+          }
+        />
         <Benefit
           icon="megaphone-outline"
           title="Prophetic Word"
-          body={`Up to ${plusLimit} words a month, weighed with Scripture — themes, cautions and next steps.`}
+          body={
+            interpretUsesService
+              ? `Up to ${plusLimit} words a month, weighed with Scripture — themes, cautions and next steps.`
+              : 'Unlimited words, weighed with Scripture — themes, cautions and next steps.'
+          }
         />
         <Benefit
           icon="heart-outline"
           title="Everything else stays free"
-          body="Daily reflections, prayer and gratitude journals, the full Bible, and reminders."
+          body={
+            interpretUsesService
+              ? 'Daily reflections, prayer and gratitude journals, the full Bible, and reminders.'
+              : `Daily reflections, prayer and gratitude journals, the full Bible, reminders — and ${FREE_PER_MONTH} free dream and ${FREE_PER_MONTH} free prophetic interpretations every month.`
+          }
         />
       </Card>
 

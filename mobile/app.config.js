@@ -9,9 +9,10 @@
 // adds purchase history (processed by Apple/Google and RevenueCat) to the declaration.
 module.exports = ({ config }) => {
   const cloudEnabled = Boolean(process.env.EXPO_PUBLIC_INSIGHT_API_URL);
-  const purchasesEnabled =
-    cloudEnabled &&
-    Boolean(process.env.EXPO_PUBLIC_REVENUECAT_IOS_KEY || process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY);
+  // Micaiah Plus works with or without the AI service, so purchases depend only on the store key.
+  const purchasesEnabled = Boolean(
+    process.env.EXPO_PUBLIC_REVENUECAT_IOS_KEY || process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY,
+  );
 
   const collected = (type) => ({
     NSPrivacyCollectedDataType: type,
@@ -22,10 +23,10 @@ module.exports = ({ config }) => {
   const privacyManifests = {
     ...config.ios.privacyManifests,
     NSPrivacyCollectedDataTypes: [
-      // The random install ID is sent with dream / prophetic requests to apply monthly allowances.
-      ...(cloudEnabled
-        ? [collected('NSPrivacyCollectedDataTypeOtherUserContent'), collected('NSPrivacyCollectedDataTypeUserID')]
-        : []),
+      ...(cloudEnabled ? [collected('NSPrivacyCollectedDataTypeOtherUserContent')] : []),
+      // The random install ID is sent with dream / prophetic requests (to apply monthly allowances)
+      // and is the RevenueCat app user ID (to recognise a subscriber).
+      ...(cloudEnabled || purchasesEnabled ? [collected('NSPrivacyCollectedDataTypeUserID')] : []),
       ...(purchasesEnabled ? [collected('NSPrivacyCollectedDataTypePurchaseHistory')] : []),
     ],
   };

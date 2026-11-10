@@ -6,22 +6,29 @@ inaccurate metadata or privacy answers are the most common reason for rejection.
 
 ## v1.0 App Store release — on-device build (use this)
 
-Build 1.0.0 (8) and later: everything runs on the device — insights, Dream
-Interpretation and Prophetic Word. No server, no API key, no purchases, no data
-collected. Everything in this section matches that build.
+Everything runs on the device — insights, Dream Interpretation and Prophetic Word.
+No server and no API key. **Micaiah Plus** (sold through the App Store via RevenueCat)
+unlocks unlimited Dream Interpretation and Prophetic Word; free users get 3 of each per
+month. Plus is switched on in builds made with `EXPO_PUBLIC_REVENUECAT_IOS_KEY` set in
+the EAS production environment (build 11 and later). Builds without it (8–10) have no
+purchases and collect no data — if you ship one of those, use **Data Not Collected** and
+drop the Micaiah Plus parts below.
 
 | Field | Value |
 |---|---|
 | Name | `Micaiah AI` |
 | Subtitle (≤30) | `Bible journal, dreams & prayer` |
 | Category | Primary **Lifestyle**, secondary **Reference** |
-| Price | Free · no in-app purchases |
+| Price | Free · in-app purchase **Micaiah Plus** (auto-renewing subscription) |
 | Support URL | https://micaiah-website.netlify.app/support.html |
 | Privacy Policy URL | https://micaiah-website.netlify.app/privacy.html |
 | Marketing URL | leave **empty** (the home page still advertises a waitlist and Premium) |
 | Copyright | `© 2026 Micaiah AI` |
 | Devices | iPhone only (`supportsTablet: false`) — no iPad screenshots needed |
-| App Privacy | **Data Not Collected** |
+| App Privacy | **Purchases → Purchase History** and **Identifiers → User ID** — both: App Functionality only, **not** linked to the user's identity, **not** used for tracking (RevenueCat receives these with a random app ID; nothing the user writes leaves the device) |
+| Subscription | Group `Micaiah Plus` · product ID `micaiah_plus_monthly` · 1 month · price of your choice (e.g. US$4.99) · display name `Micaiah Plus` · description `Unlimited dream & prophetic interpretations` · review screenshot: the Micaiah Plus screen (Interpret → Micaiah Plus) from build 11 |
+| RevenueCat | entitlement `plus`; the **current** offering contains a monthly package with `micaiah_plus_monthly` |
+| Small Business Program | apply before the first sale (15% instead of 30%) |
 | Age rating | answer **None / No** to everything → expected **4+** |
 | Encryption | already answered in the build (`usesNonExemptEncryption: false`) |
 | Sign-in required | **No** (no demo account) |
@@ -58,7 +65,10 @@ Describe a dream and bring it to Scripture. Micaiah recognises the images in it 
 PROPHETIC WORD
 Share a word you received and weigh it with Scripture. Micaiah draws out its themes, shows what the Bible says about them, and points out anything to hold carefully — like dates, money or marriage promises. "Test all things; hold fast that which is good" (1 Thessalonians 5:21).
 
-Interpretations are humble, Scripture-based reflections to help you pray — not prophecy, and never predictions.
+Interpretations are humble, Scripture-based reflections to help you pray — not prophecy, and never predictions. Everyone gets 3 free dream and 3 free prophetic interpretations each month.
+
+MICAIAH PLUS
+Unlimited Dream Interpretation and Prophetic Word with Micaiah Plus, an optional auto-renewing subscription. Everything else is free. Payment is charged to your Apple ID at confirmation; the subscription renews automatically unless cancelled at least 24 hours before the end of the current period. Manage or cancel it in your App Store account settings.
 
 THREE WAYS TO REFLECT
 • Reflect — process your day and find clarity
@@ -101,7 +111,8 @@ Thank you for reviewing Micaiah.
 • Insight: Today → Write → type e.g. "I feel anxious about my exam tomorrow" → Generate Insight. You'll get a reflection, KJV verses, steps, a question and a prayer, saved to the Journal tab.
 • Dream Interpretation: Interpret tab → Dream Interpretation → describe a dream (e.g. "I was by a river, a storm came, then a door opened and light came out") → Interpret my dream.
 • Prophetic Word: Interpret tab → Prophetic Word → e.g. "I was told God will open new doors and I will marry by December" → Explain this word. Note the cautions about dates and marriage.
-• All content is generated on the device from a built-in Scripture library. Nothing is sent to a server, there is no AI service, no analytics, no ads, no tracking and no purchases. Interpretations are clearly labelled as reflections, not prophecy or predictions.
+• All content is generated on the device from a built-in Scripture library. Nothing the user writes is sent to a server; there is no AI service, no analytics, no ads and no tracking. Interpretations are clearly labelled as reflections, not prophecy or predictions.
+• Micaiah Plus (auto-renewing subscription, product micaiah_plus_monthly) unlocks unlimited Dream Interpretation and Prophetic Word. Free users get 3 of each per month, so you can try both without buying; after 3, the button becomes "Unlock with Micaiah Plus". To test the purchase with a Sandbox account: Interpret tab → Micaiah Plus card (or Settings → Micaiah Plus) → choose the plan → Subscribe. "Restore purchases" is on the same screen and in Settings. The Terms of Use (with the subscription terms) and the Privacy Policy are linked on the purchase screen.
 • Voice: Today → Speak. Microphone and speech-recognition permissions are requested only then; typing is always available.
 • Safety: text mentioning self-harm (e.g. "I want to end my life") shows crisis resources (988, Samaritans, findahelpline.com) first. Settings → Get help now is always available.
 • Settings → Delete all data erases everything on the device.

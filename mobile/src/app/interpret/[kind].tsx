@@ -18,6 +18,7 @@ import {
   requestInterpretation,
   type Usage,
 } from '@/lib/interpret';
+import { FREE_PER_MONTH } from '@/lib/free-allowance';
 import { generateLocalInterpretation } from '@/lib/interpret-engine';
 import { DRAFT_KEY_PREFIX, newEntryId, useStore } from '@/lib/store';
 import { purchasesAvailable, useSubscription } from '@/lib/subscription';
@@ -40,7 +41,8 @@ export default function NewInterpretation() {
   const copy = KIND_COPY[kind];
   const draftKey = `${DRAFT_KEY_PREFIX}${kind}.v1`;
   const { settings, updateSettings, addInterpretation } = useStore();
-  const { usage, setUsage, refreshUsage } = useSubscription();
+  const { usage, setUsage, refreshUsage, isPlus, freeRemaining, recordFreeUse } = useSubscription();
+  const freeLeft = freeRemaining(kind);
 
   const [text, setText] = useState(params.text ?? '');
   const [seeking, setSeeking] = useState(false);
@@ -95,6 +97,7 @@ export default function NewInterpretation() {
       if (result.usage) setUsage(result.usage);
       const id = newEntryId();
       await addInterpretation({ id, createdAt: new Date().toISOString(), ...result.interpretation });
+      if (!interpretUsesService) await recordFreeUse(kind);
       await AsyncStorage.removeItem(draftKey).catch(() => {});
       router.replace({ pathname: '/interpretation/[id]', params: { id, fresh: '1' } });
     } catch (error) {
@@ -117,6 +120,11 @@ export default function NewInterpretation() {
 
   const submit = async () => {
     if (!canSubmit) return;
+    if (freeLeft === 0) {
+      // This month's free on-device interpretations are used: offer Plus (the draft is kept).
+      router.push('/plus');
+      return;
+    }
     if (left === 0) {
       // Usage may be stale (new month, or a purchase on another screen) — re-check once.
       const latest = await refreshUsage({ recheckPlan: true });
@@ -154,7 +162,13 @@ export default function NewInterpretation() {
   }
 
   const allowance = !interpretUsesService
-    ? 'Free · prepared privately on your device'
+    ? isPlus
+      ? 'Micaiah Plus · unlimited · private on your device'
+      : freeLeft === null
+        ? 'Free · prepared privately on your device'
+        : freeLeft > 0
+          ? `${freeLeft} of ${FREE_PER_MONTH} free this month · private on your device`
+          : 'Free interpretations used this month · unlimited with Micaiah Plus'
     : usage && left !== null
       ? usage.plan === 'plus'
         ? `Micaiah Plus · ${left} left this month`
@@ -210,7 +224,7 @@ export default function NewInterpretation() {
           ) : null}
 
           <PrimaryButton
-            label={kind === 'dream' ? 'Interpret my dream' : 'Explain this word'}
+            label={freeLeft === 0 ? 'Unlock with Micaiah Plus' : kind === 'dream' ? 'Interpret my dream' : 'Explain this word'}
             icon="sparkles"
             disabled={!canSubmit}
             onPress={submit}

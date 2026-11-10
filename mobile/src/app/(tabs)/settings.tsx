@@ -41,8 +41,10 @@ export default function SettingsScreen() {
   const plusDetail = subscribed
     ? usage
       ? `This month: ${usage.dream.used}/${usage.dream.limit} dreams · ${usage.prophetic.used}/${usage.prophetic.limit} prophetic words`
-      : 'Dream Interpretation and Prophetic Word are unlocked'
-    : 'More AI-written Dream Interpretation and Prophetic Word';
+      : 'Unlimited Dream Interpretation and Prophetic Word'
+    : interpretUsesService
+      ? 'More AI-written Dream Interpretation and Prophetic Word'
+      : 'Unlimited Dream Interpretation and Prophetic Word';
 
   const reminderFailed = () =>
     Alert.alert('Reminder not set', 'Micaiah could not schedule your daily reminder. Please try again in a moment.');

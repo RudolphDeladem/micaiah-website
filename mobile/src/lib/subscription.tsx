@@ -2,14 +2,17 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 import { Linking, Platform } from 'react-native';
 import Purchases, { PURCHASES_ERROR_CODE, type CustomerInfo, type PurchasesPackage } from 'react-native-purchases';
 
+import { emptyUsage, freeLeft, loadFreeUsage, saveFreeUsage, withUse, type FreeUsage } from './free-allowance';
 import { getInstallId } from './install-id';
 import { fetchUsage, interpretUsesService, type Usage } from './interpret';
+import type { InterpretationKind } from './types';
 
 /**
  * Micaiah Plus: one auto-renewing subscription (sold through the App Store / Google Play via
- * RevenueCat) that unlocks Dream Interpretation and Prophetic Word. Everything else is free.
- * The AI service re-checks the subscription with RevenueCat before every interpretation, so
- * the state here only drives the UI.
+ * RevenueCat). Without the AI service it unlocks unlimited on-device Dream Interpretation and
+ * Prophetic Word (free users get FREE_PER_MONTH of each, counted on the device). With the
+ * service, the service re-checks the subscription before every interpretation and applies its
+ * own monthly allowances, so the state here only drives the UI.
  */
 export const ENTITLEMENT_ID = 'plus';
 
@@ -20,12 +23,22 @@ const API_KEY =
       ? process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY
       : undefined) ?? '';
 
-/** Subscriptions are offered only when the store SDK is configured and there is a service to unlock. */
-export const purchasesAvailable = API_KEY.length > 0 && interpretUsesService;
+/** Subscriptions are offered whenever the store SDK is configured (a RevenueCat public key is set). */
+export const purchasesAvailable = API_KEY.length > 0;
+
+/** Free users are limited on the device only when Plus is for sale and interpretations run locally. */
+const limitsOnDevice = purchasesAvailable && !interpretUsesService;
 
 type Subscription = {
   /** RevenueCat says the Plus entitlement is active on this device. */
   isPlus: boolean;
+  /**
+   * On-device interpretations left this month for a free user; null when there is no limit to show
+   * (Micaiah Plus, no subscriptions configured, or the AI service applies its own allowance).
+   */
+  freeRemaining: (kind: InterpretationKind) => number | null;
+  /** Counts one on-device interpretation against the free allowance (no-op when unlimited). */
+  recordFreeUse: (kind: InterpretationKind) => Promise<void>;
   usage: Usage | null;
   refreshUsage: (options?: { recheckPlan?: boolean }) => Promise<Usage | null>;
   setUsage: (usage: Usage) => void;
@@ -55,6 +68,26 @@ function ensureConfigured(): Promise<void> {
 export function SubscriptionProvider({ children }: { children: ReactNode }) {
   const [isPlus, setIsPlus] = useState(false);
   const [usage, setUsage] = useState<Usage | null>(null);
+  const [freeUsage, setFreeUsage] = useState<FreeUsage>(() => emptyUsage());
+
+  useEffect(() => {
+    if (limitsOnDevice) loadFreeUsage().then(setFreeUsage);
+  }, []);
+
+  const freeRemaining = useCallback(
+    (kind: InterpretationKind) => (limitsOnDevice && !isPlus ? freeLeft(freeUsage, kind) : null),
+    [freeUsage, isPlus],
+  );
+
+  const recordFreeUse = useCallback(
+    async (kind: InterpretationKind) => {
+      if (!limitsOnDevice || isPlus) return;
+      const next = withUse(await loadFreeUsage(), kind);
+      setFreeUsage(next);
+      await saveFreeUsage(next).catch(() => {});
+    },
+    [isPlus],
+  );
 
   const refreshUsage = useCallback(async (options: { recheckPlan?: boolean } = {}) => {
     if (!interpretUsesService) return null;
@@ -137,8 +170,20 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
   }, [refreshUsage]);
 
   const value = useMemo(
-    () => ({ isPlus, usage, refreshUsage, setUsage, loadPackages, purchase, restore, manage, resetIdentity }),
-    [isPlus, usage, refreshUsage, loadPackages, purchase, restore, manage, resetIdentity],
+    () => ({
+      isPlus,
+      freeRemaining,
+      recordFreeUse,
+      usage,
+      refreshUsage,
+      setUsage,
+      loadPackages,
+      purchase,
+      restore,
+      manage,
+      resetIdentity,
+    }),
+    [isPlus, freeRemaining, recordFreeUse, usage, refreshUsage, loadPackages, purchase, restore, manage, resetIdentity],
   );
 
   return <SubscriptionContext.Provider value={value}>{children}</SubscriptionContext.Provider>;
